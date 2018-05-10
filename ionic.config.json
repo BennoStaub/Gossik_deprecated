@@ -1,0 +1,8 @@
+{
+  "name": "Gossik",
+  "app_id": "a8a9fbcb",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
