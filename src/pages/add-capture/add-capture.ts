@@ -12,7 +12,7 @@ import { HomePage } from '../home/home';
 })
 export class AddCapturePage {
  
-  capture: Cote = {
+  capture: Capture = {
     content: ''
   };
  
