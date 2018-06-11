@@ -23,12 +23,11 @@ export class DataHandlingProvider {
     addCapture(capture: Capture) {
         return this.captureListRef.push(capture);
     }
- 
+	
+	removeCapture(capture: Capture) {
+        return this.captureListRef.remove(capture.key);
+	}
     /*updateNote(note: Note) {
         return this.noteListRef.update(note.key, note);
-    }
- 
-    removeNote(note: Note) {
-        return this.noteListRef.remove(note.key);
     }*/
 }

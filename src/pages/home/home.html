@@ -27,7 +27,7 @@
       Captured
     </ion-list-header>
  
-    <ion-item *ngFor="let capture of captureList | async">
+    <ion-item *ngFor="let capture of captureList | async" detail-push navPush="ProcessCapturePage" [navParams]="{capture:capture}">
       {{capture.content}}
     </ion-item>
   </ion-list>
