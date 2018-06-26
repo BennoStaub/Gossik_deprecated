@@ -15,6 +15,7 @@ import { AuthentificationProvider } from '../providers/authentification/authenti
 export class MyApp {
   rootPage:any = LoginPage;
   private menu: MenuController;
+  logoutError: string;
 
   @ViewChild(Nav) nav: Nav;
   constructor(platform: Platform,
@@ -33,8 +34,12 @@ export class MyApp {
 
   logout() {
     this.menu.close();
-    this.auth.signOut();
-    this.nav.setRoot(LoginPage);
-  }
+  this.auth.signOut()
+			.then(
+				() => this.nav.setRoot(LoginPage),
+				error => this.logoutError = error.message
+      );
+    }
+  
 }
 
