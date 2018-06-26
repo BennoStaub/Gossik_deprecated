@@ -1,12 +1,21 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Platform, MenuController, Nav} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
 
-
+export interface PageInterface {
+  title: string;
+  name: string;
+  component: any;
+  icon: string;
+  logsOut?: boolean;
+  index?: number;
+  tabName?: string;
+  tabComponent?: any;
+}
 
 @Component({
   templateUrl: 'app.html'
@@ -14,9 +23,9 @@ import { AuthentificationProvider } from '../providers/authentification/authenti
 export class MyApp {
   rootPage:any = LoginPage;
   private menu: MenuController;
-  logoutError: string;
 
-  @ViewChild(Nav) nav: Nav;
+  @ViewChild('content') nav;
+
   constructor(platform: Platform,
               statusBar: StatusBar,
               splashScreen: SplashScreen,
@@ -33,11 +42,8 @@ export class MyApp {
 
   logout() {
     this.menu.close();
-    this.auth.signOut()
-			.then(
-				() => this.nav.setRoot(LoginPage),
-				error => this.logoutError = error.message
-      );
+    this.auth.signOut();
+    this.nav.setRoot(LoginPage);
     }
   
 }
