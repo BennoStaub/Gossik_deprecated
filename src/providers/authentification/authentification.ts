@@ -24,6 +24,7 @@ export class AuthentificationProvider {
 	}
 
 	signOut(): Promise<void> {
+		console.log('Sign out');
 		return this.afAuth.auth.signOut();
 	  }
 

@@ -34,7 +34,7 @@ export class MyApp {
 
   logout() {
     this.menu.close();
-  this.auth.signOut()
+    this.auth.signOut()
 			.then(
 				() => this.nav.setRoot(LoginPage),
 				error => this.logoutError = error.message
