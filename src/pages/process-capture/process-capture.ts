@@ -12,15 +12,14 @@ import { HomePage } from '../home/home';
   templateUrl: 'process-capture.html',
 })
 export class ProcessCapturePage {
-	
-  capture: Capture = {
-    content: ''
-  };
+  
+  capture: Capture;
 
   constructor(
 	public navCtrl: NavController,
 	public navParams: NavParams,
 	private dataHandlingProvider: DataHandlingProvider) {
+    this.capture = this.navParams.get('capture');
   }
 
   ionViewDidLoad() {

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
-import { AngularFireDatabase } from 'angularfire2/database';
 
 
 import { Capture } from '../../model/capture/capture.model';
@@ -13,10 +12,8 @@ import { DataHandlingProvider } from '../../providers/data-handling/data-handlin
   templateUrl: 'home.html'
 })
 export class HomePage {
- 
-  data = {
-    content: 'testing'
-  };
+
+  
   captureList: Observable<Capture[]>
  
   constructor(public navCtrl: NavController, private dataHandlingProvider: DataHandlingProvider) {

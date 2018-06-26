@@ -5,12 +5,18 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { firebaseConfig } from './firebase.credentials';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { LoginPageModule } from '../pages/login/login.module';
+import { LoginPage } from '../pages/login/login';
 import { DataHandlingProvider } from '../providers/data-handling/data-handling';
+import { AuthentificationProvider } from '../providers/authentification/authentification';
+import { SignupPage } from '../pages/sign-up/sign-up';
+import { SignupPageModule } from '../pages/sign-up/sign-up.module';
 
 @NgModule({
   declarations: [
@@ -21,18 +27,24 @@ import { DataHandlingProvider } from '../providers/data-handling/data-handling';
     BrowserModule,
     IonicModule.forRoot(MyApp),
 	AngularFireModule.initializeApp(firebaseConfig),
-	AngularFireDatabaseModule
+  AngularFireDatabaseModule,
+  LoginPageModule,
+  SignupPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPage,
+    SignupPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataHandlingProvider
+    AngularFireAuth,
+    DataHandlingProvider,
+    AuthentificationProvider
   ]
 })
 export class AppModule {}
