@@ -3,8 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
+import { User } from '../../model/user/user.model';
 
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
+import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 
 @Component({
 	selector: 'as-page-sign-up',
@@ -13,11 +15,15 @@ import { AuthentificationProvider } from '../../providers/authentification/authe
 export class SignupPage {
 	signupError: string;
 	form: FormGroup;
+	newUser: User = {
+		userid: ''
+	};
 
 	constructor(
-		fb: FormBuilder,
-    private navCtrl: NavController,
-    private auth: AuthentificationProvider
+		private fb: FormBuilder,
+    	private navCtrl: NavController,
+		private auth: AuthentificationProvider,
+		private db: DataHandlingProvider
 	) {
 		this.form = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -31,7 +37,8 @@ export class SignupPage {
 			email: data.email,
 			password: data.password
 		};
-		this.auth.signUp(credentials).then(
+		//then(user => {this.newUser.userid = user.user.uid}).then( () => this.db.createUser(this.newUser)).
+		this.auth.signUp(credentials).then(user => {this.newUser.userid = user.user.uid}).then( () => this.db.createUser(this.newUser)).then(
 			() => this.navCtrl.setRoot(HomePage),
 			error => this.signupError = error.message
 		);

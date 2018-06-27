@@ -1,6 +1,8 @@
 To Do:
 
 
+-wemer signup page ufmacht erstellt gad en user, wieso?
+-user zude datebanksache adde, sodass jede nur sini project/captures etc. gseht! Eifach no zuesätzlichs feld überall
 -ide datebank so mache: project->references/actions etc.
 -AddReferencePage: Wenn neus projekt erstellsch, sölls d capture gad dem projekt zueteile und denn uf homepage zrugg directe.
 -AddReferencePage: Projekt ahklickbar mache und denn teiltes dem projekt zueh und directed zrugg uf homepage. 
