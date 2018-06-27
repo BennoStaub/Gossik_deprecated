@@ -1,0 +1,38 @@
+<!--
+  Generated template for the AddReferencePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>AddReference</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item>
+    <ion-label stacked>Content to save as reference</ion-label><br>
+    <ion-textarea [(ngModel)]="capture.content" placeholder="capture.content"></ion-textarea>
+  </ion-item>
+
+  <ion-list>
+    <ion-list-header>
+      Assign to project
+    </ion-list-header>
+ 
+    <ion-item *ngFor="let project of projectList | async" detail-push navPush="ProcessCapturePage" [navParams]="{capture:capture}">
+      {{project.name}}
+    </ion-item>
+  </ion-list>
+  
+  <ion-item>
+    <ion-label stacked>Or create new project</ion-label><br>
+    <ion-textarea [(ngModel)]="newProject.name" placeholder="Project name"></ion-textarea>
+  </ion-item>
+  <button ion-button block clear (click)="addProject(newProject)">Create new project</button>
+</ion-content>

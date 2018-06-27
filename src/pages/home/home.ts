@@ -16,7 +16,7 @@ import { LoginPage } from '../login/login';
 export class HomePage {
 
   
-  captureList: Observable<Capture[]>
+  captureList: Observable<Capture[]>;
  
   constructor(
 		public navCtrl: NavController,

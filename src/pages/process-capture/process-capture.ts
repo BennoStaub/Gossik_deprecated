@@ -30,7 +30,7 @@ export class ProcessCapturePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProcessCapturePage');
+    console.log('ionViewDidLoad ProcessCapturePage with capture: ' + this.capture.content);
   }
   
   removeCapture(capture: Capture) {

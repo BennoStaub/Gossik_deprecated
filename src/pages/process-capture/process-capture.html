@@ -13,10 +13,10 @@
 
 <ion-content padding>
 <button ion-button block clear (click)="removeCapture(capture)">Remove without processing</button>
-<!--<button ion-button block clear detail-push navPush="AddReferencePage" [navParams]="{capture:capture}">Add as reference</button>-->
+<button ion-button block clear detail-push navPush="AddReferencePage" [navParams]="{capture:capture}">Add as reference</button>
 
   <ion-item>
-    <ion-label>Content</ion-label>
+    <ion-label stacked>Content</ion-label>
     <ion-textarea [(ngModel)]="capture.content" placeholder="Input new capture">asdf</ion-textarea>
   </ion-item>
   

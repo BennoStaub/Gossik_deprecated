@@ -2,17 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Capture } from '../../model/capture/capture.model';
+import { Project } from '../../model/project/project.model';
 
-/*
-  Generated class for the DataHandlingProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class DataHandlingProvider {
 
   private captureListRef = this.db.list<Capture>('capture');
+  private projectListRef = this.db.list<Project>('project');
  
     constructor(private db: AngularFireDatabase) { }
  
@@ -27,7 +24,12 @@ export class DataHandlingProvider {
 	removeCapture(capture: Capture) {
         return this.captureListRef.remove(capture.key);
 	}
-    /*updateNote(note: Note) {
-        return this.noteListRef.update(note.key, note);
-    }*/
+    
+    getProjectList() {
+        return this.projectListRef;
+    }
+
+    addProject(project: Project) {
+        return this.projectListRef.push(project);
+    }
 }
