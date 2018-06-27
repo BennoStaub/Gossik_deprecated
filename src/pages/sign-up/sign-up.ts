@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
-import { User } from '../../model/user/user.model';
 
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
@@ -15,9 +14,6 @@ import { DataHandlingProvider } from '../../providers/data-handling/data-handlin
 export class SignupPage {
 	signupError: string;
 	form: FormGroup;
-	newUser: User = {
-		userid: ''
-	};
 
 	constructor(
 		private fb: FormBuilder,
@@ -37,8 +33,8 @@ export class SignupPage {
 			email: data.email,
 			password: data.password
 		};
-		//then(user => {this.newUser.userid = user.user.uid}).then( () => this.db.createUser(this.newUser)).
-		this.auth.signUp(credentials).then(user => {this.newUser.userid = user.user.uid}).then( () => this.db.createUser(this.newUser)).then(
+		//this.auth.signUp(credentials).then(user => {this.newUser.userid = user.user.uid}).then( () => this.db.createUser(this.newUser)).then(
+		this.auth.signUp(credentials).then(user =>  {this.db.createUser(user.user.uid, user.user.email)}).then(
 			() => this.navCtrl.setRoot(HomePage),
 			error => this.signupError = error.message
 		);
