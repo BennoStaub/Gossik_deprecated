@@ -5,8 +5,11 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthentificationProvider {
 	private user: firebase.User;
+	private test: string;
 
-	constructor(public afAuth: AngularFireAuth) {
+	constructor(
+		public afAuth: AngularFireAuth
+	) {
 		afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
@@ -26,5 +29,10 @@ export class AuthentificationProvider {
 		console.log('Sign out');
 		return this.afAuth.auth.signOut();
 	  }
+
+
+	get checkLoggedIn() {
+		return this.user !== null;
+	}
 
 }

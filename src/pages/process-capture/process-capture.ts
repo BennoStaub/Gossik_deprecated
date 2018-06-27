@@ -4,6 +4,8 @@ import { Capture } from '../../model/capture/capture.model';
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 
 import { HomePage } from '../home/home';
+import { AuthentificationProvider } from '../../providers/authentification/authentification';
+import { LoginPage } from '../login/login';
 
 
 @IonicPage()
@@ -16,9 +18,14 @@ export class ProcessCapturePage {
   capture: Capture;
 
   constructor(
-	public navCtrl: NavController,
-	public navParams: NavParams,
-	private dataHandlingProvider: DataHandlingProvider) {
+	  public navCtrl: NavController,
+	  public navParams: NavParams,
+    private dataHandlingProvider: DataHandlingProvider,
+    private auth: AuthentificationProvider
+) {
+    if(!this.auth.checkLoggedIn) {
+			this.navCtrl.setRoot(LoginPage);
+		}
     this.capture = this.navParams.get('capture');
   }
 

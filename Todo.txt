@@ -1,7 +1,9 @@
 To Do:
 
+-Uf jedere site überprüefe ob user ihgloggt!
 -AddReferencePage erstelle (nachher chasch uf processpage de button usklammere, es git en fehler solang d site nonig erstellt isch), wo d capture amene projekt zueteilsch oder es projekt erstellsch und dem zueteilsch
 -ProcessCapturePage witermache dass zersch amene projekt zueteilsch oder eis erstellsch und dem zueteilsch und nachher negst aktion definiere und denn speichere
 -next aktion eh zit und priorität zueteile
 -next aktion liste mache sortiert nach zit und priorität
 -aktionssite wod seisch wie viel zit du hesch und den suechts dir 3 top-priorität aktione us und zeigts dir
+-forgot password implementiere
