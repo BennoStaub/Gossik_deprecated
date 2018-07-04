@@ -16,7 +16,7 @@ export class SignupPage {
 	form: FormGroup;
 
 	constructor(
-		private fb: FormBuilder,
+		fb: FormBuilder,
     	private navCtrl: NavController,
 		private auth: AuthentificationProvider,
 		private db: DataHandlingProvider
@@ -25,15 +25,14 @@ export class SignupPage {
 			email: ['', Validators.compose([Validators.required, Validators.email])],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
 		});
-  }
+  	}
 
-  signup() {
+  	signup() {
 		let data = this.form.value;
 		let credentials = {
 			email: data.email,
 			password: data.password
 		};
-		//this.auth.signUp(credentials).then(user => {this.newUser.userid = user.user.uid}).then( () => this.db.createUser(this.newUser)).then(
 		this.auth.signUp(credentials).then(user =>  {this.db.createUser(user.user.uid, user.user.email)}).then(
 			() => this.navCtrl.setRoot(HomePage),
 			error => this.signupError = error.message
