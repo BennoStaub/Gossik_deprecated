@@ -1,5 +1,5 @@
 To Do:
-
+-done: zeigt nurno captures vom aktuelle user ah, etz no überall sus dezue tueh (eifach ali funktione vom data handler mit userid ufrüef und verknüpfe)
 -user überall adde, sodass jede nur sini project/captures etc. gseht! Eifach no zuesätzlichs feld überall
 -ide datebank so mache: project->references/actions etc.
 -AddReferencePage: Wenn neus projekt erstellsch, sölls d capture gad dem projekt zueteile und denn uf homepage zrugg directe.

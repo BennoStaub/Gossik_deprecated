@@ -7,11 +7,9 @@ import { User } from '../../model/user/user.model';
 
 @Injectable()
 export class DataHandlingProvider {
-
-  private captureListRef = this.db.list<Capture>('capture');
+  private captureListRef : any;//this.db.list<Capture>('/capture', ref => ref.orderByChild('userid'));
   private projectListRef = this.db.list<Project>('project');
   userData: User = {
-      userid: '',
       email: ''
   };
  
@@ -19,13 +17,12 @@ export class DataHandlingProvider {
     
     createUser(userid, email) {
         console.log('create user with id ' + userid);
-        this.userData.userid = userid;
         this.userData.email = email;
         return this.db.list('users').set(userid, this.userData); 
     }
 
-    getCaptureList() {
-        return this.captureListRef;
+    getCaptureList(userid) {
+        return this.db.list('/capture', ref => ref.orderByChild('userid').equalTo(userid));
     }
  
     addCapture(capture: Capture) {

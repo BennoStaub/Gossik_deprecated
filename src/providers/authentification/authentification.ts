@@ -34,4 +34,8 @@ export class AuthentificationProvider {
 		return this.user !== null;
 	}
 
+	get userid() {
+		return this.user.uid;
+	}
+
 }

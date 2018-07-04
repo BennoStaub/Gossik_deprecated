@@ -20,20 +20,20 @@ export class HomePage {
  
   constructor(
 		public navCtrl: NavController,
-		private dataHandlingProvider: DataHandlingProvider,
-		private auth: AuthentificationProvider
+		private auth: AuthentificationProvider,
+		private db: DataHandlingProvider
 	) {
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
 		}
-	  this.captureList = this.dataHandlingProvider.getCaptureList()
+	  this.captureList = this.db.getCaptureList(this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
 		return changes.map(c => ({
 		  key: c.payload.key, ...c.payload.val()
 		}))
-	  });
+		});
   }
  
 }
