@@ -1,4 +1,4 @@
-export interface Project {
+export interface Goal {
     key?: string;
     userid: string;
     name: string;
