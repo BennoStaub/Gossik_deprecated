@@ -48,7 +48,7 @@ export class AddReferencePage {
   addProject(projectname) {
     this.newProject.userid = this.auth.userid;
     this.newProject.name = projectname;
-    this.db.addProject(this.newProject);
+    this.db.addProject(this.newProject).then( ref => this.addToProject(ref));
   }
 
   addToProject(project){
