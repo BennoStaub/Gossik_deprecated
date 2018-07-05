@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 import { Capture } from '../../model/capture/capture.model';
-import { Project } from '../../model/project/project.model';
+import { Goal } from '../../model/goal/goal.model';
 import { LoginPage } from '../login/login';
 import { Observable } from 'rxjs/Observable';
 import { HomePage } from '../home/home';
@@ -17,9 +17,9 @@ import { HomePage } from '../home/home';
 export class AddReferencePage {
 
   capture: Capture;
-  projectList: Observable<Project[]>;
-  newProject = {} as Project;
-  projectname: string;
+  goalList: Observable<Goal[]>;
+  newGoal = {} as Goal;
+  goalname: string;
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +31,7 @@ export class AddReferencePage {
 			this.navCtrl.setRoot(LoginPage);
 		}
     this.capture = this.navParams.get('capture');
-    this.projectList = this.db.getProjectList(this.auth.userid)
+    this.goalList = this.db.getGoalList(this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
@@ -45,14 +45,14 @@ export class AddReferencePage {
     console.log('ionViewDidLoad AddReferencePage with capture: ' + this.capture.content);
   }
 
-  addProject(projectname) {
-    this.newProject.userid = this.auth.userid;
-    this.newProject.name = projectname;
-    this.db.addProject(this.newProject).then( ref => this.addToProject(ref));
+  addGoal(goalname) {
+    this.newGoal.userid = this.auth.userid;
+    this.newGoal.name = goalname;
+    this.db.addGoal(this.newGoal).then( ref => this.addToGoal(ref));
   }
 
-  addToProject(project){
-    this.db.addReferenceToProject(this.capture, project).then( () => this.db.removeCapture(this.capture)).then( () => this.navCtrl.setRoot(HomePage));
+  addToGoal(project){
+    this.db.addReferenceToGoal(this.capture, project).then( () => this.db.removeCapture(this.capture)).then( () => this.navCtrl.setRoot(HomePage));
   }
 
 }

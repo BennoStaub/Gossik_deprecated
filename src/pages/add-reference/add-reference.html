@@ -22,17 +22,17 @@
 
   <ion-list>
     <ion-list-header>
-      Assign to project
+      Assign to goal
     </ion-list-header>
  
-    <ion-item *ngFor="let project of projectList | async" (click)="addToProject(project)">
-      {{project.name}}
+    <ion-item *ngFor="let goal of goalList | async" (click)="addToGoal(goal)">
+      {{goal.name}}
     </ion-item>
   </ion-list>
   
   <ion-item>
-    <ion-label stacked>Or create new project</ion-label><br>
-    <ion-textarea [(ngModel)]="projectname" placeholder="Project name"></ion-textarea>
+    <ion-label stacked>Or create new goal</ion-label><br>
+    <ion-textarea [(ngModel)]="goalname" placeholder="Goal name"></ion-textarea>
   </ion-item>
-  <button ion-button block clear (click)="addProject(projectname)">Create new project</button>
+  <button ion-button block clear (click)="addGoal(goalname)">Create new goal</button>
 </ion-content>

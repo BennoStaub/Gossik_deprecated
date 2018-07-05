@@ -1,7 +1,5 @@
 To Do:
 -ersetz project dur goal
--AddReferencePage: Wenn neus projekt erstellsch, sölls d capture gad dem projekt zueteile und denn uf homepage zrugg directe.
--AddReferencePage: Projekt ahklickbar mache und denn teiltes dem projekt zueh und directed zrugg uf homepage. 
 -ProcessCapturePage witermache dass zersch amene projekt zueteilsch oder eis erstellsch und dem zueteilsch und nachher negst aktion definiere und denn speichere
 -next aktion eh zit und priorität zueteile
 -next aktion liste mache sortiert nach zit und priorität

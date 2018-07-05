@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Capture } from '../../model/capture/capture.model';
-import { Project } from '../../model/project/project.model';
+import { Goal } from '../../model/goal/goal.model';
 import { User } from '../../model/user/user.model';
 
 
@@ -18,6 +18,7 @@ export class DataHandlingProvider {
     }
 
     getCaptureList(userid) {
+        console.log('get capturelist')
         return this.db.list('/captures', ref => ref.orderByChild('userid').equalTo(userid));
     }
  
@@ -29,15 +30,15 @@ export class DataHandlingProvider {
         return this.db.list('/captures').remove(capture.key);
 	}
     
-    getProjectList(userid) {
-        return this.db.list('/projects', ref => ref.orderByChild('userid').equalTo(userid));
+    getGoalList(userid) {
+        return this.db.list('/goals', ref => ref.orderByChild('userid').equalTo(userid));
     }
 
-    addProject(project: Project) {
-        return this.db.list('/projects').push(project);
+    addGoal(goal: Goal) {
+        return this.db.list('/goals').push(goal);
     }
 
-    addReferenceToProject(reference, project){
-        return this.db.list('/projects/' + project.key + '/references').push(reference.content);
+    addReferenceToGoal(reference, goal){
+        return this.db.list('/goals/' + goal.key + '/references').push(reference.content);
     }
 }

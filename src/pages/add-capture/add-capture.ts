@@ -14,10 +14,7 @@ import { LoginPage } from '../login/login';
 })
 export class AddCapturePage {
  
-  capture: Capture = {
-    userid: '',
-    content: ''
-  };
+  capture = {} as Capture;
  
   constructor(
     public navCtrl: NavController,
