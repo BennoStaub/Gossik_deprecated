@@ -25,14 +25,14 @@
       Assign to project
     </ion-list-header>
  
-    <ion-item *ngFor="let project of projectList | async" detail-push navPush="ProcessCapturePage" [navParams]="{capture:capture}">
+    <ion-item *ngFor="let project of projectList | async" (click)="addToProject(project)">
       {{project.name}}
     </ion-item>
   </ion-list>
   
   <ion-item>
     <ion-label stacked>Or create new project</ion-label><br>
-    <ion-textarea [(ngModel)]="newProject.name" placeholder="Project name"></ion-textarea>
+    <ion-textarea [(ngModel)]="projectname" placeholder="Project name"></ion-textarea>
   </ion-item>
-  <button ion-button block clear (click)="addProject(newProject)">Create new project</button>
+  <button ion-button block clear (click)="addProject(projectname)">Create new project</button>
 </ion-content>

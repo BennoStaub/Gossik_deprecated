@@ -15,6 +15,7 @@ import { LoginPage } from '../login/login';
 export class AddCapturePage {
  
   capture: Capture = {
+    userid: '',
     content: ''
   };
  
@@ -27,6 +28,7 @@ export class AddCapturePage {
       if(!this.auth.checkLoggedIn) {
         this.navCtrl.setRoot(LoginPage);
       }
+      this.capture.userid = this.auth.userid;
   }
  
   ionViewDidLoad() {

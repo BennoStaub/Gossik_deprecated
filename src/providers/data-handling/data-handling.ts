@@ -7,11 +7,7 @@ import { User } from '../../model/user/user.model';
 
 @Injectable()
 export class DataHandlingProvider {
-  private captureListRef : any;//this.db.list<Capture>('/capture', ref => ref.orderByChild('userid'));
-  private projectListRef = this.db.list<Project>('project');
-  userData: User = {
-      email: ''
-  };
+    userData = {} as User;
  
     constructor(private db: AngularFireDatabase) { }
     
@@ -22,22 +18,26 @@ export class DataHandlingProvider {
     }
 
     getCaptureList(userid) {
-        return this.db.list('/capture', ref => ref.orderByChild('userid').equalTo(userid));
+        return this.db.list('/captures', ref => ref.orderByChild('userid').equalTo(userid));
     }
  
     addCapture(capture: Capture) {
-        return this.captureListRef.push(capture);
+        return this.db.list('/captures').push(capture);
     }
 	
 	removeCapture(capture: Capture) {
-        return this.captureListRef.remove(capture.key);
+        return this.db.list('/captures').remove(capture.key);
 	}
     
-    getProjectList() {
-        return this.projectListRef;
+    getProjectList(userid) {
+        return this.db.list('/projects', ref => ref.orderByChild('userid').equalTo(userid));
     }
 
     addProject(project: Project) {
-        return this.projectListRef.push(project);
+        return this.db.list('/projects').push(project);
+    }
+
+    addReferenceToProject(reference, project){
+        return this.db.list('/projects/' + project.key + '/references').push(reference.content);
     }
 }
