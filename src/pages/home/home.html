@@ -18,15 +18,9 @@
 		<button navPush="AddCapturePage" ion-button round>Add new capture</button>
 	</ion-col>
   </ion-row>
-  
-<ion-content padding>
-  
+  <br>Process captures <br>
   <ion-list>
-    <ion-list-header>
-      Captured
-    </ion-list-header>
- 
-    <ion-item *ngFor="let capture of captureList | async" detail-push navPush="ProcessCapturePage" [navParams]="{capture:capture}">
+    <ion-item *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
       {{capture.content}}
     </ion-item>
   </ion-list>

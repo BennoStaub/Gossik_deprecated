@@ -11,13 +11,40 @@
 </ion-header>
 
 
-<ion-content padding>
-<button ion-button block clear (click)="removeCapture(capture)">Remove without processing</button>
-<button ion-button block clear detail-push navPush="AddReferencePage" [navParams]="{capture:capture}">Add as reference</button>
+<ion-content padding >
 
-  <ion-item>
-    <ion-label stacked>Content</ion-label>
-    <ion-textarea [(ngModel)]="capture.content" placeholder="Input new capture">asdf</ion-textarea>
-  </ion-item>
-  
+  <div *ngIf="processCtrl == 'start'">
+  <p>{{capture.content}}</p>
+  <br>
+  <p>Remove this capture without processing?</p>
+  <div class="buttons-flex-container">
+  <button class="button-left" ion-button round (click)="removeCapture(capture)">Yes</button>
+  <button class="button-right" ion-button round (click)="processCapture()">No</button>
+  </div>
+  <button ion-button block clear detail-push navPush="AddReferencePage" [navParams]="{capture:capture}">Add as reference</button>
+  </div>
+
+  <div *ngIf="processCtrl == 'chooseGoal'">
+    <ion-list>
+        <ion-list-header>
+          Assign to goal
+        </ion-list-header>
+     
+        <ion-item *ngFor="let goal of goalList | async" (click)="addToGoal(goal)">
+          {{goal.name}}
+        </ion-item>
+      </ion-list>
+      
+      <ion-item>
+        <ion-label stacked>Or create new goal</ion-label><br>
+        <ion-textarea [(ngModel)]="goalname" placeholder="Goal name"></ion-textarea>
+      </ion-item>
+      <button ion-button block clear (click)="addGoal(goalname)">Create new goal</button>
+  </div>
+
+  <div *ngIf="processCtrl == 'reviewGoal'">
+    Reviewing Goal {{assignedGoal.name}}
+    <ion-item *ngFor="let reference of referenceList | async">{{reference.content}}</ion-item>
+
+  </div>
 </ion-content>

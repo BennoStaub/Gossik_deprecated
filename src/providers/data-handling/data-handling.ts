@@ -3,6 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Capture } from '../../model/capture/capture.model';
 import { Goal } from '../../model/goal/goal.model';
 import { User } from '../../model/user/user.model';
+import { Reference } from '../../model/reference/reference.model';
 
 
 @Injectable()
@@ -36,6 +37,10 @@ export class DataHandlingProvider {
 
     addGoal(goal: Goal) {
         return this.db.list('/goals').push(goal);
+    }
+
+    getReferenceListFromGoal(goalid) {
+        return this.db.list('/goals/' + goalid + '/references')
     }
 
     addReferenceToGoal(reference, goal){
