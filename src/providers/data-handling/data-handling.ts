@@ -19,7 +19,6 @@ export class DataHandlingProvider {
     }
 
     getCaptureList(userid) {
-        console.log('get capturelist')
         return this.db.list('/captures', ref => ref.orderByChild('userid').equalTo(userid));
     }
  
@@ -40,7 +39,15 @@ export class DataHandlingProvider {
     }
 
     getReferenceListFromGoal(goalid) {
-        return this.db.list('/goals/' + goalid + '/references')
+        return this.db.list('/goals/' + goalid + '/references');
+    }
+
+    getNextActionListFromGoal(goalid) {
+        return this.db.list('/goals/' + goalid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(false));
+    }
+
+    getWaitingForListFromGoal(goalid) {
+        return this.db.list('/goals/' + goalid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(true));
     }
 
     addReferenceToGoal(reference, goal){

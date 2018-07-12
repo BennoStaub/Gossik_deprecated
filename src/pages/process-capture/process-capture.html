@@ -19,7 +19,7 @@
   <p>Remove this capture without processing?</p>
   <div class="buttons-flex-container">
   <button class="button-left" ion-button round (click)="removeCapture(capture)">Yes</button>
-  <button class="button-right" ion-button round (click)="processCapture()">No</button>
+  <button class="button-right" ion-button round (click)="goToProcessCapture()">No</button>
   </div>
   <button ion-button block clear detail-push navPush="AddReferencePage" [navParams]="{capture:capture}">Add as reference</button>
   </div>
@@ -43,8 +43,46 @@
   </div>
 
   <div *ngIf="processCtrl == 'reviewGoal'">
-    Reviewing Goal {{assignedGoal.name}}
+    Reviewing Goal: {{assignedGoal.name}}
+    <button ion-button block round (click)="nextActions()">Show next actions</button>
+    <div *ngIf="showNextActions">
+    <ion-item *ngFor="let action of nextActionList | async">{{action.content}}</ion-item>
+    </div>
+    <button ion-button block round (click)="waitingFors()">Show waiting fors</button>
+    <div *ngIf="showWaitingFors">
+    <ion-item *ngFor="let action of waitingForList | async">{{action.content}}</ion-item>
+    </div>
+    <button ion-button block round (click)="references()">Show references</button>
+    <div *ngIf="showReferences">
     <ion-item *ngFor="let reference of referenceList | async">{{reference.content}}</ion-item>
+    </div>
+    Is right now an action required from you for this capture?
+    <div class="buttons-flex-container">
+      <button class="button-left" ion-button round (click)="goToDefineAction()">Yes</button>
+      <button class="button-right" ion-button round (click)="goToDelegatingQuestion()">No</button>
+    </div>
+  </div>
 
+  <div *ngIf="processCtrl == 'defineAction'">
+    Defining new action:
+    <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
+    <form (ngSubmit)="defineAction()" [formGroup]="defineActionForm">
+      <ion-list inset>
+        <ion-item>
+          <ion-label block>Action</ion-label>
+          <ion-input type="text" placeholder="Action" formControlName="content"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Priority (0: low, 10: high)</ion-label>
+          <ion-input type="number" placeholder="0" min="0" max="10" formControlName="priority"></ion-input>
+        </ion-item>
+        <ion-item>
+            <div *ngIf="checkDeadline">
+                <ion-datetime displayFormat="HH:mm - D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline"></ion-datetime>
+            </div>
+        </ion-item>
+      </ion-list>
+      <button ion-button full type="submit">Define action</button>
+    </form>
   </div>
 </ion-content>
