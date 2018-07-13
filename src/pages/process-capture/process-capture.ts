@@ -34,6 +34,7 @@ export class ProcessCapturePage {
   defineActionForm: FormGroup;
   checkDeadline;
   deadline: string;
+  newAction = {} as Action;
 
   constructor(
 	  public navCtrl: NavController,
@@ -126,17 +127,23 @@ export class ProcessCapturePage {
       priority: ['', Validators.required],
       deadline: ['', Validators.required]
     });
-    // deadline for 12.aug.2018 17:09:00 is following: 2018-08-12T17:09:00Z
+    // deadline for 12.aug.2018 is following: 2018-08-12
   }
 
   defineAction() {
-    console.log(this.defineActionForm.value.content);
-    console.log(this.defineActionForm.value.deadline);
+    this.newAction.content = this.defineActionForm.value.content;
+    this.newAction.deadline = this.defineActionForm.value.deadline;
+    this.newAction.priority = this.defineActionForm.value.priority;
+    this.newAction.delegated = false;
+    this.newAction.goalid = this.assignedGoal.key;
+    this.newAction.userid = this.auth.userid;
+    this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture).then( () => this.navCtrl.setRoot(HomePage));
   }
 
   goToDelegatingQuestion() {
     this.processCtrl = 'delegatingQuestion';
   }
+
   //Adding reference to goal and remove capture then:
   //this.db.addReferenceToGoal(this.capture, project).then( () => this.db.removeCapture(this.capture)).then( () => this.navCtrl.setRoot(HomePage));
 }

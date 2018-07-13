@@ -65,9 +65,12 @@
 
   <div *ngIf="processCtrl == 'defineAction'">
     Defining new action:
-    <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
-    <form (ngSubmit)="defineAction()" [formGroup]="defineActionForm">
-      <ion-list inset>
+    <ion-list inset>
+      <ion-item>
+        <ion-label>Deadline required</ion-label>
+        <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
+      </ion-item>
+      <form (ngSubmit)="defineAction()" [formGroup]="defineActionForm">
         <ion-item>
           <ion-label block>Action</ion-label>
           <ion-input type="text" placeholder="Action" formControlName="content"></ion-input>
@@ -78,11 +81,11 @@
         </ion-item>
         <ion-item>
             <div *ngIf="checkDeadline">
-                <ion-datetime displayFormat="HH:mm - D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline"></ion-datetime>
+                <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline" max="2099-12-31"></ion-datetime>
             </div>
         </ion-item>
-      </ion-list>
-      <button ion-button full type="submit">Define action</button>
-    </form>
+        <button ion-button full type="submit">Define action</button>
+      </form>
+    </ion-list>
   </div>
 </ion-content>

@@ -1,7 +1,7 @@
 To Do:
 -ProcessCapturePage witermache:
-    -ReviewGoal: alli references/next actions/waiting for etc. ahluege chöne: drufklicke denn expandiert eh liste mit allne (nöd uf neui site oder so, sus muesch wieder zrugg und so)
-    -nachher une aktion required?
+    -bim deadline ihgeh chuntmer nöd druss welles rad für was isch
+    -wemer submitted sölls action erstelle ide db
 -next aktion eh zit und priorität zueteile
 -next aktion liste mache sortiert nach zit und priorität
 -aktionssite wod seisch wie viel zit du hesch und den suechts dir 3 top-priorität aktione us und zeigts dir

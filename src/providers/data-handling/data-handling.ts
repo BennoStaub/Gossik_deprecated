@@ -3,7 +3,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Capture } from '../../model/capture/capture.model';
 import { Goal } from '../../model/goal/goal.model';
 import { User } from '../../model/user/user.model';
-import { Reference } from '../../model/reference/reference.model';
 
 
 @Injectable()
@@ -48,6 +47,10 @@ export class DataHandlingProvider {
 
     getWaitingForListFromGoal(goalid) {
         return this.db.list('/goals/' + goalid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(true));
+    }
+
+    addNextActionToGoal(action, goal, capture) {
+        return this.db.list('/goals/' + goal.key + '/nextActions').push(action).then( () => this.removeCapture(capture));
     }
 
     addReferenceToGoal(reference, goal){
