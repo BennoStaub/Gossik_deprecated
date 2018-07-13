@@ -18,4 +18,12 @@ page-process-capture {
         order: 2;
     }
 
+    .centered-block-container {
+        display: flex;
+        justify-content: center;
+    }
+    .centered-block-container>.centered-block {
+        order:  1;
+    }
+
 }

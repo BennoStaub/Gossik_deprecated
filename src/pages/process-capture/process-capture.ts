@@ -31,10 +31,13 @@ export class ProcessCapturePage {
   showNextActions: boolean = false;
   showWaitingFors: boolean = false;
   showReferences: boolean = false;
-  defineActionForm: FormGroup;
+  defineOwnActionForm: FormGroup;
+  defineDelegatedActionForm: FormGroup;
+  defineReferenceForm: FormGroup;
   checkDeadline;
   deadline: string;
   newAction = {} as Action;
+  newReference = {} as Reference;
 
   constructor(
 	  public navCtrl: NavController,
@@ -63,7 +66,7 @@ export class ProcessCapturePage {
   }
   
   removeCapture(capture: Capture) {
-    this.dataHandlingProvider.removeCapture(capture).then(ref => {
+    this.dataHandlingProvider.removeCapture(capture, this.auth.userid).then(ref => {
       this.navCtrl.setRoot(HomePage);
     })
   }
@@ -75,7 +78,7 @@ export class ProcessCapturePage {
   addGoal(goalname) {
     this.newGoal.userid = this.auth.userid;
     this.newGoal.name = goalname;
-    this.db.addGoal(this.newGoal).then( ref => this.addToGoal(ref));
+    this.db.addGoal(this.newGoal, this.auth.userid);
   }
 
   addToGoal(goal){
@@ -120,30 +123,64 @@ export class ProcessCapturePage {
     this.showReferences = !this.showReferences;
   }
 
-  goToDefineAction(){
-    this.processCtrl = 'defineAction';
-    this.defineActionForm = this.fb.group({
+  goToDefineOwnAction(){
+    this.processCtrl = 'defineOwnAction';
+    this.defineOwnActionForm = this.fb.group({
 			content: ['', Validators.required],
       priority: ['', Validators.required],
       deadline: ['', Validators.required]
     });
-    // deadline for 12.aug.2018 is following: 2018-08-12
   }
 
-  defineAction() {
-    this.newAction.content = this.defineActionForm.value.content;
-    this.newAction.deadline = this.defineActionForm.value.deadline;
-    this.newAction.priority = this.defineActionForm.value.priority;
+  defineOwnAction() {
+    this.newAction.content = this.defineOwnActionForm.value.content;
+    this.newAction.deadline = this.defineOwnActionForm.value.deadline;
+    this.newAction.priority = this.defineOwnActionForm.value.priority;
     this.newAction.delegated = false;
     this.newAction.goalid = this.assignedGoal.key;
     this.newAction.userid = this.auth.userid;
-    this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture).then( () => this.navCtrl.setRoot(HomePage));
+    this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+      this.navCtrl.setRoot(HomePage);
+    });
   }
 
-  goToDelegatingQuestion() {
-    this.processCtrl = 'delegatingQuestion';
+  goToDelegatedActionQuestion() {
+    this.processCtrl = 'askDelegatedAction';
   }
 
-  //Adding reference to goal and remove capture then:
-  //this.db.addReferenceToGoal(this.capture, project).then( () => this.db.removeCapture(this.capture)).then( () => this.navCtrl.setRoot(HomePage));
+  goToDefineDelegatedAction() {
+    this.processCtrl = 'defineDelegatedAction';
+    this.defineDelegatedActionForm = this.fb.group({
+			content: ['', Validators.required],
+      priority: ['', Validators.required],
+      deadline: ['', Validators.required]
+    });
+  }
+
+  defineDelegatedAction() {
+    this.newAction.content = this.defineDelegatedActionForm.value.content;
+    this.newAction.deadline = this.defineDelegatedActionForm.value.deadline;
+    this.newAction.delegated = true;
+    this.newAction.goalid = this.assignedGoal.key;
+    this.newAction.userid = this.auth.userid;
+    this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+      this.navCtrl.setRoot(HomePage);
+    });
+  }
+
+  goToAddReference() {
+    this.processCtrl = 'defineReference';
+    this.defineReferenceForm = this.fb.group({
+			content: ['', Validators.required]
+    });
+  }
+  addReference() {
+    this.newReference.content = this.defineReferenceForm.value.content;
+    this.newReference.goalid = this.assignedGoal.key;
+    this.newReference.userid = this.auth.userid;
+    this.db.addReferenceToGoal(this.newReference, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+      this.navCtrl.setRoot(HomePage);
+    });
+  }
+
 }

@@ -11,17 +11,22 @@
 </ion-header>
 
 
-<ion-content padding >
+<ion-content padding>
+
+  <div class="centered-block-container">
+    <div class="centered-block">
+      <font face="courier new">
+        <p>"{{capture.content}}"</p>
+      </font>
+    </div>
+  </div>
 
   <div *ngIf="processCtrl == 'start'">
-  <p>{{capture.content}}</p>
-  <br>
-  <p>Remove this capture without processing?</p>
-  <div class="buttons-flex-container">
-  <button class="button-left" ion-button round (click)="removeCapture(capture)">Yes</button>
-  <button class="button-right" ion-button round (click)="goToProcessCapture()">No</button>
-  </div>
-  <button ion-button block clear detail-push navPush="AddReferencePage" [navParams]="{capture:capture}">Add as reference</button>
+    <p>Remove this capture without processing?</p>
+    <div class="buttons-flex-container">
+      <button class="button-left" ion-button round (click)="removeCapture(capture)">Yes</button>
+      <button class="button-right" ion-button round (click)="goToProcessCapture()">No</button>
+    </div>
   </div>
 
   <div *ngIf="processCtrl == 'chooseGoal'">
@@ -58,19 +63,19 @@
     </div>
     Is right now an action required from you for this capture?
     <div class="buttons-flex-container">
-      <button class="button-left" ion-button round (click)="goToDefineAction()">Yes</button>
-      <button class="button-right" ion-button round (click)="goToDelegatingQuestion()">No</button>
+      <button class="button-left" ion-button round (click)="goToDefineOwnAction()">Yes</button>
+      <button class="button-right" ion-button round (click)="goToDelegatedActionQuestion()">No</button>
     </div>
   </div>
 
-  <div *ngIf="processCtrl == 'defineAction'">
+  <div *ngIf="processCtrl == 'defineOwnAction'">
     Defining new action:
     <ion-list inset>
       <ion-item>
-        <ion-label>Deadline required</ion-label>
+        <ion-label>Deadline required?</ion-label>
         <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
       </ion-item>
-      <form (ngSubmit)="defineAction()" [formGroup]="defineActionForm">
+      <form (ngSubmit)="defineOwnAction()" [formGroup]="defineOwnActionForm">
         <ion-item>
           <ion-label block>Action</ion-label>
           <ion-input type="text" placeholder="Action" formControlName="content"></ion-input>
@@ -85,6 +90,47 @@
             </div>
         </ion-item>
         <button ion-button full type="submit">Define action</button>
+      </form>
+    </ion-list>
+  </div>
+
+  <div *ngIf="processCtrl == 'askDelegatedAction'">
+      Is right now an action required from someone else for this capture?
+      <div class="buttons-flex-container">
+        <button class="button-left" ion-button round (click)="goToDefineDelegatedAction()">Yes</button>
+        <button class="button-right" ion-button round (click)="goToAddReference()">No</button>
+      </div>
+  </div>
+
+  <div *ngIf="processCtrl == 'defineDelegatedAction'">
+      Defining new waiting for:
+      <ion-list inset>
+        <ion-item>
+          <ion-label>Deadline required?</ion-label>
+          <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
+        </ion-item>
+        <form (ngSubmit)="defineDelegatedAction()" [formGroup]="defineDelegatedActionForm">
+          <ion-item>
+            <ion-input type="text" placeholder="Waiting for" formControlName="content"></ion-input>
+          </ion-item>
+          <ion-item>
+              <div *ngIf="checkDeadline">
+                  <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline" max="2099-12-31"></ion-datetime>
+              </div>
+          </ion-item>
+          <button ion-button full type="submit">Define action</button>
+        </form>
+      </ion-list>
+    </div>
+
+  <div *ngIf="processCtrl == 'defineReference'">
+    Defining new reference:
+    <ion-list inset>
+      <form (ngSubmit)="addReference()" [formGroup]="defineReferenceForm">
+        <ion-item>
+          <ion-input type="text" value="{{capture.content}}" formControlName="content"></ion-input>
+        </ion-item>
+        <button ion-button full type="submit">Define reference</button>
       </form>
     </ion-list>
   </div>

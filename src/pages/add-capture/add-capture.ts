@@ -19,7 +19,7 @@ export class AddCapturePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private dataHandlingProvider: DataHandlingProvider,
+    private db: DataHandlingProvider,
     private auth: AuthentificationProvider
   ) {
       if(!this.auth.checkLoggedIn) {
@@ -33,7 +33,7 @@ export class AddCapturePage {
   }
  
   addCapture(capture: Capture) {
-    this.dataHandlingProvider.addCapture(capture).then(ref => {
+    this.db.addCapture(capture, this.auth.userid).then(ref => {
       this.navCtrl.setRoot(HomePage);
     })
   }
