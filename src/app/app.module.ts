@@ -17,8 +17,6 @@ import { DataHandlingProvider } from '../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
 import { SignupPage } from '../pages/sign-up/sign-up';
 import { SignupPageModule } from '../pages/sign-up/sign-up.module';
-import { AddReferencePage } from '../pages/add-reference/add-reference';
-import { AddReferencePageModule } from '../pages/add-reference/add-reference.module';
 
 @NgModule({
   declarations: [
@@ -31,16 +29,14 @@ import { AddReferencePageModule } from '../pages/add-reference/add-reference.mod
 	AngularFireModule.initializeApp(firebaseConfig),
   AngularFireDatabaseModule,
   LoginPageModule,
-  SignupPageModule,
-  AddReferencePageModule
+  SignupPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     LoginPage,
-    SignupPage,
-    AddReferencePage
+    SignupPage
   ],
   providers: [
     StatusBar,

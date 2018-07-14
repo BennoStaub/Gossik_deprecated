@@ -15,6 +15,7 @@ import { LoginPage } from '../login/login';
 export class AddCapturePage {
  
   capture = {} as Capture;
+  errorMsg: string;
  
   constructor(
     public navCtrl: NavController,
@@ -33,9 +34,14 @@ export class AddCapturePage {
   }
  
   addCapture(capture: Capture) {
-    this.db.addCapture(capture, this.auth.userid).then(ref => {
-      this.navCtrl.setRoot(HomePage);
-    })
+    if(capture.content !== '' && capture.content !== null && capture.content !== undefined) {
+      this.errorMsg = "";
+      this.db.addCapture(capture, this.auth.userid).then(ref => {
+        this.navCtrl.setRoot(HomePage);
+      })
+    } else {
+      this.errorMsg = "You cannot save an empty capture.";
+    }
   }
  
 }

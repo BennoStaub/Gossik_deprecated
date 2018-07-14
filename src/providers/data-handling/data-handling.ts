@@ -3,6 +3,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Capture } from '../../model/capture/capture.model';
 import { Goal } from '../../model/goal/goal.model';
 import { User } from '../../model/user/user.model';
+import { Action } from '../../model/action/action.model';
+import { Reference } from '../../model/reference/reference.model';
 
 
 @Injectable()
@@ -21,11 +23,14 @@ export class DataHandlingProvider {
         return this.db.list('/captures', ref => ref.orderByChild('userid').equalTo(userid));
     }
  
-    addCapture(capture: Capture) {
-        return this.db.list('/captures').push(capture);
+    addCapture(capture: Capture, userid) {
+        return this.db.list('/captures').push(capture).then( ref => {
+            this.db.list('/users/' + userid + '/captures').set(ref.key, capture);
+        });
     }
 	
-	removeCapture(capture: Capture) {
+	removeCapture(capture: Capture, userid) {
+        this.db.list('/users/' + userid + '/captures').remove(capture.key);
         return this.db.list('/captures').remove(capture.key);
 	}
     
@@ -33,8 +38,10 @@ export class DataHandlingProvider {
         return this.db.list('/goals', ref => ref.orderByChild('userid').equalTo(userid));
     }
 
-    addGoal(goal: Goal) {
-        return this.db.list('/goals').push(goal);
+    addGoal(goal: Goal, userid) {
+        return this.db.list('/goals').push(goal).then( ref => {
+            this.db.list('/users/' + userid + '/goals').set(ref.key, goal);
+        });
     }
 
     getReferenceListFromGoal(goalid) {
@@ -49,11 +56,17 @@ export class DataHandlingProvider {
         return this.db.list('/goals/' + goalid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(true));
     }
 
-    addNextActionToGoal(action, goal, capture) {
-        return this.db.list('/goals/' + goal.key + '/nextActions').push(action).then( () => this.removeCapture(capture));
+    addNextActionToGoal(action: Action, goal: Goal, capture: Capture, userid) {
+        return this.db.list('/goals/' + goal.key + '/nextActions').push(action).then( ref => {
+            this.db.list('/nextActions').set(ref.key, action);
+            this.db.list('users/' + userid + '/nextActions').set(ref.key, action);
+        }).then( () => this.removeCapture(capture, userid));
     }
 
-    addReferenceToGoal(reference, goal){
-        return this.db.list('/goals/' + goal.key + '/references').push(reference.content);
+    addReferenceToGoal(reference: Reference, goal: Goal, capture: Capture, userid){
+        return this.db.list('/goals/' + goal.key + '/references').push(reference).then( ref => {
+            this.db.list('/references').set(ref.key, reference);
+            this.db.list('/users/' + userid + '/references').set(ref.key, reference);
+        }).then( () => this.removeCapture(capture, userid));
     }
 }

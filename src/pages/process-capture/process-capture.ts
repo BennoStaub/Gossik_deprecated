@@ -12,7 +12,6 @@ import { Goal } from '../../model/goal/goal.model';
 import { Reference } from '../../model/reference/reference.model';
 import { Action } from '../../model/action/action.model';
 
-
 @IonicPage()
 @Component({
   selector: 'page-process-capture',
@@ -38,6 +37,7 @@ export class ProcessCapturePage {
   deadline: string;
   newAction = {} as Action;
   newReference = {} as Reference;
+  errorMsg: string;
 
   constructor(
 	  public navCtrl: NavController,
@@ -76,9 +76,15 @@ export class ProcessCapturePage {
   }
 
   addGoal(goalname) {
-    this.newGoal.userid = this.auth.userid;
-    this.newGoal.name = goalname;
-    this.db.addGoal(this.newGoal, this.auth.userid);
+    if(goalname !== '' && goalname !== null && goalname !== undefined) {
+      this.newGoal.userid = this.auth.userid;
+      this.newGoal.name = goalname;
+      goalname = '';
+      this.db.addGoal(this.newGoal, this.auth.userid);
+      this.errorMsg = "";
+    } else {
+      this.errorMsg = "You cannot create a goal without a name.";
+    }
   }
 
   addToGoal(goal){
@@ -133,15 +139,36 @@ export class ProcessCapturePage {
   }
 
   defineOwnAction() {
+    this.errorMsg = "";
     this.newAction.content = this.defineOwnActionForm.value.content;
     this.newAction.deadline = this.defineOwnActionForm.value.deadline;
     this.newAction.priority = this.defineOwnActionForm.value.priority;
     this.newAction.delegated = false;
     this.newAction.goalid = this.assignedGoal.key;
     this.newAction.userid = this.auth.userid;
-    this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
-      this.navCtrl.setRoot(HomePage);
-    });
+    if(this.newAction.content !== '' && this.newAction.content !== null && this.newAction.content !== undefined) {
+      if(this.newAction.priority !== '' && this.newAction.priority !== null && this.newAction.priority !== undefined) {
+        if(this.checkDeadline === true) {
+            if(this.newAction.deadline !== '' && this.newAction.deadline !== null && this.newAction.deadline !== undefined) {
+              this.errorMsg = "";
+              this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+              this.navCtrl.setRoot(HomePage);
+              });
+            } else {
+              this.errorMsg = "Please define a deadline or deselct the deadline checkbox.";
+            }
+          } else {
+            this.errorMsg = "";
+            this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+            this.navCtrl.setRoot(HomePage);
+            });
+          }
+      } else {
+        this.errorMsg = "Please define a priority.";
+      }
+    } else {
+      this.errorMsg = "Please define an action.";
+    }
   }
 
   goToDelegatedActionQuestion() {
@@ -163,9 +190,25 @@ export class ProcessCapturePage {
     this.newAction.delegated = true;
     this.newAction.goalid = this.assignedGoal.key;
     this.newAction.userid = this.auth.userid;
-    this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
-      this.navCtrl.setRoot(HomePage);
-    });
+    if(this.newAction.content !== '' && this.newAction.content !== null && this.newAction.content !== undefined) {
+      if(this.checkDeadline === true) {
+        if(this.newAction.deadline !== '' && this.newAction.deadline !== null && this.newAction.deadline !== undefined) {
+          this.errorMsg = "";
+          this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+          this.navCtrl.setRoot(HomePage);
+          });
+        } else {
+          this.errorMsg = "Please define a deadline or deselct the deadline checkbox.";
+        }
+      } else {
+        this.errorMsg = "";
+        this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+        this.navCtrl.setRoot(HomePage);
+        });
+      }
+    } else {
+      this.errorMsg = "Please define a waiting for.";
+    }
   }
 
   goToAddReference() {
@@ -178,9 +221,14 @@ export class ProcessCapturePage {
     this.newReference.content = this.defineReferenceForm.value.content;
     this.newReference.goalid = this.assignedGoal.key;
     this.newReference.userid = this.auth.userid;
-    this.db.addReferenceToGoal(this.newReference, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+    if(this.newReference.content !== '' && this.newReference.content !== null && this.newReference.content !== undefined) {
+      this.errorMsg = "";
+      this.db.addReferenceToGoal(this.newReference, this.assignedGoal, this.capture, this.auth.userid).then( () => {
       this.navCtrl.setRoot(HomePage);
-    });
+      });
+    } else {
+      this.errorMsg = "Please define what you want to save as reference.";
+    }
   }
 
 }
