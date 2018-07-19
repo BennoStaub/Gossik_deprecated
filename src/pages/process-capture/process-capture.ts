@@ -134,7 +134,8 @@ export class ProcessCapturePage {
     this.defineOwnActionForm = this.fb.group({
 			content: ['', Validators.required],
       priority: ['', Validators.required],
-      deadline: ['', Validators.required]
+      deadline: ['', Validators.required],
+      time: ['', Validators.required]
     });
   }
 
@@ -143,12 +144,14 @@ export class ProcessCapturePage {
     this.newAction.content = this.defineOwnActionForm.value.content;
     this.newAction.deadline = this.defineOwnActionForm.value.deadline;
     this.newAction.priority = this.defineOwnActionForm.value.priority;
+    this.newAction.time = this.defineOwnActionForm.value.time;
     this.newAction.delegated = false;
     this.newAction.goalid = this.assignedGoal.key;
     this.newAction.userid = this.auth.userid;
     if(this.newAction.content !== '' && this.newAction.content !== null && this.newAction.content !== undefined) {
       if(this.newAction.priority !== '' && this.newAction.priority !== null && this.newAction.priority !== undefined) {
-        if(this.checkDeadline === true) {
+        if(this.newAction.time !== '' && this.newAction.time !== null && this.newAction.time !== undefined) {
+          if(this.checkDeadline === true) {
             if(this.newAction.deadline !== '' && this.newAction.deadline !== null && this.newAction.deadline !== undefined) {
               this.errorMsg = "";
               this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
@@ -163,6 +166,9 @@ export class ProcessCapturePage {
             this.navCtrl.setRoot(HomePage);
             });
           }
+        } else {
+          this.errorMsg = "Please define a valid time estimate for this action";
+        }
       } else {
         this.errorMsg = "Please define a priority.";
       }

@@ -8,4 +8,5 @@ export interface Action {
     content: string;
     priority: string;
     deadline: string;
+    time: string;
 }

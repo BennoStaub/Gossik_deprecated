@@ -1,13 +1,12 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Gossik</ion-title>
+    <ion-buttons end>
+      <button ion-button menuToggle edge>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
-  <button ion-button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  
 </ion-header>
 
 
@@ -71,7 +70,7 @@
   </div>
 
   <div *ngIf="processCtrl == 'defineOwnAction'">
-    Defining new action:
+    Defining new action
     <ion-list inset>
       <ion-item>
         <ion-label>Deadline required?</ion-label>
@@ -79,12 +78,15 @@
       </ion-item>
       <form (ngSubmit)="defineOwnAction()" [formGroup]="defineOwnActionForm">
         <ion-item>
-          <ion-label block>Action</ion-label>
           <ion-input type="text" placeholder="Action" formControlName="content"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Priority (0: low, 10: high)</ion-label>
-          <ion-input type="number" placeholder="0" min="0" max="10" formControlName="priority"></ion-input>
+          <ion-label>Priority (0: low, 10: high):</ion-label>
+          <ion-input type="number" placeholder="0" min="0" max="10" formControlName="priority" value="0"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label block>Estimated time in min:</ion-label>
+            <ion-input type="number" placeholder="Time" min="0" max="1000" formControlName="time" value="0"></ion-input>
         </ion-item>
         <ion-item>
             <div *ngIf="checkDeadline">
@@ -120,7 +122,7 @@
                   <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline" max="2099-12-31"></ion-datetime>
               </div>
           </ion-item>
-          <button ion-button full type="submit">Define action</button>
+          <button ion-button full type="submit">Define waiting for</button>
         </form>
       </ion-list>
     </div>
