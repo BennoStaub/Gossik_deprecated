@@ -29,9 +29,16 @@ export class DataHandlingProvider {
         });
     }
 	
-	removeCapture(capture: Capture, userid) {
+	removeUnprocessedCapture(capture: Capture, userid) {
         this.db.list('/users/' + userid + '/captures').remove(capture.key);
         return this.db.list('/captures').remove(capture.key);
+    }
+    
+    removeAction(action: Action, userid, goalkey) {
+        console.log(action);
+        this.db.list('/users/' + userid + '/nextActions').remove(action.key);
+        this.db.list('/goals/' + goalkey + '/nextActions').remove(action.key);
+        return this.db.list('/nextActions').remove(action.key);
 	}
     
     getGoalList(userid) {
@@ -60,13 +67,13 @@ export class DataHandlingProvider {
         return this.db.list('/goals/' + goal.key + '/nextActions').push(action).then( ref => {
             this.db.list('/nextActions').set(ref.key, action);
             this.db.list('users/' + userid + '/nextActions').set(ref.key, action);
-        }).then( () => this.removeCapture(capture, userid));
+        }).then( () => this.removeUnprocessedCapture(capture, userid));
     }
 
     addReferenceToGoal(reference: Reference, goal: Goal, capture: Capture, userid){
         return this.db.list('/goals/' + goal.key + '/references').push(reference).then( ref => {
             this.db.list('/references').set(ref.key, reference);
             this.db.list('/users/' + userid + '/references').set(ref.key, reference);
-        }).then( () => this.removeCapture(capture, userid));
+        }).then( () => this.removeUnprocessedCapture(capture, userid));
     }
 }

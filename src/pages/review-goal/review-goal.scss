@@ -1,0 +1,16 @@
+page-review-goal {
+
+    .buttons-flex-container {
+        display: flex;
+        justify-content: left;
+    }
+
+    .buttons-flex-container>.button-left {
+        order: 1;
+    }
+
+    .buttons-flex-container>.button-right {
+        order: 2;
+    }
+
+}

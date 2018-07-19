@@ -25,7 +25,7 @@
   <div *ngIf="processCtrl == 'start'">
     <p>Remove this capture without processing?</p>
     <div class="buttons-flex-container">
-      <button class="button-left" ion-button round (click)="removeCapture(capture)">Yes</button>
+      <button class="button-left" ion-button round (click)="removeUnprocessedCapture(capture)">Yes</button>
       <button class="button-right" ion-button round (click)="goToProcessCapture()">No</button>
     </div>
   </div>

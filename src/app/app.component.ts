@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
 import { HomePage } from '../pages/home/home';
+import { ReviewGoalPage } from '../pages/review-goal/review-goal';
 
 export interface PageInterface {
   title: string;
@@ -60,6 +61,11 @@ export class MyApp {
     this.auth.signOut();
     this.nav.setRoot(LoginPage);
     }
+
+  goToReviewGoalPage() {
+    this.menu.close();
+    this.nav.push(ReviewGoalPage);
+  }
   
 }
 
