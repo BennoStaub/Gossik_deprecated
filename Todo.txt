@@ -1,7 +1,10 @@
 To Do:
+-ProcessCaputePage: when new action defined, only checked if action name is valid, priority and time set to zero and that's okay, change that!
 -ReviewGoalsPage:
+    -bide actions au time estimate ahzeige. und wenn kei Deadline, söll stoh 'no deadline'
     -delete action funktioniert
-    -edit action s div ahpasse wo sich denn öffnet
+    -edit action funktioniert
+        -bim edit action au ihfüehre dasmer richtige name etc ihgiht
     -s gliche für waiting fors ihbaue
     -s gliche für references ihbaue
 -eh aktion als abgschlosse definiere, denn automatisch chunts is capture damit neui aktion definiersch

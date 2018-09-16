@@ -6,6 +6,8 @@ import { DataHandlingProvider } from '../../providers/data-handling/data-handlin
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 import { Reference } from '../../model/reference/reference.model';
 import { Action } from '../../model/action/action.model';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -27,17 +29,21 @@ export class ReviewGoalPage {
   showWaitingFor: boolean = false;
   showReference: boolean = false;
   action = {} as Action;
+  newAction = {} as Action;
   reference = {} as Reference;
+  editOwnActionForm: FormGroup;
+  checkDeadline: boolean;
+  errorMsg: string = '';
 
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private db: DataHandlingProvider,
-    private auth: AuthentificationProvider
+    private auth: AuthentificationProvider,
+    private fb: FormBuilder
   ) {
     this.goal.name = '';
-    console.log(this.goal.name);
     this.goalList = this.db.getGoalList(this.auth.userid)
 	  .snapshotChanges()
 	  .map(
@@ -98,8 +104,45 @@ export class ReviewGoalPage {
   }
 
   deleteAction(action: Action, goal) {
-    console.log('removing' + action);
     this.db.removeAction(action, this.auth.userid, goal.key);
   }
+
+  goToEditAction(action: Action) {
+    this.action = action;
+    this.reviewCtrl = 'editOwnAction';
+    this.editOwnActionForm = this.fb.group({
+			content: ['', Validators.required],
+      priority: ['', Validators.required],
+      deadline: [this.action.deadline, Validators.required],
+      time: ['', Validators.required]
+    });
+  }
+
+  editOwnAction() {
+    if(this.action.content !== '' && this.action.content !== null && this.action.content !== undefined) {
+      if(this.action.priority !== '' && this.action.priority !== null && this.action.priority !== undefined) {
+        if(this.action.time !== '' && this.action.time !== null && this.action.time !== undefined) {
+          this.errorMsg = "";
+          this.newAction.content = this.editOwnActionForm.value.content;
+          this.newAction.deadline = this.editOwnActionForm.value.deadline;
+          this.newAction.priority = this.editOwnActionForm.value.priority;
+          this.newAction.time = this.editOwnActionForm.value.time;
+          this.newAction.delegated = this.action.delegated;
+          this.newAction.goalid = this.goal.key;
+          this.newAction.userid = this.auth.userid;
+          this.db.editNextAction(this.newAction, this.action, this.goal, this.auth.userid).then( () => {
+          this.reviewCtrl = 'reviewGoal';
+          });
+        } else {
+          this.errorMsg = "Please define a valid time estimate for this action";
+        }
+      } else {
+        this.errorMsg = "Please define a priority.";
+      }
+    } else {
+      this.errorMsg = "Please define an action.";
+    }
+  }
+
 
 }

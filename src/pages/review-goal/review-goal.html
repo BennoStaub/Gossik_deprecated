@@ -32,7 +32,7 @@
         <div *ngIf="nextAction.deadline !== ''">Deadline: {{nextAction.deadline}}</div>
         <div class="buttons-flex-container">
           <button class="button-left" ion-button round (click)="deleteAction(nextAction, goal)">Delete</button>
-          <button class="button-right" ion-button round (click)="editAction(nextAction)">Edit</button>
+          <button class="button-right" ion-button round (click)="goToEditAction(nextAction)">Edit</button>
         </div>
       </div>
     </ion-item>
@@ -50,26 +50,21 @@
   <div *ngIf="reviewCtrl == 'editOwnAction'">
       Defining new action
       <ion-list inset>
-        <ion-item>
-          <ion-label>Deadline required?</ion-label>
-          <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
-        </ion-item>
-        <form (ngSubmit)="defineOwnAction()" [formGroup]="defineOwnActionForm">
+        <form (ngSubmit)="editOwnAction()" [formGroup]="editOwnActionForm">
           <ion-item>
-            <ion-input type="text" placeholder="Action" formControlName="content"></ion-input>
+            <ion-input type="text" value="{{action.content}}" formControlName="content"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label>Priority (0: low, 10: high):</ion-label>
-            <ion-input type="number" placeholder="0" min="0" max="10" formControlName="priority" value="0"></ion-input>
+            <ion-input type="number" value="{{action.priority}}" min="0" max="10" formControlName="priority" value="0"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label block>Estimated time in min:</ion-label>
-              <ion-input type="number" placeholder="Time" min="0" max="1000" formControlName="time" value="0"></ion-input>
+              <ion-input type="number" value="{{action.time}}" min="0" max="1000" formControlName="time" value="0"></ion-input>
           </ion-item>
           <ion-item>
-              <div *ngIf="checkDeadline">
-                  <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline" max="2099-12-31"></ion-datetime>
-              </div>
+            <ion-label>Deadline</ion-label>
+            <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
           </ion-item>
           <button ion-button full type="submit">Define action</button>
         </form>

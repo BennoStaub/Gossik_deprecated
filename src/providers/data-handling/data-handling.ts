@@ -69,6 +69,14 @@ export class DataHandlingProvider {
             this.db.list('users/' + userid + '/nextActions').set(ref.key, action);
         }).then( () => this.removeUnprocessedCapture(capture, userid));
     }
+    
+    editNextAction(newAction: Action, action: Action, goal: Goal, userid) {
+        console.log(action);
+        return this.removeAction(action, userid, goal.key).then( () => {this.db.list('/goals/' + goal.key + '/nextActions').push(newAction).then( ref => {
+            this.db.list('/nextActions').set(ref.key, newAction);
+            this.db.list('users/' + userid + '/nextActions').set(ref.key, newAction);
+        })});
+    }
 
     addReferenceToGoal(reference: Reference, goal: Goal, capture: Capture, userid){
         return this.db.list('/goals/' + goal.key + '/references').push(reference).then( ref => {
