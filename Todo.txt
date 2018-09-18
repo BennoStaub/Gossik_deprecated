@@ -1,11 +1,4 @@
 To Do:
--ReviewGoalsPage:
-    -bide actions au time estimate ahzeige. und wenn kei Deadline, söll stoh 'no deadline'
-    -delete action funktioniert
-    -edit action funktioniert
-        -bim edit action au ihfüehre dasmer richtige name etc ihgiht
-    -s gliche für waiting fors ihbaue
-    -s gliche für references ihbaue
 -eh aktion als abgschlosse definiere, denn automatisch chunts is capture damit neui aktion definiersch
 -next aktion liste mache sortiert nach zit und priorität
 -aktion usführ site: sege wie viel zit das hesch und denn zeigts dir 3 high-priority actions ah in dere zit.

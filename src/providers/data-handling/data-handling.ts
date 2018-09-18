@@ -43,7 +43,7 @@ export class DataHandlingProvider {
     removeReference(reference: Reference, userid, goalkey) {
         this.db.list('/users/' + userid + '/references').remove(reference.key);
         this.db.list('/goals/' + goalkey + '/references').remove(reference.key);
-        return this.db.list('/reference').remove(reference.key);
+        return this.db.list('/references').remove(reference.key);
 	}
     
     getGoalList(userid) {
