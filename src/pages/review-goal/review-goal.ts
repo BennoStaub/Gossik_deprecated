@@ -119,9 +119,9 @@ export class ReviewGoalPage {
   }
 
   editOwnAction() {
-    if(this.action.content !== '' && this.action.content !== null && this.action.content !== undefined) {
-      if(this.action.priority !== '' && this.action.priority !== null && this.action.priority !== undefined) {
-        if(this.action.time !== '' && this.action.time !== null && this.action.time !== undefined) {
+    if(this.editOwnActionForm.value.content !== '' && this.editOwnActionForm.value.content !== null && this.editOwnActionForm.value.content !== undefined) {
+      if(this.editOwnActionForm.value.priority != 0 && this.editOwnActionForm.value.priority !== null && this.editOwnActionForm.value.priority !== undefined) {
+        if(this.editOwnActionForm.value.time != 0 && this.editOwnActionForm.value.time !== null && this.editOwnActionForm.value.time !== undefined) {
           this.errorMsg = "";
           this.newAction.content = this.editOwnActionForm.value.content;
           this.newAction.deadline = this.editOwnActionForm.value.deadline;

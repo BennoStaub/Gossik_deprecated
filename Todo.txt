@@ -1,5 +1,4 @@
 To Do:
--ProcessCaputePage: when new action defined, only checked if action name is valid, priority and time set to zero and that's okay, change that!
 -ReviewGoalsPage:
     -bide actions au time estimate ahzeige. und wenn kei Deadline, söll stoh 'no deadline'
     -delete action funktioniert

@@ -204,7 +204,7 @@ export class ProcessCapturePage {
           this.navCtrl.setRoot(HomePage);
           });
         } else {
-          this.errorMsg = "Please define a deadline or deselct the deadline checkbox.";
+          this.errorMsg = "Please define a deadline or deselect the deadline checkbox.";
         }
       } else {
         this.errorMsg = "";
@@ -223,6 +223,7 @@ export class ProcessCapturePage {
 			content: ['', Validators.required]
     });
   }
+  
   addReference() {
     this.newReference.content = this.defineReferenceForm.value.content;
     this.newReference.goalid = this.assignedGoal.key;
