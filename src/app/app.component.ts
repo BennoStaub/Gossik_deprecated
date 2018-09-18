@@ -7,6 +7,7 @@ import { LoginPage } from '../pages/login/login';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
 import { HomePage } from '../pages/home/home';
 import { ReviewGoalPage } from '../pages/review-goal/review-goal';
+import { TakeActionPage } from '../pages/take-action/take-action';
 
 export interface PageInterface {
   title: string;
@@ -65,6 +66,11 @@ export class MyApp {
   goToReviewGoalPage() {
     this.menu.close();
     this.nav.push(ReviewGoalPage);
+  }
+
+  goToTakeActionPage() {
+    this.menu.close();
+    this.nav.push(TakeActionPage);
   }
   
 }

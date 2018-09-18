@@ -64,6 +64,10 @@ export class DataHandlingProvider {
         return this.db.list('/goals/' + goalid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(false));
     }
 
+    getNextActionListFromUser(userid) {
+        return this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(false));
+    }
+
     getWaitingForListFromGoal(goalid) {
         return this.db.list('/goals/' + goalid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(true));
     }

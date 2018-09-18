@@ -19,6 +19,8 @@ import { SignupPage } from '../pages/sign-up/sign-up';
 import { SignupPageModule } from '../pages/sign-up/sign-up.module';
 import { ReviewGoalPage } from '../pages/review-goal/review-goal';
 import { ReviewGoalPageModule } from '../pages/review-goal/review-goal.module';
+import { TakeActionPage } from '../pages/take-action/take-action';
+import { TakeActionPageModule } from '../pages/take-action/take-action.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { ReviewGoalPageModule } from '../pages/review-goal/review-goal.module';
   AngularFireDatabaseModule,
   LoginPageModule,
   SignupPageModule,
-  ReviewGoalPageModule
+  ReviewGoalPageModule,
+  TakeActionPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -40,7 +43,8 @@ import { ReviewGoalPageModule } from '../pages/review-goal/review-goal.module';
     HomePage,
     LoginPage,
     SignupPage,
-    ReviewGoalPage
+    ReviewGoalPage,
+    TakeActionPage
   ],
   providers: [
     StatusBar,

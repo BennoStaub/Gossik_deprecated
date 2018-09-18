@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Gossik</ion-title>
+    <ion-buttons end>
+      <button ion-button menuToggle edge>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+
+
+  <div *ngIf="pageCtrl == ''">
+    <p>How many minutes do you have available right now?</p>
+    <form (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
+      <ion-item>
+        <ion-label>Time in min:</ion-label>
+        <ion-input type="number" placeholder="0" min="0" formControlName="timeEstimate" value="0"></ion-input>
+      </ion-item>
+      <button ion-button full type="submit">Show doable action</button>
+    </form>
+  </div>
+  
+  <p>{{errorMsg}}</p>
+
+  <ion-item *ngFor="let doableAction of doableActionArray">{{doableAction.content}} and {{doableAction.time}}</ion-item>
+
+
+
+
+
+</ion-content>
