@@ -149,8 +149,8 @@ export class ProcessCapturePage {
     this.newAction.goalid = this.assignedGoal.key;
     this.newAction.userid = this.auth.userid;
     if(this.newAction.content !== '' && this.newAction.content !== null && this.newAction.content !== undefined) {
-      if(this.newAction.priority !== '' && this.newAction.priority !== null && this.newAction.priority !== undefined) {
-        if(this.newAction.time !== '' && this.newAction.time !== null && this.newAction.time !== undefined) {
+      if(this.newAction.priority != 0 && this.newAction.priority !== null && this.newAction.priority !== undefined) {
+        if(this.newAction.time != 0 && this.newAction.time !== null && this.newAction.time !== undefined) {
           if(this.checkDeadline === true) {
             if(this.newAction.deadline !== '' && this.newAction.deadline !== null && this.newAction.deadline !== undefined) {
               this.errorMsg = "";
