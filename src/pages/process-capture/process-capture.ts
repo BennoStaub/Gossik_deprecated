@@ -213,7 +213,7 @@ export class ProcessCapturePage {
         });
       }
     } else {
-      this.errorMsg = "Please define a waiting for.";
+      this.errorMsg = "Please define what you are waiting for.";
     }
   }
 
@@ -223,7 +223,7 @@ export class ProcessCapturePage {
 			content: ['', Validators.required]
     });
   }
-  
+
   addReference() {
     this.newReference.content = this.defineReferenceForm.value.content;
     this.newReference.goalid = this.assignedGoal.key;

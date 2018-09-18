@@ -26,12 +26,14 @@ export class ReviewGoalPage {
   nextActionList: Observable<Action[]>;
   waitingForList: Observable<Action[]>;
   showAction: string;
-  showWaitingFor: boolean = false;
-  showReference: boolean = false;
+  showWaitingFor: string;
+  showReference: string;
   action = {} as Action;
+  waitingFor = {} as Action;
   newAction = {} as Action;
   reference = {} as Reference;
   editOwnActionForm: FormGroup;
+  editWaitingForForm: FormGroup;
   checkDeadline: boolean;
   errorMsg: string = '';
 
@@ -103,7 +105,15 @@ export class ReviewGoalPage {
     this.showAction = action.key;
   }
 
+  reviewWaitingFor(action: Action) {
+    this.showWaitingFor = action.key
+  }
+
   deleteAction(action: Action, goal) {
+    this.db.removeAction(action, this.auth.userid, goal.key);
+  }
+
+  deleteWaitingFor(action: Action, goal) {
     this.db.removeAction(action, this.auth.userid, goal.key);
   }
 
@@ -115,6 +125,15 @@ export class ReviewGoalPage {
       priority: ['', Validators.required],
       deadline: [this.action.deadline, Validators.required],
       time: ['', Validators.required]
+    });
+  }
+
+  goToEditWaitingFor(waitingFor: Action) {
+    this.waitingFor = waitingFor;
+    this.reviewCtrl = 'editWaitingFor';
+    this.editWaitingForForm = this.fb.group({
+			content: ['', Validators.required],
+      deadline: [this.waitingFor.deadline, Validators.required]
     });
   }
 
@@ -141,6 +160,22 @@ export class ReviewGoalPage {
       }
     } else {
       this.errorMsg = "Please define an action.";
+    }
+  }
+
+  editWaitingFor() {
+    if(this.editWaitingForForm.value.content !== '' && this.editWaitingForForm.value.content !== null && this.editWaitingForForm.value.content !== undefined) {
+      this.errorMsg = "";
+      this.newAction.content = this.editWaitingForForm.value.content;
+      this.newAction.deadline = this.editWaitingForForm.value.deadline;
+      this.newAction.delegated = this.waitingFor.delegated;
+      this.newAction.goalid = this.goal.key;
+      this.newAction.userid = this.auth.userid;
+      this.db.editNextAction(this.newAction, this.waitingFor, this.goal, this.auth.userid).then( () => {
+      this.reviewCtrl = 'reviewGoal';
+      });
+    } else {
+      this.errorMsg = "Please define what you are waiting for.";
     }
   }
 

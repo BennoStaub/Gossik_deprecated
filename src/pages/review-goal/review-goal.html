@@ -29,8 +29,10 @@
     <ion-item *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
       {{nextAction.content}}
       <div *ngIf="showAction === nextAction.key">
-        Priority: {{nextAction.priority}}
-        <div *ngIf="nextAction.deadline !== ''">Deadline: {{nextAction.deadline}}</div>
+        <p>Priority: {{nextAction.priority}}</p>
+        <p>Time estimate: {{nextAction.time}}min</p>
+        <p *ngIf="nextAction.deadline === ''">No deadline</p>
+        <p *ngIf="nextAction.deadline !== ''">Deadline: {{nextAction.deadline}}</p>
         <div class="buttons-flex-container">
           <button class="button-left" ion-button round (click)="deleteAction(nextAction, goal)">Delete</button>
           <button class="button-right" ion-button round (click)="goToEditAction(nextAction)">Edit</button>
@@ -40,7 +42,17 @@
     </div>
     <button ion-button block round (click)="waitingFors()">Show waiting fors</button>
     <div *ngIf="showWaitingFors">
-    <ion-item *ngFor="let action of waitingForList | async">{{action.content}}</ion-item>
+    <ion-item *ngFor="let waitingFor of waitingForList | async" (click)="reviewWaitingFor(waitingFor)">
+      {{waitingFor.content}}
+      <div *ngIf="showWaitingFor === waitingFor.key">
+          <p *ngIf="waitingFor.deadline === ''">No deadline</p>
+          <p *ngIf="waitingFor.deadline !== ''">Deadline: {{waitingFor.deadline}}</p>
+          <div class="buttons-flex-container">
+            <button class="button-left" ion-button round (click)="deleteWaitingFor(waitingFor, goal)">Delete</button>
+            <button class="button-right" ion-button round (click)="goToEditWaitingFor(waitingFor)">Edit</button>
+          </div>
+      </div>
+    </ion-item>
     </div>
     <button ion-button block round (click)="references()">Show references</button>
     <div *ngIf="showReferences">
@@ -49,7 +61,7 @@
   </div>
 
   <div *ngIf="reviewCtrl == 'editOwnAction'">
-      Defining new action
+      Edit action
       <ion-list inset>
         <form (ngSubmit)="editOwnAction()" [formGroup]="editOwnActionForm">
           <ion-item>
@@ -67,7 +79,23 @@
             <ion-label>Deadline</ion-label>
             <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
           </ion-item>
-          <button ion-button full type="submit">Define action</button>
+          <button ion-button full type="submit">Edit</button>
+        </form>
+      </ion-list>
+    </div>
+
+    <div *ngIf="reviewCtrl == 'editWaitingFor'">
+      Edit waiting for
+      <ion-list inset>
+        <form (ngSubmit)="editWaitingFor()" [formGroup]="editWaitingForForm">
+          <ion-item>
+            <ion-input type="text" value="{{waitingFor.content}}" formControlName="content"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Deadline</ion-label>
+            <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
+          </ion-item>
+          <button ion-button full type="submit">Edit</button>
         </form>
       </ion-list>
     </div>
