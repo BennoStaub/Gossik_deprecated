@@ -56,7 +56,15 @@
     </div>
     <button ion-button block round (click)="references()">Show references</button>
     <div *ngIf="showReferences">
-    <ion-item *ngFor="let reference of referenceList | async">{{reference.content}}</ion-item>
+    <ion-item *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
+      {{reference.content}}
+      <div *ngIf="showReference === reference.key">
+          <div class="buttons-flex-container">
+            <button class="button-left" ion-button round (click)="deleteReference(reference, goal)">Delete</button>
+            <button class="button-right" ion-button round (click)="goToEditReference(reference)">Edit</button>
+          </div>
+      </div>
+    </ion-item>
     </div>
   </div>
 
@@ -99,6 +107,18 @@
         </form>
       </ion-list>
     </div>
+
+    <div *ngIf="reviewCtrl == 'editReference'">
+        Edit reference
+        <ion-list inset>
+          <form (ngSubmit)="editReference()" [formGroup]="editReferenceForm">
+            <ion-item>
+              <ion-input type="text" value="{{reference.content}}" formControlName="content"></ion-input>
+            </ion-item>
+            <button ion-button full type="submit">Edit</button>
+          </form>
+        </ion-list>
+      </div>
 
 
 

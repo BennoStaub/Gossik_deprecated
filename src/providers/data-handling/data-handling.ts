@@ -35,10 +35,15 @@ export class DataHandlingProvider {
     }
     
     removeAction(action: Action, userid, goalkey) {
-        console.log(action);
         this.db.list('/users/' + userid + '/nextActions').remove(action.key);
         this.db.list('/goals/' + goalkey + '/nextActions').remove(action.key);
         return this.db.list('/nextActions').remove(action.key);
+    }
+    
+    removeReference(reference: Reference, userid, goalkey) {
+        this.db.list('/users/' + userid + '/references').remove(reference.key);
+        this.db.list('/goals/' + goalkey + '/references').remove(reference.key);
+        return this.db.list('/reference').remove(reference.key);
 	}
     
     getGoalList(userid) {
@@ -69,19 +74,25 @@ export class DataHandlingProvider {
             this.db.list('users/' + userid + '/nextActions').set(ref.key, action);
         }).then( () => this.removeUnprocessedCapture(capture, userid));
     }
-    
-    editNextAction(newAction: Action, action: Action, goal: Goal, userid) {
-        console.log(action);
-        return this.removeAction(action, userid, goal.key).then( () => {this.db.list('/goals/' + goal.key + '/nextActions').push(newAction).then( ref => {
-            this.db.list('/nextActions').set(ref.key, newAction);
-            this.db.list('users/' + userid + '/nextActions').set(ref.key, newAction);
-        })});
-    }
 
     addReferenceToGoal(reference: Reference, goal: Goal, capture: Capture, userid){
         return this.db.list('/goals/' + goal.key + '/references').push(reference).then( ref => {
             this.db.list('/references').set(ref.key, reference);
             this.db.list('/users/' + userid + '/references').set(ref.key, reference);
         }).then( () => this.removeUnprocessedCapture(capture, userid));
+    }
+
+    editNextAction(newAction: Action, action: Action, goal: Goal, userid) {
+        return this.removeAction(action, userid, goal.key).then( () => {this.db.list('/goals/' + goal.key + '/nextActions').push(newAction).then( ref => {
+            this.db.list('/nextActions').set(ref.key, newAction);
+            this.db.list('users/' + userid + '/nextActions').set(ref.key, newAction);
+        })});
+    }
+
+    editReference(newReference: Reference, reference: Reference, goal: Goal, userid) {
+        return this.removeReference(reference, userid, goal.key).then( () => {this.db.list('/goals/' + goal.key + '/references').push(newReference).then( ref => {
+            this.db.list('/references').set(ref.key, newReference);
+            this.db.list('users/' + userid + '/references').set(ref.key, newReference);
+        })});
     }
 }

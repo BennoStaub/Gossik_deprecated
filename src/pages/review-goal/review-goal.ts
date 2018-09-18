@@ -31,9 +31,11 @@ export class ReviewGoalPage {
   action = {} as Action;
   waitingFor = {} as Action;
   newAction = {} as Action;
+  newReference = {} as Reference;
   reference = {} as Reference;
   editOwnActionForm: FormGroup;
   editWaitingForForm: FormGroup;
+  editReferenceForm: FormGroup;
   checkDeadline: boolean;
   errorMsg: string = '';
 
@@ -109,12 +111,20 @@ export class ReviewGoalPage {
     this.showWaitingFor = action.key
   }
 
+  reviewReference(reference: Reference) {
+    this.showReference = reference.key;
+  }
+
   deleteAction(action: Action, goal) {
     this.db.removeAction(action, this.auth.userid, goal.key);
   }
 
   deleteWaitingFor(action: Action, goal) {
     this.db.removeAction(action, this.auth.userid, goal.key);
+  }
+
+  deleteReference(reference: Reference, goal) {
+    this.db.removeReference(reference, this.auth.userid, goal.key);
   }
 
   goToEditAction(action: Action) {
@@ -136,6 +146,15 @@ export class ReviewGoalPage {
       deadline: [this.waitingFor.deadline, Validators.required]
     });
   }
+
+  goToEditReference(reference: Reference) {
+    this.reference = reference;
+    this.reviewCtrl = 'editReference';
+    this.editReferenceForm = this.fb.group({
+			content: ['', Validators.required]
+    });
+  }
+
 
   editOwnAction() {
     if(this.editOwnActionForm.value.content !== '' && this.editOwnActionForm.value.content !== null && this.editOwnActionForm.value.content !== undefined) {
@@ -176,6 +195,20 @@ export class ReviewGoalPage {
       });
     } else {
       this.errorMsg = "Please define what you are waiting for.";
+    }
+  }
+
+  editReference() {
+    if(this.editReferenceForm.value.content !== '' && this.editReferenceForm.value.content !== null && this.editReferenceForm.value.content !== undefined) {
+      this.errorMsg = "";
+      this.newReference.content = this.editReferenceForm.value.content;
+      this.newReference.goalid = this.goal.key;
+      this.newReference.userid = this.auth.userid;
+      this.db.editReference(this.newReference, this.reference, this.goal, this.auth.userid).then( () => {
+      this.reviewCtrl = 'reviewGoal';
+      });
+    } else {
+      this.errorMsg = "Please define a valid reference.";
     }
   }
 
