@@ -20,6 +20,8 @@ export class TakeActionPage {
   giveTimeForm: FormGroup;
   doableActionArray: Action[] = [];
   errorMsg: string = '';
+  topPriorityDoableActions: Action[] = [];
+  finalArray: Action[] = [];
 
   constructor(
     public navCtrl: NavController,
@@ -48,13 +50,30 @@ export class TakeActionPage {
     });
     this.doableActionList.subscribe(
       doableActionArray => {
-        for(this.doableAction of doableActionArray) {
-          if(this.doableAction.time <= this.giveTimeForm.value.timeEstimate) {
-            console.log(this.doableActionArray.indexOf(this.doableAction));
-            this.doableActionArray.push(this.doableAction)
+        for(let doableAction of doableActionArray) {
+          if(Number(doableAction.time) <= this.giveTimeForm.value.timeEstimate) {
+            this.doableActionArray.push(doableAction);
           }
         };
         if(this.doableActionArray.length > 0) {
+          let oldArray: Action[] = this.doableActionArray;
+          let newArray: Action[] = [];
+          for(let numberDoableHighPriorityActions:number = 0; numberDoableHighPriorityActions < 3; numberDoableHighPriorityActions++) {
+            if(oldArray.length == 0) {
+              continue;
+            }
+            let maxPriority = 0;
+            let index = 0;
+            for(let counter: number = 0; counter <= oldArray.length-1; counter++) {
+              if(oldArray[counter].priority > maxPriority) {
+                maxPriority = oldArray[counter].priority;
+                index = counter;
+              }
+            }
+            newArray.push(oldArray[index]);
+            oldArray.splice(index, 1);
+          }
+          this.finalArray = newArray;
           this.pageCtrl = 'showActions';
           this.errorMsg = '';
         } else {
