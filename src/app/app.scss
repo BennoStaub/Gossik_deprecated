@@ -14,3 +14,14 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.toolbar-content{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+ }
+
+ ion-item {
+     border-radius: 5px;
+     margin-bottom: 1px !important;
+ }

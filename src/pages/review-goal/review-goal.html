@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Gossik</ion-title>
     <ion-buttons end>
       <button ion-button menuToggle edge>
@@ -14,7 +14,7 @@
 
   <div *ngIf="reviewCtrl == ''">
     <ion-list>
-      <ion-item *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
+      <ion-item no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
         {{goal.name}}
       </ion-item>
     </ion-list>
@@ -26,7 +26,7 @@
     Reviewing Goal: {{goal.name}}
     <button ion-button block round (click)="nextActions()">Show next actions</button>
     <div *ngIf="showNextActions">
-    <ion-item *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
+    <ion-item no-lines *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
       {{nextAction.content}}
       <div *ngIf="showAction === nextAction.key">
         <p>Priority: {{nextAction.priority}}</p>
@@ -42,7 +42,7 @@
     </div>
     <button ion-button block round (click)="waitingFors()">Show waiting fors</button>
     <div *ngIf="showWaitingFors">
-    <ion-item *ngFor="let waitingFor of waitingForList | async" (click)="reviewWaitingFor(waitingFor)">
+    <ion-item no-lines *ngFor="let waitingFor of waitingForList | async" (click)="reviewWaitingFor(waitingFor)">
       {{waitingFor.content}}
       <div *ngIf="showWaitingFor === waitingFor.key">
           <p *ngIf="waitingFor.deadline === ''">No deadline</p>
@@ -56,7 +56,7 @@
     </div>
     <button ion-button block round (click)="references()">Show references</button>
     <div *ngIf="showReferences">
-    <ion-item *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
+    <ion-item no-lines *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
       {{reference.content}}
       <div *ngIf="showReference === reference.key">
           <div class="buttons-flex-container">
@@ -72,18 +72,18 @@
       Edit action
       <ion-list inset>
         <form (ngSubmit)="editOwnAction()" [formGroup]="editOwnActionForm">
-          <ion-item>
+          <ion-item no-lines>
             <ion-input type="text" value="{{action.content}}" formControlName="content"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item no-lines>
             <ion-label>Priority (0: low, 10: high):</ion-label>
             <ion-input type="number" value="{{action.priority}}" min="0" max="10" formControlName="priority" value="0"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item no-lines>
               <ion-label block>Estimated time in min:</ion-label>
               <ion-input type="number" value="{{action.time}}" min="0" max="1000" formControlName="time" value="0"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item no-lines>
             <ion-label>Deadline</ion-label>
             <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
           </ion-item>
@@ -96,10 +96,10 @@
       Edit waiting for
       <ion-list inset>
         <form (ngSubmit)="editWaitingFor()" [formGroup]="editWaitingForForm">
-          <ion-item>
+          <ion-item no-lines>
             <ion-input type="text" value="{{waitingFor.content}}" formControlName="content"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item no-lines>
             <ion-label>Deadline</ion-label>
             <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
           </ion-item>
@@ -112,7 +112,7 @@
         Edit reference
         <ion-list inset>
           <form (ngSubmit)="editReference()" [formGroup]="editReferenceForm">
-            <ion-item>
+            <ion-item no-lines>
               <ion-input type="text" value="{{reference.content}}" formControlName="content"></ion-input>
             </ion-item>
             <button ion-button full type="submit">Edit</button>

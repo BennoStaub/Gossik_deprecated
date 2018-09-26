@@ -1,5 +1,10 @@
 page-home {
-    .captureList {
+    .ion-item {
         border-bottom: 1px solid #150931;
+        white-space: pre-line;
+    }
+    
+    ion-title {
+        text-align: center;
     }
 }

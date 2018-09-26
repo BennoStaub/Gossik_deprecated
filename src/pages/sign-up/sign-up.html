@@ -1,19 +1,19 @@
 <ion-header>
-	<ion-navbar>
-		<ion-title>Sign up</ion-title>
+	<ion-navbar color="primary">
+	  <ion-title>Gossik</ion-title>
 	</ion-navbar>
-</ion-header>
+  </ion-header>
 
 <ion-content>
 
 	<form (ngSubmit)="signup()" [formGroup]="form">
 		<ion-list inset>
 
-			<ion-item>
+			<ion-item no-lines>
 				<ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
 			</ion-item>
 
-			<ion-item>
+			<ion-item no-lines>
 				<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
 			</ion-item>
 

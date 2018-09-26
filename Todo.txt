@@ -1,4 +1,5 @@
 To Do:
+-bi input felder mit typ number hets immerno en rand unedra
 -next aktion liste mache sortiert nach zit und priorität
 -forgot password implementiere
 -meh chan unendlich viel tabs ufenand staple, wemer uf reviewgoal isch und immer wieder via menu review goals öffnet. söll also zersch checke obs scho uf dere site isch

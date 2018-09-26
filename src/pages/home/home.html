@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Gossik</ion-title>
     <ion-buttons end>
       <button ion-button menuToggle edge>
@@ -16,10 +16,8 @@
 		<button navPush="AddCapturePage" ion-button round>Add new capture</button>
 	</ion-col>
   </ion-row>
-  <br>Process captures <br>
-  <ion-list>
-    <ion-item text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
-      {{capture.content}}
-    </ion-item>
-  </ion-list>
+  <p>Process captures<p>
+  <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
+    {{capture.content}}
+  </ion-item>
 </ion-content>
