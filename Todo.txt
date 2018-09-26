@@ -1,10 +1,4 @@
 To Do:
--TakeActionPage:
-    -Show only 3 tasks
-    -Show only high-priority tasks
-    -Make actions clickable and when clicked, 'doing' flag becomes true and whenenver user opens the app, it asks him whether he finished this action: if yes, action deleted and put in capture, when not, put action back normally.
--eh aktion als abgschlosse definiere, denn automatisch chunts is capture damit neui aktion definiersch
 -next aktion liste mache sortiert nach zit und priorität
--aktion usführ site: sege wie viel zit das hesch und denn zeigts dir 3 high-priority actions ah in dere zit.
 -forgot password implementiere
 -meh chan unendlich viel tabs ufenand staple, wemer uf reviewgoal isch und immer wieder via menu review goals öffnet. söll also zersch checke obs scho uf dere site isch

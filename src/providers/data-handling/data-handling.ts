@@ -14,7 +14,6 @@ export class DataHandlingProvider {
     constructor(private db: AngularFireDatabase) { }
     
     createUser(userid, email) {
-        console.log('create user with id ' + userid);
         this.userData.email = email;
         return this.db.list('users').set(userid, this.userData); 
     }
@@ -99,4 +98,10 @@ export class DataHandlingProvider {
             this.db.list('users/' + userid + '/references').set(ref.key, newReference);
         })});
     }
+
+    getGoalFromGoalid(goalid) {
+        return this.db.object<Goal>('/goals/' + goalid);
+    }
+
+
 }
