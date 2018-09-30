@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { Goal } from '../../model/goal/goal.model';
 import { Reference } from '../../model/reference/reference.model';
 import { Action } from '../../model/action/action.model';
+import { Delegation } from '../../model/delegation/delegation.model';
 
 @IonicPage()
 @Component({
@@ -23,19 +24,20 @@ export class ProcessCapturePage {
   goalList: Observable<Goal[]>;
   referenceList: Observable<Reference[]>;
   nextActionList: Observable<Action[]>;
-  waitingForList: Observable<Action[]>;
+  delegationList: Observable<Delegation[]>;
   newGoal = {} as Goal;
   processCtrl: string = 'start';
   assignedGoal = {} as Goal;
   showNextActions: boolean = false;
-  showWaitingFors: boolean = false;
+  showDelegations: boolean = false;
   showReferences: boolean = false;
-  defineOwnActionForm: FormGroup;
-  defineDelegatedActionForm: FormGroup;
+  defineActionForm: FormGroup;
+  defineDelegationForm: FormGroup;
   defineReferenceForm: FormGroup;
   checkDeadline;
   deadline: string;
   newAction = {} as Action;
+  newDelegation = {} as Delegation;
   newReference = {} as Reference;
   errorMsg: string;
 
@@ -89,7 +91,7 @@ export class ProcessCapturePage {
 
   addToGoal(goal){
     this.processCtrl = 'reviewGoal';
-    this.referenceList = this.db.getReferenceListFromGoal(goal.key)
+    this.referenceList = this.db.getReferenceListFromGoal(goal.key, this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
@@ -97,7 +99,7 @@ export class ProcessCapturePage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
     });
-    this.nextActionList = this.db.getNextActionListFromGoal(goal.key)
+    this.nextActionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
@@ -105,7 +107,7 @@ export class ProcessCapturePage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
     });
-    this.waitingForList = this.db.getWaitingForListFromGoal(goal.key)
+    this.delegationList = this.db.getDelegationListFromGoal(goal.key, this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
@@ -121,17 +123,17 @@ export class ProcessCapturePage {
     this.showNextActions = !this.showNextActions;
   }
 
-  waitingFors() {
-    this.showWaitingFors = !this.showWaitingFors;
+  delegations() {
+    this.showDelegations = !this.showDelegations;
   }
 
   references() {
     this.showReferences = !this.showReferences;
   }
 
-  goToDefineOwnAction(){
-    this.processCtrl = 'defineOwnAction';
-    this.defineOwnActionForm = this.fb.group({
+  goToDefineAction(){
+    this.processCtrl = 'defineAction';
+    this.defineActionForm = this.fb.group({
 			content: ['', Validators.required],
       priority: ['', Validators.required],
       deadline: ['', Validators.required],
@@ -139,13 +141,12 @@ export class ProcessCapturePage {
     });
   }
 
-  defineOwnAction() {
+  addAction() {
     this.errorMsg = "";
-    this.newAction.content = this.defineOwnActionForm.value.content;
-    this.newAction.deadline = this.defineOwnActionForm.value.deadline;
-    this.newAction.priority = this.defineOwnActionForm.value.priority;
-    this.newAction.time = this.defineOwnActionForm.value.time;
-    this.newAction.delegated = false;
+    this.newAction.content = this.defineActionForm.value.content;
+    this.newAction.deadline = this.defineActionForm.value.deadline;
+    this.newAction.priority = this.defineActionForm.value.priority;
+    this.newAction.time = this.defineActionForm.value.time;
     this.newAction.goalid = this.assignedGoal.key;
     this.newAction.userid = this.auth.userid;
     if(this.newAction.content !== '' && this.newAction.content !== null && this.newAction.content !== undefined) {
@@ -177,30 +178,24 @@ export class ProcessCapturePage {
     }
   }
 
-  goToDelegatedActionQuestion() {
-    this.processCtrl = 'askDelegatedAction';
-  }
-
-  goToDefineDelegatedAction() {
-    this.processCtrl = 'defineDelegatedAction';
-    this.defineDelegatedActionForm = this.fb.group({
+  goToDefineDelegation() {
+    this.processCtrl = 'defineDelegation';
+    this.defineDelegationForm = this.fb.group({
 			content: ['', Validators.required],
-      priority: ['', Validators.required],
       deadline: ['', Validators.required]
     });
   }
 
-  defineDelegatedAction() {
-    this.newAction.content = this.defineDelegatedActionForm.value.content;
-    this.newAction.deadline = this.defineDelegatedActionForm.value.deadline;
-    this.newAction.delegated = true;
-    this.newAction.goalid = this.assignedGoal.key;
-    this.newAction.userid = this.auth.userid;
-    if(this.newAction.content !== '' && this.newAction.content !== null && this.newAction.content !== undefined) {
+  addDelegation() {
+    this.newDelegation.content = this.defineDelegationForm.value.content;
+    this.newDelegation.deadline = this.defineDelegationForm.value.deadline;
+    this.newDelegation.goalid = this.assignedGoal.key;
+    this.newDelegation.userid = this.auth.userid;
+    if(this.newDelegation.content !== '' && this.newDelegation.content !== null && this.newDelegation.content !== undefined) {
       if(this.checkDeadline === true) {
-        if(this.newAction.deadline !== '' && this.newAction.deadline !== null && this.newAction.deadline !== undefined) {
+        if(this.newDelegation.deadline !== '' && this.newDelegation.deadline !== null && this.newDelegation.deadline !== undefined) {
           this.errorMsg = "";
-          this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+          this.db.addDelegationToGoal(this.newDelegation, this.assignedGoal, this.capture, this.auth.userid).then( () => {
           this.navCtrl.setRoot(HomePage);
           });
         } else {
@@ -208,7 +203,7 @@ export class ProcessCapturePage {
         }
       } else {
         this.errorMsg = "";
-        this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+        this.db.addDelegationToGoal(this.newDelegation, this.assignedGoal, this.capture, this.auth.userid).then( () => {
         this.navCtrl.setRoot(HomePage);
         });
       }
@@ -217,7 +212,7 @@ export class ProcessCapturePage {
     }
   }
 
-  goToAddReference() {
+  goToDefineReference() {
     this.processCtrl = 'defineReference';
     this.defineReferenceForm = this.fb.group({
 			content: ['', Validators.required]

@@ -7,7 +7,7 @@ import { AuthentificationProvider } from '../../providers/authentification/authe
 import { Reference } from '../../model/reference/reference.model';
 import { Action } from '../../model/action/action.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HomePage } from '../home/home';
+import { Delegation } from '../../model/delegation/delegation.model';
 
 @IonicPage()
 @Component({
@@ -20,21 +20,22 @@ export class ReviewGoalPage {
   goal = {} as Goal;
   goalList: Observable<Goal[]>;
   showNextActions: boolean = false;
-  showWaitingFors: boolean = false;
+  showDelegations: boolean = false;
   showReferences: boolean = false;
   referenceList: Observable<Reference[]>;
   nextActionList: Observable<Action[]>;
-  waitingForList: Observable<Action[]>;
+  delegationList: Observable<Action[]>;
   showAction: string;
-  showWaitingFor: string;
+  showDelegation: string;
   showReference: string;
   action = {} as Action;
-  waitingFor = {} as Action;
-  newAction = {} as Action;
-  newReference = {} as Reference;
+  delegation = {} as Delegation;
   reference = {} as Reference;
-  editOwnActionForm: FormGroup;
-  editWaitingForForm: FormGroup;
+  newAction = {} as Action;
+  newDelegation = {} as Delegation;
+  newReference = {} as Reference;
+  editActionForm: FormGroup;
+  editDelegationForm: FormGroup;
   editReferenceForm: FormGroup;
   checkDeadline: boolean;
   errorMsg: string = '';
@@ -65,7 +66,7 @@ export class ReviewGoalPage {
   reviewGoal(goal: Goal) {
     this.reviewCtrl = 'reviewGoal';
     this.goal = goal;
-    this.referenceList = this.db.getReferenceListFromGoal(goal.key)
+    this.referenceList = this.db.getReferenceListFromGoal(goal.key, this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
@@ -73,7 +74,7 @@ export class ReviewGoalPage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
     });
-    this.nextActionList = this.db.getNextActionListFromGoal(goal.key)
+    this.nextActionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
@@ -81,7 +82,7 @@ export class ReviewGoalPage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
     });
-    this.waitingForList = this.db.getWaitingForListFromGoal(goal.key)
+    this.delegationList = this.db.getDelegationListFromGoal(goal.key, this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
@@ -95,8 +96,8 @@ export class ReviewGoalPage {
     this.showNextActions = !this.showNextActions;
   }
 
-  waitingFors() {
-    this.showWaitingFors = !this.showWaitingFors;
+  delegations() {
+    this.showDelegations = !this.showDelegations;
   }
 
   references() {
@@ -107,8 +108,8 @@ export class ReviewGoalPage {
     this.showAction = action.key;
   }
 
-  reviewWaitingFor(action: Action) {
-    this.showWaitingFor = action.key
+  reviewDelegation(delegation: Delegation) {
+    this.showDelegation = delegation.key
   }
 
   reviewReference(reference: Reference) {
@@ -116,21 +117,21 @@ export class ReviewGoalPage {
   }
 
   deleteAction(action: Action, goal) {
-    this.db.removeAction(action, this.auth.userid, goal.key);
+    this.db.removeAction(action, this.auth.userid);
   }
 
-  deleteWaitingFor(action: Action, goal) {
-    this.db.removeAction(action, this.auth.userid, goal.key);
+  deleteDelegation(delegation: Delegation, goal) {
+    this.db.removeDelegation(delegation, this.auth.userid);
   }
 
   deleteReference(reference: Reference, goal) {
-    this.db.removeReference(reference, this.auth.userid, goal.key);
+    this.db.removeReference(reference, this.auth.userid);
   }
 
   goToEditAction(action: Action) {
     this.action = action;
-    this.reviewCtrl = 'editOwnAction';
-    this.editOwnActionForm = this.fb.group({
+    this.reviewCtrl = 'editAction';
+    this.editActionForm = this.fb.group({
 			content: ['', Validators.required],
       priority: ['', Validators.required],
       deadline: [this.action.deadline, Validators.required],
@@ -138,12 +139,12 @@ export class ReviewGoalPage {
     });
   }
 
-  goToEditWaitingFor(waitingFor: Action) {
-    this.waitingFor = waitingFor;
-    this.reviewCtrl = 'editWaitingFor';
-    this.editWaitingForForm = this.fb.group({
+  goToEditDelegation(delegation: Delegation) {
+    this.delegation = delegation;
+    this.reviewCtrl = 'editDelegation';
+    this.editDelegationForm = this.fb.group({
 			content: ['', Validators.required],
-      deadline: [this.waitingFor.deadline, Validators.required]
+      deadline: [this.delegation.deadline, Validators.required]
     });
   }
 
@@ -156,16 +157,15 @@ export class ReviewGoalPage {
   }
 
 
-  editOwnAction() {
-    if(this.editOwnActionForm.value.content !== '' && this.editOwnActionForm.value.content !== null && this.editOwnActionForm.value.content !== undefined) {
-      if(this.editOwnActionForm.value.priority != 0 && this.editOwnActionForm.value.priority !== null && this.editOwnActionForm.value.priority !== undefined) {
-        if(this.editOwnActionForm.value.time != 0 && this.editOwnActionForm.value.time !== null && this.editOwnActionForm.value.time !== undefined) {
+  editAction() {
+    if(this.editActionForm.value.content !== '' && this.editActionForm.value.content !== null && this.editActionForm.value.content !== undefined) {
+      if(this.editActionForm.value.priority != 0 && this.editActionForm.value.priority !== null && this.editActionForm.value.priority !== undefined) {
+        if(this.editActionForm.value.time != 0 && this.editActionForm.value.time !== null && this.editActionForm.value.time !== undefined) {
           this.errorMsg = "";
-          this.newAction.content = this.editOwnActionForm.value.content;
-          this.newAction.deadline = this.editOwnActionForm.value.deadline;
-          this.newAction.priority = this.editOwnActionForm.value.priority;
-          this.newAction.time = this.editOwnActionForm.value.time;
-          this.newAction.delegated = this.action.delegated;
+          this.newAction.content = this.editActionForm.value.content;
+          this.newAction.deadline = this.editActionForm.value.deadline;
+          this.newAction.priority = this.editActionForm.value.priority;
+          this.newAction.time = this.editActionForm.value.time;
           this.newAction.goalid = this.goal.key;
           this.newAction.userid = this.auth.userid;
           this.db.editNextAction(this.newAction, this.action, this.goal, this.auth.userid).then( () => {
@@ -182,15 +182,14 @@ export class ReviewGoalPage {
     }
   }
 
-  editWaitingFor() {
-    if(this.editWaitingForForm.value.content !== '' && this.editWaitingForForm.value.content !== null && this.editWaitingForForm.value.content !== undefined) {
+  editDelegation() {
+    if(this.editDelegationForm.value.content !== '' && this.editDelegationForm.value.content !== null && this.editDelegationForm.value.content !== undefined) {
       this.errorMsg = "";
-      this.newAction.content = this.editWaitingForForm.value.content;
-      this.newAction.deadline = this.editWaitingForForm.value.deadline;
-      this.newAction.delegated = this.waitingFor.delegated;
-      this.newAction.goalid = this.goal.key;
-      this.newAction.userid = this.auth.userid;
-      this.db.editNextAction(this.newAction, this.waitingFor, this.goal, this.auth.userid).then( () => {
+      this.newDelegation.content = this.editDelegationForm.value.content;
+      this.newDelegation.deadline = this.editDelegationForm.value.deadline;
+      this.newDelegation.goalid = this.goal.key;
+      this.newDelegation.userid = this.auth.userid;
+      this.db.editDelegation(this.newDelegation, this.delegation, this.goal, this.auth.userid).then( () => {
       this.reviewCtrl = 'reviewGoal';
       });
     } else {

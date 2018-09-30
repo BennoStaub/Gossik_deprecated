@@ -49,29 +49,30 @@
     <div *ngIf="showNextActions">
     <ion-item no-lines *ngFor="let action of nextActionList | async">{{action.content}}</ion-item>
     </div>
-    <button ion-button block round (click)="waitingFors()">Show waiting fors</button>
-    <div *ngIf="showWaitingFors">
-    <ion-item no-lines *ngFor="let action of waitingForList | async">{{action.content}}</ion-item>
+    <button ion-button block round (click)="delegations()">Show delegations</button>
+    <div *ngIf="showDelegations">
+    <ion-item no-lines *ngFor="let delegation of delegationList | async">{{delegation.content}}</ion-item>
     </div>
     <button ion-button block round (click)="references()">Show references</button>
     <div *ngIf="showReferences">
     <ion-item no-lines *ngFor="let reference of referenceList | async">{{reference.content}}</ion-item>
     </div>
-    Is right now an action required from you for this capture?
+    Is right now an action required from you or someone else for this capture?
     <div class="buttons-flex-container">
-      <button class="button-left" ion-button round (click)="goToDefineOwnAction()">Yes</button>
-      <button class="button-right" ion-button round (click)="goToDelegatedActionQuestion()">No</button>
+      <button class="button-left" ion-button round (click)="goToDefineAction()">From me</button>
+      <button class="button-left" ion-button round (click)="goToDefineDelegation()">From someone else</button>
+      <button class="button-right" ion-button round (click)="goToDefineReference()">No</button>
     </div>
   </div>
 
-  <div *ngIf="processCtrl == 'defineOwnAction'">
+  <div *ngIf="processCtrl == 'defineAction'">
     Defining new action
     <ion-list inset>
       <ion-item no-lines>
         <ion-label>Deadline required?</ion-label>
         <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
       </ion-item>
-      <form (ngSubmit)="defineOwnAction()" [formGroup]="defineOwnActionForm">
+      <form (ngSubmit)="addAction()" [formGroup]="defineActionForm">
         <ion-item no-lines>
           <ion-input type="text" placeholder="Action" formControlName="content"></ion-input>
         </ion-item>
@@ -93,31 +94,23 @@
     </ion-list>
   </div>
 
-  <div *ngIf="processCtrl == 'askDelegatedAction'">
-      Is right now an action required from someone else for this capture?
-      <div class="buttons-flex-container">
-        <button class="button-left" ion-button round (click)="goToDefineDelegatedAction()">Yes</button>
-        <button class="button-right" ion-button round (click)="goToAddReference()">No</button>
-      </div>
-  </div>
-
-  <div *ngIf="processCtrl == 'defineDelegatedAction'">
-      Defining new waiting for:
+  <div *ngIf="processCtrl == 'defineDelegation'">
+      Defining new delegation:
       <ion-list inset>
         <ion-item no-lines>
           <ion-label>Deadline required?</ion-label>
           <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
         </ion-item>
-        <form (ngSubmit)="defineDelegatedAction()" [formGroup]="defineDelegatedActionForm">
+        <form (ngSubmit)="addDelegation()" [formGroup]="defineDelegationForm">
           <ion-item no-lines>
-            <ion-input type="text" placeholder="Waiting for" formControlName="content"></ion-input>
+            <ion-input type="text" placeholder="Delegation" formControlName="content"></ion-input>
           </ion-item>
           <div *ngIf="checkDeadline">
             <ion-item no-lines>
               <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline" max="2099-12-31"></ion-datetime>
             </ion-item>
           </div>
-          <button ion-button full type="submit">Define waiting for</button>
+          <button ion-button full type="submit">Define delegation</button>
         </form>
       </ion-list>
     </div>

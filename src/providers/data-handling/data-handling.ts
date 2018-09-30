@@ -5,6 +5,7 @@ import { Goal } from '../../model/goal/goal.model';
 import { User } from '../../model/user/user.model';
 import { Action } from '../../model/action/action.model';
 import { Reference } from '../../model/reference/reference.model';
+import { Delegation } from '../../model/delegation/delegation.model';
 
 
 @Injectable()
@@ -19,88 +20,79 @@ export class DataHandlingProvider {
     }
 
     getCaptureList(userid) {
-        return this.db.list('/captures', ref => ref.orderByChild('userid').equalTo(userid));
+        return this.db.list('/users/' + userid + '/captures');
     }
  
     addCapture(capture: Capture, userid) {
-        return this.db.list('/captures').push(capture).then( ref => {
-            this.db.list('/users/' + userid + '/captures').set(ref.key, capture);
-        });
+        return this.db.list('/users/' + userid + '/captures').push(capture);
     }
 	
 	removeUnprocessedCapture(capture: Capture, userid) {
-        this.db.list('/users/' + userid + '/captures').remove(capture.key);
-        return this.db.list('/captures').remove(capture.key);
+        return this.db.list('/users/' + userid + '/captures').remove(capture.key);
     }
     
-    removeAction(action: Action, userid, goalkey) {
-        this.db.list('/users/' + userid + '/nextActions').remove(action.key);
-        this.db.list('/goals/' + goalkey + '/nextActions').remove(action.key);
-        return this.db.list('/nextActions').remove(action.key);
+    removeAction(action: Action, userid) {
+        return this.db.list('/users/' + userid + '/nextActions').remove(action.key);
+    }
+
+    removeDelegation(delegation: Delegation, userid) {
+        return this.db.list('/users/' + userid + '/delegations').remove(delegation.key);
     }
     
-    removeReference(reference: Reference, userid, goalkey) {
-        this.db.list('/users/' + userid + '/references').remove(reference.key);
-        this.db.list('/goals/' + goalkey + '/references').remove(reference.key);
-        return this.db.list('/references').remove(reference.key);
+    removeReference(reference: Reference, userid) {
+        return this.db.list('/users/' + userid + '/references').remove(reference.key);
 	}
     
     getGoalList(userid) {
-        return this.db.list('/goals', ref => ref.orderByChild('userid').equalTo(userid));
+        return this.db.list('/users/' + userid + '/goals');
     }
 
     addGoal(goal: Goal, userid) {
-        return this.db.list('/goals').push(goal).then( ref => {
-            this.db.list('/users/' + userid + '/goals').set(ref.key, goal);
-        });
+        return this.db.list('/users/' + userid + '/goals').push(goal);
     }
 
-    getReferenceListFromGoal(goalid) {
-        return this.db.list('/goals/' + goalid + '/references');
+    getReferenceListFromGoal(goalid, userid) {
+        return this.db.list('/users/' + userid + '/references', ref => ref.orderByChild('goalid').equalTo(goalid));
     }
 
-    getNextActionListFromGoal(goalid) {
-        return this.db.list('/goals/' + goalid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(false));
+    getNextActionListFromGoal(goalid, userid) {
+        return this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('goalid').equalTo(goalid));
+    }
+
+    getDelegationListFromGoal(goalid, userid) {
+        return this.db.list('/users/' + userid + '/delegations', ref => ref.orderByChild('goalid').equalTo(goalid));
     }
 
     getNextActionListFromUser(userid) {
-        return this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(false));
-    }
-
-    getWaitingForListFromGoal(goalid) {
-        return this.db.list('/goals/' + goalid + '/nextActions', ref => ref.orderByChild('delegated').equalTo(true));
+        return this.db.list('/users/' + userid + '/nextActions');
     }
 
     addNextActionToGoal(action: Action, goal: Goal, capture: Capture, userid) {
-        return this.db.list('/goals/' + goal.key + '/nextActions').push(action).then( ref => {
-            this.db.list('/nextActions').set(ref.key, action);
-            this.db.list('users/' + userid + '/nextActions').set(ref.key, action);
-        }).then( () => this.removeUnprocessedCapture(capture, userid));
+        return this.db.list('users/' + userid + '/nextActions').push(action).then( () => this.removeUnprocessedCapture(capture, userid));
+    }
+
+    addDelegationToGoal(delegation: Delegation, goal: Goal, capture: Capture, userid) {
+        return this.db.list('users/' + userid + '/delegations').push(delegation).then( () => this.removeUnprocessedCapture(capture, userid));
     }
 
     addReferenceToGoal(reference: Reference, goal: Goal, capture: Capture, userid){
-        return this.db.list('/goals/' + goal.key + '/references').push(reference).then( ref => {
-            this.db.list('/references').set(ref.key, reference);
-            this.db.list('/users/' + userid + '/references').set(ref.key, reference);
-        }).then( () => this.removeUnprocessedCapture(capture, userid));
+        return this.db.list('/users/' + userid + '/references').push(reference).then( () => this.removeUnprocessedCapture(capture, userid));
     }
 
     editNextAction(newAction: Action, action: Action, goal: Goal, userid) {
-        return this.removeAction(action, userid, goal.key).then( () => {this.db.list('/goals/' + goal.key + '/nextActions').push(newAction).then( ref => {
-            this.db.list('/nextActions').set(ref.key, newAction);
-            this.db.list('users/' + userid + '/nextActions').set(ref.key, newAction);
-        })});
+        return this.removeAction(action, userid).then( () => this.db.list('users/' + userid + '/nextActions').push(newAction));
+    }
+
+    editDelegation(newDelegation: Delegation, delegation: Delegation, goal: Goal, userid) {
+        return this.removeDelegation(delegation, userid).then( () => this.db.list('users/' + userid + '/delegations').push(newDelegation));
     }
 
     editReference(newReference: Reference, reference: Reference, goal: Goal, userid) {
-        return this.removeReference(reference, userid, goal.key).then( () => {this.db.list('/goals/' + goal.key + '/references').push(newReference).then( ref => {
-            this.db.list('/references').set(ref.key, newReference);
-            this.db.list('users/' + userid + '/references').set(ref.key, newReference);
-        })});
+        return this.removeReference(reference, userid).then( () => this.db.list('users/' + userid + '/references').push(newReference));
     }
 
-    getGoalFromGoalid(goalid) {
-        return this.db.object<Goal>('/goals/' + goalid);
+    getGoalFromGoalid(goalid, userid) {
+        return this.db.object<Goal>('/users/' + userid + '/goals/' + goalid);
     }
 
 

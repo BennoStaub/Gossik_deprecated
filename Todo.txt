@@ -1,6 +1,6 @@
 To Do:
--bi input felder mit typ number hets immerno en rand unedra
--datebank ihbaue das jede nur sini date lese chan, datebank isch momentan offe
+-deleteGoal ihbaue bi review
+-zeileumbruch wird nöd gmacht, überall nö
 -deploye und paarne geh zum teste
 -next aktion liste mache sortiert nach zit und priorität
 -forgot password implementiere

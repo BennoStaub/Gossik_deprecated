@@ -18,6 +18,6 @@
   </ion-row>
   <p>Process captures<p>
   <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
-   {{capture.content}}
+   <div [innerHtml]="capture.content" ng-repeat></div>
   </ion-item>
 </ion-content>
