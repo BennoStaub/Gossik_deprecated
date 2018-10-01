@@ -27,8 +27,8 @@
   
   <p>{{errorMsg}}</p>
 
-  <ion-item no-lines *ngFor="let doableAction of finalArray" (click)="takeThisAction(doableAction)">
-    <div [innerHtml]="doableAction.content"></div>
+  <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
+    <div [innerHtml]="action.content"></div>
   </ion-item>
 
 

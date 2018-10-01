@@ -24,8 +24,7 @@ export class TakeActionPage {
   giveTimeForm: FormGroup;
   doableActionArray: Action[] = [];
   errorMsg: string = '';
-  topPriorityDoableActions: Action[] = [];
-  finalArray: Action[] = [];
+  doableHighPriorityActions: Action[] = [];
   goalFromAction = {} as Goal;
   
 
@@ -54,7 +53,7 @@ export class TakeActionPage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
     });
-    this.doableActionList.subscribe(
+    this.doableActionList.take(1).subscribe(
       doableActionArray => {
         for(let doableAction of doableActionArray) {
           if(Number(doableAction.time) <= this.giveTimeForm.value.timeEstimate) {
@@ -62,24 +61,21 @@ export class TakeActionPage {
           }
         };
         if(this.doableActionArray.length > 0) {
-          let oldArray: Action[] = this.doableActionArray;
-          let newArray: Action[] = [];
           for(let numberDoableHighPriorityActions:number = 0; numberDoableHighPriorityActions < 3; numberDoableHighPriorityActions++) {
-            if(oldArray.length == 0) {
+            if(this.doableActionArray.length == 0) {
               continue;
             }
             let maxPriority = 0;
             let index = 0;
-            for(let counter: number = 0; counter <= oldArray.length-1; counter++) {
-              if(oldArray[counter].priority > maxPriority) {
-                maxPriority = oldArray[counter].priority;
+            for(let counter: number = 0; counter <= this.doableActionArray.length-1; counter++) {
+              if(this.doableActionArray[counter].priority > maxPriority) {
+                maxPriority = this.doableActionArray[counter].priority;
                 index = counter;
               }
             }
-            newArray.push(oldArray[index]);
-            oldArray.splice(index, 1);
+            this.doableHighPriorityActions.push(this.doableActionArray[index]);
+            this.doableActionArray.splice(index, 1);
           }
-          this.finalArray = newArray;
           this.pageCtrl = 'showActions';
           this.errorMsg = '';
         } else {

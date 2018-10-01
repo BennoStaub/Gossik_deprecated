@@ -21,12 +21,28 @@
     pointer-events: none;
  }
 
+ .toolbar-background{
+    //background-image: url('../assets/imgs/header4.png');
+    background-color: rgb(19, 18, 17);
+    background-repeat: no-repeat;
+    background-size:cover;
+ }
+
  ion-item {
-     border-radius: 5px;
-     margin-bottom: 1px !important;
+    border-radius: 5px;
+    margin-bottom: 1px !important;
+    background-image: url('../assets/imgs/item2.png');
+    background-repeat: no-repeat;
+    background-size:cover;
  }
  
  .item-inner {
     border-bottom-color: transparent !important;
     box-shadow: none !important;
+}
+
+ion-content {
+    background-image: url('../assets/imgs/background-3.png');
+    background-repeat: no-repeat;
+    background-size:cover;
 }
