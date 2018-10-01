@@ -19,7 +19,7 @@
     <form (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
       <ion-item no-lines>
         <ion-label>Time in min:</ion-label>
-        <ion-input type="number" placeholder="0" min="0" formControlName="timeEstimate" value="0"></ion-input>
+        <ion-input type="number" placeholder="0" min="0" formControlName="timeEstimate"></ion-input>
       </ion-item>
       <button ion-button full type="submit">Show doable action</button>
     </form>

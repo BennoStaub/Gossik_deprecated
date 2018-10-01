@@ -79,11 +79,11 @@
         </ion-item>
         <ion-item>
           <ion-label>Priority (0: low, 10: high):</ion-label>
-          <ion-input no-lines type="number" placeholder="0" min="0" max="10" formControlName="priority" value="0"></ion-input>
+          <ion-input type="number" placeholder="0" min="0" max="10" formControlName="priority"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label block>Estimated time in min:</ion-label>
-            <ion-input type="number" placeholder="Time" min="0" max="1000" formControlName="time" value="0"></ion-input>
+            <ion-input type="number" placeholder="0" min="0" max="1000" formControlName="time"></ion-input>
         </ion-item>
         <div *ngIf="checkDeadline">
           <ion-item no-lines>

@@ -1,10 +1,7 @@
 To Do:
--input fields for time and priority is the label directly on border, looks ugly
 -change remove in db to delete in function names: consistency!
--tutorial, like explanation of what a capture is
 -takeAction when clicking on action, should not be done right now
 -mark a goal as done (whenever action done, ask 'is goal achieved?')
--bi aktion etc definiere chamer 05 ihgeh und es zeigt denn 05 ah statt 5
 -s einte im db provider isch es objekt, statt list, luege wieso
 -han ihbaue dass captures, actions, delegations und references mit zeileumbruch dargstellt wehred, aber meh chan keine ihfüege will input statt text-area
 -forgot password implementiere
