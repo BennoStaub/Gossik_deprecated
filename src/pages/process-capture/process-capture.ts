@@ -145,8 +145,8 @@ export class ProcessCapturePage {
     this.errorMsg = "";
     this.newAction.content = this.defineActionForm.value.content;
     this.newAction.deadline = this.defineActionForm.value.deadline;
-    this.newAction.priority = this.defineActionForm.value.priority;
-    this.newAction.time = this.defineActionForm.value.time;
+    this.newAction.priority = Number(this.defineActionForm.value.priority);
+    this.newAction.time = Number(this.defineActionForm.value.time);
     this.newAction.goalid = this.assignedGoal.key;
     this.newAction.userid = this.auth.userid;
     if(this.newAction.content !== '' && this.newAction.content !== null && this.newAction.content !== undefined) {

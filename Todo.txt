@@ -1,13 +1,18 @@
 To Do:
+-bi aktion etc definiere chamer 05 ihgeh und es zeigt denn 05 ah statt 5
 -s einte im db provider isch es objekt, statt list, luege wieso
 -han ihbaue dass captures, actions, delegations und references mit zeileumbruch dargstellt wehred, aber meh chan keine ihfüege will input statt text-area
 -deleteGoal ihbaue bi review
--deploye und paarne geh zum teste
 -forgot password implementiere
 -meh chan unendlich viel tabs ufenand staple, wemer uf reviewgoal isch und immer wieder via menu review goals öffnet. söll also zersch checke obs scho uf dere site isch
 
 
 
-
+npm run ionic:build --prod 
+doesn't work, out of memory... app already too big?
+workaround for now:
+npm run ionic:build --aot --minifyjs --minifycss
+If this doesn't work, after using that I changed the first line of node_modules\.bin\ionic-app-scripts to:
+#!/bin/node --max_old_space_size=4096
 
 

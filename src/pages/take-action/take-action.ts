@@ -56,12 +56,12 @@ export class TakeActionPage {
     this.doableActionList.take(1).subscribe(
       doableActionArray => {
         for(let doableAction of doableActionArray) {
-          if(Number(doableAction.time) <= this.giveTimeForm.value.timeEstimate) {
+          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate)) {
             this.doableActionArray.push(doableAction);
           }
         };
         if(this.doableActionArray.length > 0) {
-          for(let numberDoableHighPriorityActions:number = 0; numberDoableHighPriorityActions < 3; numberDoableHighPriorityActions++) {
+          for(let numberDoableHighPriorityActions: number = 0; numberDoableHighPriorityActions < 3; numberDoableHighPriorityActions++) {
             if(this.doableActionArray.length == 0) {
               continue;
             }
