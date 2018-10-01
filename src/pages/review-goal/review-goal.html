@@ -24,7 +24,7 @@
 
   <div *ngIf="reviewCtrl == 'reviewGoal'">
     Reviewing Goal: {{goal.name}}
-    <button ion-button block round (click)="nextActions()">Show next actions</button>
+    <button ion-button block (click)="nextActions()">Show next actions</button>
     <div *ngIf="showNextActions">
       <ion-item no-lines *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
         <div [innerHtml]="nextAction.content"></div>
@@ -40,7 +40,7 @@
         </div>
       </ion-item>
     </div>
-    <button ion-button block round (click)="delegations()">Show delegations</button>
+    <button ion-button block (click)="delegations()">Show delegations</button>
     <div *ngIf="showDelegations">
     <ion-item no-lines *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
         <div [innerHtml]="delegation.content"></div>
@@ -54,7 +54,7 @@
       </div>
     </ion-item>
     </div>
-    <button ion-button block round (click)="references()">Show references</button>
+    <button ion-button block (click)="references()">Show references</button>
     <div *ngIf="showReferences">
     <ion-item no-lines *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
         <div [innerHtml]="reference.content"></div>

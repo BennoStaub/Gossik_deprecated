@@ -12,11 +12,16 @@
 <ion-content padding>
 
   <ion-row>
-	<ion-col style="text-align: center">
+  <ion-col style="text-align: center">
+    Capture any thought you have during your day to add it as a note for later processing!
+  </ion-col>
+  </ion-row>
+  <ion-row>
+  <ion-col style="text-align: center">
 		<button navPush="AddCapturePage" ion-button round>Add new capture</button>
 	</ion-col>
   </ion-row>
-  <p>Process captures<p>
+  <p>Thoughts captured and ready for processing:<p>
   <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
    <div [innerHtml]="capture.content"></div>
   </ion-item>

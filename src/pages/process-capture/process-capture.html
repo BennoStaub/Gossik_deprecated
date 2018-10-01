@@ -11,14 +11,9 @@
 
 
 <ion-content padding>
-
-  <div class="centered-block-container">
-    <div class="centered-block">
-      <font face="courier new">
-        <p [innerHtml]="capture.content"></p>
-      </font>
-    </div>
-  </div>
+  <font face="courier new">
+    <ion-item [innerHtml]="capture.content"></ion-item>
+  </font>
 
   <p>{{errorMsg}}</p>
 
@@ -45,19 +40,19 @@
 
   <div *ngIf="processCtrl == 'reviewGoal'">
     Reviewing Goal: {{assignedGoal.name}}
-    <button ion-button block round (click)="nextActions()">Show next actions</button>
+    <button ion-button block (click)="nextActions()">Show next actions</button>
     <div *ngIf="showNextActions">
     <ion-item no-lines *ngFor="let action of nextActionList | async">
       <div [innerHtml]="action.content"></div>
     </ion-item>
     </div>
-    <button ion-button block round (click)="delegations()">Show delegations</button>
+    <button ion-button block (click)="delegations()">Show delegations</button>
     <div *ngIf="showDelegations">
     <ion-item no-lines *ngFor="let delegation of delegationList | async">
       <div [innerHtml]="delegation.content"></div>
     </ion-item>
     </div>
-    <button ion-button block round (click)="references()">Show references</button>
+    <button ion-button block (click)="references()">Show references</button>
     <div *ngIf="showReferences">
     <ion-item no-lines *ngFor="let reference of referenceList | async">
       <div [innerHtml]="reference.content"></div>
