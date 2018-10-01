@@ -27,7 +27,7 @@
     <button ion-button block round (click)="nextActions()">Show next actions</button>
     <div *ngIf="showNextActions">
       <ion-item no-lines *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
-        {{nextAction.content}}
+        <div [innerHtml]="nextAction.content"></div>
         <div *ngIf="showAction === nextAction.key">
           <p>Priority: {{nextAction.priority}}</p>
           <p>Time estimate: {{nextAction.time}}min</p>
@@ -43,7 +43,7 @@
     <button ion-button block round (click)="delegations()">Show delegations</button>
     <div *ngIf="showDelegations">
     <ion-item no-lines *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
-      {{delegation.content}}
+        <div [innerHtml]="delegation.content"></div>
       <div *ngIf="showDelegation === delegation.key">
           <p *ngIf="delegation.deadline === ''">No deadline</p>
           <p *ngIf="delegation.deadline !== ''">Deadline: {{delegation.deadline}}</p>
@@ -57,7 +57,7 @@
     <button ion-button block round (click)="references()">Show references</button>
     <div *ngIf="showReferences">
     <ion-item no-lines *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
-      {{reference.content}}
+        <div [innerHtml]="reference.content"></div>
       <div *ngIf="showReference === reference.key">
           <div class="buttons-flex-container">
             <button class="button-left" ion-button round (click)="deleteReference(reference, goal)">Delete</button>

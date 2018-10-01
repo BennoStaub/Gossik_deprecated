@@ -31,7 +31,7 @@ export class HomePage {
 	  .map(
 	  changes => {
 		return changes.map(c => ({
-		  key: c.payload.key, ...c.payload.val()
+		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
 		}))
 		});
   }

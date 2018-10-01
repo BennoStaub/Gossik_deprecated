@@ -1,7 +1,13 @@
 To Do:
+-s einte im db provider isch es objekt, statt list, luege wieso
+-han ihbaue dass captures, actions, delegations und references mit zeileumbruch dargstellt wehred, aber meh chan keine ihfüege will input statt text-area
 -deleteGoal ihbaue bi review
--zeileumbruch wird nöd gmacht, überall nö
 -deploye und paarne geh zum teste
--next aktion liste mache sortiert nach zit und priorität
 -forgot password implementiere
 -meh chan unendlich viel tabs ufenand staple, wemer uf reviewgoal isch und immer wieder via menu review goals öffnet. söll also zersch checke obs scho uf dere site isch
+
+
+
+
+
+

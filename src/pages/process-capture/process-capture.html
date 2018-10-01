@@ -15,7 +15,7 @@
   <div class="centered-block-container">
     <div class="centered-block">
       <font face="courier new">
-        <p>"{{capture.content}}"</p>
+        <p [innerHtml]="capture.content"></p>
       </font>
     </div>
   </div>
@@ -47,15 +47,21 @@
     Reviewing Goal: {{assignedGoal.name}}
     <button ion-button block round (click)="nextActions()">Show next actions</button>
     <div *ngIf="showNextActions">
-    <ion-item no-lines *ngFor="let action of nextActionList | async">{{action.content}}</ion-item>
+    <ion-item no-lines *ngFor="let action of nextActionList | async">
+      <div [innerHtml]="action.content"></div>
+    </ion-item>
     </div>
     <button ion-button block round (click)="delegations()">Show delegations</button>
     <div *ngIf="showDelegations">
-    <ion-item no-lines *ngFor="let delegation of delegationList | async">{{delegation.content}}</ion-item>
+    <ion-item no-lines *ngFor="let delegation of delegationList | async">
+      <div [innerHtml]="delegation.content"></div>
+    </ion-item>
     </div>
     <button ion-button block round (click)="references()">Show references</button>
     <div *ngIf="showReferences">
-    <ion-item no-lines *ngFor="let reference of referenceList | async">{{reference.content}}</ion-item>
+    <ion-item no-lines *ngFor="let reference of referenceList | async">
+      <div [innerHtml]="reference.content"></div>
+    </ion-item>
     </div>
     Is right now an action required from you or someone else for this capture?
     <div class="buttons-flex-container">
