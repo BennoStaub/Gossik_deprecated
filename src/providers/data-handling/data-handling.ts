@@ -95,5 +95,46 @@ export class DataHandlingProvider {
         return this.db.object<Goal>('/users/' + userid + '/goals/' + goalid);
     }
 
+    deleteGoal(goalid, userid) {
+        return this.db.list('/users/' + userid + '/goals').remove(goalid).then( () => {
+            this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('goalid').equalTo(goalid))
+            .snapshotChanges()
+            .map(
+            changes => {
+            return changes.map(c => ({
+                key: c.payload.key, ...c.payload.val()
+            }))
+            }).take(1).subscribe(actions => {
+                for(let action of actions) {
+                    this.db.list('/users/' + userid + '/nextActions').remove(action.key);  
+                }
+            });
+            this.db.list('/users/' + userid + '/delegations', ref => ref.orderByChild('goalid').equalTo(goalid))
+            .snapshotChanges()
+            .map(
+            changes => {
+            return changes.map(c => ({
+                key: c.payload.key, ...c.payload.val()
+            }))
+            }).take(1).subscribe(delegations => {
+                for(let delegation of delegations) {
+                    this.db.list('/users/' + userid + '/delegations').remove(delegation.key);  
+                }
+            });
+            this.db.list('/users/' + userid + '/references', ref => ref.orderByChild('goalid').equalTo(goalid))
+            .snapshotChanges()
+            .map(
+            changes => {
+            return changes.map(c => ({
+                key: c.payload.key, ...c.payload.val()
+            }))
+            }).take(1).subscribe(references => {
+                for(let reference of references) {
+                    this.db.list('/users/' + userid + '/references').remove(reference.key);  
+                }
+            });
+        });
+    }
+
 
 }

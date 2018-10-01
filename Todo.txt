@@ -1,8 +1,12 @@
 To Do:
+-change remove in db to delete in function names: consistency!
+-tutorial, like explanation of what a capture is
+-delete goal
+-takeAction when clicking on action, should not be done right now
+-mark a goal as done (whenever action done, ask 'is goal achieved?')
 -bi aktion etc definiere chamer 05 ihgeh und es zeigt denn 05 ah statt 5
 -s einte im db provider isch es objekt, statt list, luege wieso
 -han ihbaue dass captures, actions, delegations und references mit zeileumbruch dargstellt wehred, aber meh chan keine ihfüege will input statt text-area
--deleteGoal ihbaue bi review
 -forgot password implementiere
 -meh chan unendlich viel tabs ufenand staple, wemer uf reviewgoal isch und immer wieder via menu review goals öffnet. söll also zersch checke obs scho uf dere site isch
 

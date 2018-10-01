@@ -24,21 +24,16 @@
 		<div padding-horizontal>
 			<div class="form-error">{{loginError}}</div>
 
-			<button ion-button full type="submit" [disabled]="!loginForm.valid">Log in</button>
-			<div class="login-footer">
-				<p>
-					<a href="#">Forgot password?</a><br>
-					If you're a new user, please sign up.
-				</p>
-			</div>
-
-			
+			<button ion-button full type="submit" [disabled]="!loginForm.valid">Log in</button>			
 		</div>
 	</form>
 	<ion-list>
-		<button ion-button icon-left block clear (click)="signup()">
+		<button ion-button icon-left class="signInButton" (click)="signup()">
 			<ion-icon name="person-add"></ion-icon>
 			Sign up
+		</button>
+		<button ion-button icon-left class="signInButton" (click)="forgotPassword()">
+			Forgot password?
 		</button>
 	</ion-list>
 </ion-content>

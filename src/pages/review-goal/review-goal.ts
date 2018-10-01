@@ -211,5 +211,11 @@ export class ReviewGoalPage {
     }
   }
 
+  deleteGoal(goal: Goal) {
+    this.db.deleteGoal(goal.key, this.auth.userid).then( () => {
+      this.reviewCtrl = '';
+    });
+  }
+
 
 }
