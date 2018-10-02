@@ -88,15 +88,19 @@ export class TakeActionPage {
   //valueChanges().subscribe() get a call whenever the data changes either locally or in the realtime database
   //therefore, the take(1) to make the call only once
   takeThisAction(action: Action) {
-    this.db.getGoalFromGoalid(action.goalid, this.auth.userid).valueChanges().take(1).subscribe( data => {
-      this.goalFromAction = data;
-      let capture = {} as Capture;
-      capture.content = 'Action finished: ' + action.content + '\n from goal: ' + data.name;
-      capture.userid = this.auth.userid;
-      this.db.removeAction(action, this.auth.userid).then( () => {
-        this.db.addCapture(capture, this.auth.userid);
-        this.navCtrl.setRoot(HomePage);
-      });
+    //this.db.getGoalFromGoalid(action.goalid, this.auth.userid).valueChanges().take(1).subscribe( data => {
+    //  this.goalFromAction = data;
+    //  let capture = {} as Capture;
+    //  capture.content = 'Action finished: ' + action.content + '\n from goal: ' + data.name;
+    //  capture.userid = this.auth.userid;
+    //  this.db.removeAction(action, this.auth.userid).then( () => {
+    //    this.db.addCapture(capture, this.auth.userid);
+    //    this.navCtrl.setRoot(HomePage);
+    //  });
+    //});
+    action.taken = true;
+    this.db.editAction(action, this.auth.userid).then( () => {
+      this.pageCtrl = 'actionTaken';
     });
   }
 

@@ -26,10 +26,15 @@
   </div>
   
   <p>{{errorMsg}}</p>
+  <div *ngIf="pageCtrl == 'showActions'">
+    <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
+      <div [innerHtml]="action.content"></div>
+    </ion-item>
+  </div>
 
-  <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
-    <div [innerHtml]="action.content"></div>
-  </ion-item>
+  <div *ngIf="pageCtrl == 'actionTaken'">
+    <ion-item>Great, have fun while taking Action!</ion-item>
+  </div>
 
 
 

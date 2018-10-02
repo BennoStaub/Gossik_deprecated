@@ -79,16 +79,22 @@ export class DataHandlingProvider {
         return this.db.list('/users/' + userid + '/references').push(reference).then( () => this.removeUnprocessedCapture(capture, userid));
     }
 
-    editNextAction(newAction: Action, action: Action, goal: Goal, userid) {
-        return this.removeAction(action, userid).then( () => this.db.list('users/' + userid + '/nextActions').push(newAction));
+    editAction(action: Action, userid) {
+        let actionkey = action.key;
+        delete action.key;
+        return this.db.database.ref('/users/' + userid + '/nextActions/' + actionkey).set(action);
     }
 
-    editDelegation(newDelegation: Delegation, delegation: Delegation, goal: Goal, userid) {
-        return this.removeDelegation(delegation, userid).then( () => this.db.list('users/' + userid + '/delegations').push(newDelegation));
+    editDelegation(delegation: Delegation, userid) {
+        let delegationkey = delegation.key;
+        delete delegation.key;
+        return this.db.database.ref('/users/' + userid + '/delegations/' + delegationkey).set(delegation);
     }
 
-    editReference(newReference: Reference, reference: Reference, goal: Goal, userid) {
-        return this.removeReference(reference, userid).then( () => this.db.list('users/' + userid + '/references').push(newReference));
+    editReference(reference: Reference, userid) {
+        let referencekey = reference.key;
+        delete reference.key;
+        return this.db.database.ref('/users/' + userid + '/references/' + referencekey).set(reference);
     }
 
     getGoalFromGoalid(goalid, userid) {

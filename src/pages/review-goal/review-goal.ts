@@ -162,13 +162,11 @@ export class ReviewGoalPage {
       if(this.editActionForm.value.priority != 0 && this.editActionForm.value.priority !== null && this.editActionForm.value.priority !== undefined) {
         if(this.editActionForm.value.time != 0 && this.editActionForm.value.time !== null && this.editActionForm.value.time !== undefined) {
           this.errorMsg = "";
-          this.newAction.content = this.editActionForm.value.content;
-          this.newAction.deadline = this.editActionForm.value.deadline;
-          this.newAction.priority = this.editActionForm.value.priority;
-          this.newAction.time = this.editActionForm.value.time;
-          this.newAction.goalid = this.goal.key;
-          this.newAction.userid = this.auth.userid;
-          this.db.editNextAction(this.newAction, this.action, this.goal, this.auth.userid).then( () => {
+          this.action.content = this.editActionForm.value.content;
+          this.action.deadline = this.editActionForm.value.deadline;
+          this.action.priority = this.editActionForm.value.priority;
+          this.action.time = this.editActionForm.value.time;
+          this.db.editAction(this.action, this.auth.userid).then( () => {
           this.reviewCtrl = 'reviewGoal';
           });
         } else {
@@ -185,11 +183,9 @@ export class ReviewGoalPage {
   editDelegation() {
     if(this.editDelegationForm.value.content !== '' && this.editDelegationForm.value.content !== null && this.editDelegationForm.value.content !== undefined) {
       this.errorMsg = "";
-      this.newDelegation.content = this.editDelegationForm.value.content;
-      this.newDelegation.deadline = this.editDelegationForm.value.deadline;
-      this.newDelegation.goalid = this.goal.key;
-      this.newDelegation.userid = this.auth.userid;
-      this.db.editDelegation(this.newDelegation, this.delegation, this.goal, this.auth.userid).then( () => {
+      this.delegation.content = this.editDelegationForm.value.content;
+      this.delegation.deadline = this.editDelegationForm.value.deadline;
+      this.db.editDelegation(this.delegation, this.auth.userid).then( () => {
       this.reviewCtrl = 'reviewGoal';
       });
     } else {
@@ -200,10 +196,8 @@ export class ReviewGoalPage {
   editReference() {
     if(this.editReferenceForm.value.content !== '' && this.editReferenceForm.value.content !== null && this.editReferenceForm.value.content !== undefined) {
       this.errorMsg = "";
-      this.newReference.content = this.editReferenceForm.value.content;
-      this.newReference.goalid = this.goal.key;
-      this.newReference.userid = this.auth.userid;
-      this.db.editReference(this.newReference, this.reference, this.goal, this.auth.userid).then( () => {
+      this.reference.content = this.editReferenceForm.value.content;
+      this.db.editReference(this.reference, this.auth.userid).then( () => {
       this.reviewCtrl = 'reviewGoal';
       });
     } else {
