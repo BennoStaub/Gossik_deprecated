@@ -19,7 +19,7 @@ export class DataHandlingProvider {
         return this.db.list('users').set(userid, this.userData); 
     }
 
-    getCaptureList(userid) {
+    getCaptureListFromUser(userid) {
         return this.db.list('/users/' + userid + '/captures');
     }
  
@@ -65,6 +65,10 @@ export class DataHandlingProvider {
 
     getNextActionListFromUser(userid) {
         return this.db.list('/users/' + userid + '/nextActions');
+    }
+
+    getTakenActionListFromUser(userid) {
+        return this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('taken').equalTo(true));
     }
 
     addNextActionToGoal(action: Action, goal: Goal, capture: Capture, userid) {

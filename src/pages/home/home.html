@@ -21,6 +21,9 @@
 		<button navPush="AddCapturePage" ion-button round>Add new capture</button>
 	</ion-col>
   </ion-row>
+  <ion-item no-lines text-wrap *ngFor="let takenAction of takenActionList | async" navPush="ProcessTakenActionPage" [navParams]="{takenAction:takenAction}">
+    <div>You started with action "{{takenAction.content}}", click here to process</div>
+  </ion-item>
   <p>Thoughts captured and ready for processing:<p>
   <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
    <div [innerHtml]="capture.content"></div>

@@ -8,6 +8,7 @@ import { Capture } from '../../model/capture/capture.model';
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 import { LoginPage } from '../login/login';
+import { Action } from '../../model/action/action.model';
 
 @Component({
   selector: 'page-home',
@@ -16,7 +17,8 @@ import { LoginPage } from '../login/login';
 export class HomePage {
 
   
-  captureList: Observable<Capture[]>;
+	captureList: Observable<Capture[]>;
+	takenActionList: Observable<Action[]>;
  
   constructor(
 		public navCtrl: NavController,
@@ -26,7 +28,7 @@ export class HomePage {
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
 		}
-	  this.captureList = this.db.getCaptureList(this.auth.userid)
+	  this.captureList = this.db.getCaptureListFromUser(this.auth.userid)
 	  .snapshotChanges()
 	  .map(
 	  changes => {
@@ -34,6 +36,15 @@ export class HomePage {
 		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
 		}))
 		});
+		this.takenActionList = this.db.getTakenActionListFromUser(this.auth.userid)
+	  .snapshotChanges()
+	  .map(
+	  changes => {
+		return changes.map(c => ({
+		  key: c.payload.key, ...c.payload.val()
+		}))
+		});
+		
   }
  
 }
