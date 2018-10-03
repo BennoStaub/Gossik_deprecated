@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Gossik</ion-title>
+    <ion-buttons end>
+      <button ion-button menuToggle edge>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="pageCtrl == ''">
+    Please indicate whether you finished the action or want to abort it.<br>
+    <div class="buttons-flex-container">
+      <button class="button-left" ion-button round (click)="actionFinished()">Finished</button>
+      <button class="button-right" ion-button round (click)="abortAction()">Abort</button>
+    </div>
+  </div>
+
+  <div *ngIf="pageCtrl == 'actionAborted'">
+    You aborted this action, it has been put back into your actions list
+  </div>
+
+  <div *ngIf="pageCtrl == 'actionFinished'">
+    Congrats! Is your goal now accomplished or does it need more action?
+    <div class="buttons-flex-container">
+      <button class="button-left" ion-button round (click)="goalFinished()">Accomplished</button>
+      <button class="button-right" ion-button round (click)="goalNotFinished()">Not yet</button>
+    </div>
+  </div>
+
+  <div *ngIf="pageCtrl == 'goalFinished'">
+    Congratulations to finishing your goal! Now let's head on to achieving the next ones!
+  </div>
+
+</ion-content>

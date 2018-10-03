@@ -22,7 +22,7 @@
  }
 
  .toolbar-background{
-    background-image: url('../assets/imgs/purple_header.png');
+    background-image: url('../assets/imgs/brown_header.png');
     background-repeat: no-repeat;
     background-size:cover;
  }
@@ -30,7 +30,9 @@
  ion-item {
     border-radius: 5px;
     margin-bottom: 1px !important;
-    background-color: #3D2C45;
+    background-image: url('../assets/imgs/brown_item.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
  }
  
  .item-inner {
@@ -39,7 +41,7 @@
 }
 
 ion-content {
-    background-image: url('../assets/imgs/purple_background.png');
+    background-image: url('../assets/imgs/brown_background.png');
     background-repeat: no-repeat;
     background-size:cover;
 }

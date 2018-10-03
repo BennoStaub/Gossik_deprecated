@@ -35,7 +35,7 @@
         <ion-label stacked>Or create new goal</ion-label><br>
         <ion-textarea [(ngModel)]="goalname" placeholder="Goal name"></ion-textarea>
       </ion-item>
-      <button ion-button block clear (click)="addGoal(goalname)">Create new goal</button>
+      <button ion-button block (click)="addGoal(goalname)">Create new goal</button>
   </div>
 
   <div *ngIf="processCtrl == 'reviewGoal'">

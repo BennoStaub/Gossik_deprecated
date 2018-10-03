@@ -8,4 +8,5 @@ export interface Action {
     priority: number;
     deadline: string;
     time: number;
+    taken: boolean;
 }

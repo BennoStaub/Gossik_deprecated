@@ -57,6 +57,12 @@ export class ReviewGoalPage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
     });
+    this.goalList.subscribe( goalList => {
+      if(goalList.length == 0) {
+        this.errorMsg = 'You don\'t have any goals yet. Capture your thoughts and process them to create goals!';
+      }
+    })
+    console.log(this.goalList);
   }
 
   ionViewDidLoad() {

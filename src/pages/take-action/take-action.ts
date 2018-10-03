@@ -6,9 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Action } from '../../model/action/action.model';
 import { Observable } from 'rxjs/Observable';
 import { Goal } from '../../model/goal/goal.model';
-import { Capture } from '../../model/capture/capture.model';
 import 'rxjs/add/operator/take';
-import { HomePage } from '../home/home';
 
 
 @IonicPage()
@@ -56,7 +54,7 @@ export class TakeActionPage {
     this.doableActionList.take(1).subscribe(
       doableActionArray => {
         for(let doableAction of doableActionArray) {
-          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate)) {
+          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate) && !doableAction.taken) {
             this.doableActionArray.push(doableAction);
           }
         };
@@ -85,19 +83,7 @@ export class TakeActionPage {
     );
   }
 
-  //valueChanges().subscribe() get a call whenever the data changes either locally or in the realtime database
-  //therefore, the take(1) to make the call only once
   takeThisAction(action: Action) {
-    //this.db.getGoalFromGoalid(action.goalid, this.auth.userid).valueChanges().take(1).subscribe( data => {
-    //  this.goalFromAction = data;
-    //  let capture = {} as Capture;
-    //  capture.content = 'Action finished: ' + action.content + '\n from goal: ' + data.name;
-    //  capture.userid = this.auth.userid;
-    //  this.db.removeAction(action, this.auth.userid).then( () => {
-    //    this.db.addCapture(capture, this.auth.userid);
-    //    this.navCtrl.setRoot(HomePage);
-    //  });
-    //});
     action.taken = true;
     this.db.editAction(action, this.auth.userid).then( () => {
       this.pageCtrl = 'actionTaken';
