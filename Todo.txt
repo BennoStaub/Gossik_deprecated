@@ -1,13 +1,17 @@
 To Do:
--change theme to blue one
--when reviewing goals but no goals yet, show error
--ProcessTakenActionPage implementiere
--mark a goal as done (whenever action done, ask 'is goal achieved?')
 -s einte im db provider isch es objekt, statt list, luege wieso
--han ihbaue dass captures, actions, delegations und references mit zeileumbruch dargstellt wehred, aber meh chan keine ihfüege will input statt text-area
 -forgot password implementiere
 -meh chan unendlich viel tabs ufenand staple, wemer uf reviewgoal isch und immer wieder via menu review goals öffnet. söll also zersch checke obs scho uf dere site isch
 
+
+deploying:
+firebase init 
+<choose hosting>
+<dir: www>
+<yes>
+<no>
+npm run ionic:build --aot --minifyjs --minifycss
+firebase deploy 
 
 
 npm run ionic:build --prod 
