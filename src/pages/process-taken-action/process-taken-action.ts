@@ -58,7 +58,7 @@ export class ProcessTakenActionPage {
       let capture = {} as Capture;
       capture.content = 'Action finished: ' + this.takenAction.content + '\n from goal: ' + data.name;
       capture.userid = this.auth.userid;
-      this.db.removeAction(this.takenAction, this.auth.userid).then( () => {
+      this.db.deleteAction(this.takenAction, this.auth.userid).then( () => {
         this.db.addCapture(capture, this.auth.userid);
         this.navCtrl.setRoot(HomePage);
       });

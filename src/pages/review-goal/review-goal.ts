@@ -123,15 +123,15 @@ export class ReviewGoalPage {
   }
 
   deleteAction(action: Action, goal) {
-    this.db.removeAction(action, this.auth.userid);
+    this.db.deleteAction(action, this.auth.userid);
   }
 
   deleteDelegation(delegation: Delegation, goal) {
-    this.db.removeDelegation(delegation, this.auth.userid);
+    this.db.deleteDelegation(delegation, this.auth.userid);
   }
 
   deleteReference(reference: Reference, goal) {
-    this.db.removeReference(reference, this.auth.userid);
+    this.db.deleteReference(reference, this.auth.userid);
   }
 
   goToEditAction(action: Action) {

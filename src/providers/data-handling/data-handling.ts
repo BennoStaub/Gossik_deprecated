@@ -27,19 +27,19 @@ export class DataHandlingProvider {
         return this.db.list('/users/' + userid + '/captures').push(capture);
     }
 	
-	removeUnprocessedCapture(capture: Capture, userid) {
+	deleteCapture(capture: Capture, userid) {
         return this.db.list('/users/' + userid + '/captures').remove(capture.key);
     }
     
-    removeAction(action: Action, userid) {
+    deleteAction(action: Action, userid) {
         return this.db.list('/users/' + userid + '/nextActions').remove(action.key);
     }
 
-    removeDelegation(delegation: Delegation, userid) {
+    deleteDelegation(delegation: Delegation, userid) {
         return this.db.list('/users/' + userid + '/delegations').remove(delegation.key);
     }
     
-    removeReference(reference: Reference, userid) {
+    deleteReference(reference: Reference, userid) {
         return this.db.list('/users/' + userid + '/references').remove(reference.key);
 	}
     
@@ -71,16 +71,20 @@ export class DataHandlingProvider {
         return this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('taken').equalTo(true));
     }
 
+    getGoalFromGoalid(goalid, userid) {
+        return this.db.object<Goal>('/users/' + userid + '/goals/' + goalid);
+    }
+
     addNextActionToGoal(action: Action, goal: Goal, capture: Capture, userid) {
-        return this.db.list('users/' + userid + '/nextActions').push(action).then( () => this.removeUnprocessedCapture(capture, userid));
+        return this.db.list('users/' + userid + '/nextActions').push(action).then( () => this.deleteCapture(capture, userid));
     }
 
     addDelegationToGoal(delegation: Delegation, goal: Goal, capture: Capture, userid) {
-        return this.db.list('users/' + userid + '/delegations').push(delegation).then( () => this.removeUnprocessedCapture(capture, userid));
+        return this.db.list('users/' + userid + '/delegations').push(delegation).then( () => this.deleteCapture(capture, userid));
     }
 
     addReferenceToGoal(reference: Reference, goal: Goal, capture: Capture, userid){
-        return this.db.list('/users/' + userid + '/references').push(reference).then( () => this.removeUnprocessedCapture(capture, userid));
+        return this.db.list('/users/' + userid + '/references').push(reference).then( () => this.deleteCapture(capture, userid));
     }
 
     editAction(action: Action, userid) {
@@ -99,10 +103,6 @@ export class DataHandlingProvider {
         let referencekey = reference.key;
         delete reference.key;
         return this.db.database.ref('/users/' + userid + '/references/' + referencekey).set(reference);
-    }
-
-    getGoalFromGoalid(goalid, userid) {
-        return this.db.object<Goal>('/users/' + userid + '/goals/' + goalid);
     }
 
     deleteGoal(goalid, userid) {

@@ -67,8 +67,8 @@ export class ProcessCapturePage {
     console.log('ionViewDidLoad ProcessCapturePage with capture: ' + this.capture.content);
   }
   
-  removeUnprocessedCapture(capture: Capture) {
-    this.dataHandlingProvider.removeUnprocessedCapture(capture, this.auth.userid).then(ref => {
+  deleteCapture(capture: Capture) {
+    this.dataHandlingProvider.deleteCapture(capture, this.auth.userid).then(ref => {
       this.navCtrl.setRoot(HomePage);
     })
   }
