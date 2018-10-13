@@ -34,12 +34,17 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    rgb(43, 30, 23),
+  primary:    rgba(94, 61, 42, 0.5),
   secondary:  #4e4e4e,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222
 );
+
+
+//There two variables change application wide button text color
+$button-md-text-color: #000000 !important;
+$button-ios-text-color: #000000 !important;
 
 
 // App iOS Variables
@@ -70,7 +75,7 @@ $colors: (
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.dark";
+@import "ionic.theme.default";
 
 
 // Ionicons

@@ -19,34 +19,50 @@
     width: 100%;
     text-align: center;
     pointer-events: none;
+    color: #000000 !important;
  }
 
- .toolbar-background{
-    background-image: url('../assets/imgs/brown_header.png');
-    background-repeat: no-repeat;
-    background-size:cover;
- }
-
- ion-item {
-    border-radius: 5px;
-    margin-bottom: 1px !important;
-    background-image: url('../assets/imgs/brown_item3.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
- }
- 
- .item-inner {
-    border-bottom-color: transparent !important;
-    box-shadow: none !important;
+ //These 3 lines change the title text color application
+.toolbar-title.toolbar-title-md, 
+.toolbar-title.toolbar-title-ios, 
+.toolbar-title.toolbar-title-wp { 
+    color: #000000 !important; 
 }
 
+.toolbar-background{
+   background-color: map-get($colors, primary);
+   //background-image: url('../assets/imgs/brown_header.png');
+   //background-repeat: no-repeat;
+   //background-size: cover;
+}
+
+ion-title {
+   color: #000000 !important;
+}
+
+ion-item {
+   border-radius: 5px;
+   margin-bottom: 1px !important;
+   color: #000000 !important;
+   background-color: map-get($colors, primary) !important;
+   //background-image: url('../assets/imgs/brown_item3.png');
+   //background-repeat: no-repeat;
+   //background-size: 100% 100%;
+   opacity: 1;
+}
+
+ 
+
+
 ion-content {
-    background-image: url('../assets/imgs/brown_new_background.png');
+    background-image: url('../assets/imgs/brown_bg_new1.png');
     background-repeat: no-repeat;
     background-size:cover;
+    color: #000000 !important;
 }
 
 ion-label {
     margin-left: 5px !important;
     width: 80%;
+    color: #000000 !important;
 }

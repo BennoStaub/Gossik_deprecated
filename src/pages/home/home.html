@@ -22,10 +22,12 @@
 	</ion-col>
   </ion-row>
   <ion-item no-lines text-wrap *ngFor="let takenAction of takenActionList | async" navPush="ProcessTakenActionPage" [navParams]="{takenAction:takenAction}">
+    <div class="ion-item-bg"></div>
     <div>You started with action "{{takenAction.content}}", click here to process</div>
   </ion-item>
   <p>Thoughts captured and ready for processing:<p>
   <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
-   <div [innerHtml]="capture.content"></div>
+    <div class="ion-item-bg"></div>
+    <div [innerHtml]="capture.content"></div>
   </ion-item>
 </ion-content>
