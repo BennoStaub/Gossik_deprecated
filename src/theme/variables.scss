@@ -34,7 +34,7 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    rgba(94, 61, 42, 0.5),
+  primary:    rgba(13, 39, 119, 0.699),
   secondary:  #4e4e4e,
   danger:     #f53d3d,
   light:      #f4f4f4,
@@ -43,8 +43,12 @@ $colors: (
 
 
 //There two variables change application wide button text color
-$button-md-text-color: #000000 !important;
-$button-ios-text-color: #000000 !important;
+$button-md-text-color: #000000;
+$button-ios-text-color: #000000;
+
+//These two variable change application wide button background color
+$button-md-background-color: map-get($colors, primary);
+$button-ios-background-color: map-get($colors, primary);
 
 
 // App iOS Variables
