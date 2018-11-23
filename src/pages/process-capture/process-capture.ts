@@ -44,7 +44,6 @@ export class ProcessCapturePage {
   constructor(
 	  public navCtrl: NavController,
 	  public navParams: NavParams,
-    private dataHandlingProvider: DataHandlingProvider,
     private auth: AuthentificationProvider,
     private db: DataHandlingProvider,
     private fb: FormBuilder

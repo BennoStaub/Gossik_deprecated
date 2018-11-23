@@ -10,6 +10,8 @@ import { AuthentificationProvider } from '../../providers/authentification/authe
 import { LoginPage } from '../login/login';
 import { Action } from '../../model/action/action.model';
 
+import { Platform } from 'ionic-angular';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -19,12 +21,15 @@ export class HomePage {
   
 	captureList: Observable<Capture[]>;
 	takenActionList: Observable<Action[]>;
+	Oplatform: string[];
  
   constructor(
 		public navCtrl: NavController,
 		private auth: AuthentificationProvider,
-		private db: DataHandlingProvider
+		private db: DataHandlingProvider,
+		public platform: Platform
 	) {
+  	this.Oplatform = this.platform.platforms()
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
 		}
