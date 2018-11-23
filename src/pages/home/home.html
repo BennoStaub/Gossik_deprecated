@@ -27,7 +27,6 @@
   </ion-item>
   <p>Thoughts captured and ready for processing:<p>
   <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
-    <div class="ion-item-bg"></div>
-    <div [innerHtml]="capture.content"></div>
+    <div class="ion-item-bg" [innerHtml]="capture.content" (swipe)="removeCapture(capture)"></div>
   </ion-item>
 </ion-content>

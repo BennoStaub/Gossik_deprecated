@@ -1,11 +1,30 @@
-To Do:
+To do
+-google calendar ahluege und das besser implementiere (timeslots bis uf 5min dynamisch abe, dasmer für jede task genau sege chan wie lang, für jede task gad no d referenze wod bruchsch usw)
+-main app isch am pc, am handy eifach captures sammle und chli processe und Tasks sueche zum mache wenn zit hesch
+-simples design erstelle wo uf pc und handy guet usgseht. wiesse hintergrund und buttons etc. eifach liecht färbe oder so
+-remove capture without processing wegneh und via swipe lösche
+-uf processing site 'Assign to Goal' change zu 'To which goals belongs this capture?'
+-change priority label 1:low statt 0:low
+-project review sölmer neui aktione, reference und delegatione direkt adde chöne
+-miteme UX expert rede zum das berede und dir helfe. etz muesches zersch mal benutzerfründlich mache
+-add new capture gad ufde startsite mache, also gad chöne ihgeh und adde, statt ufe neui site
+-bi review goal visualisiere! nöd so wie jetzt sondern es söll gad roadmap ahzeige, ca so:
+    -aktion a1 -> wait for delegation a1 -> aktion a2 -> aktion a3
+       referenz a1               referenz a3
+    -aktion b1 -> aktion b2 -> wait for delegation b2 -> aktion b3
+                    referenz b2
+    so chamer für jede aktionsstrang nach links/rechts swipe zum en überblick ha wenn was dra chunt, meh chan neui delegatione adde und sege weli aktione für die delegation warte müend etc.
+    aktione hend eh farb, reference eh farb, delegatione eh farb
+    meh chan alles au schön verschiebe eifach druf klicke und anen neue platz verschiebe
+    deadlines/priorities usw zeigts alles ah wemer druf klickt.
+    für die sache wo scho gmacht worde sind zeigts eh roadmap ah, wenn was gmacht worde isch
+
 -simples design erstelle
--mit patricia, alisa etc. rede ob gossik so ihbaue willsch dass d lüt alles dokumentiered wenn sie was mached, siehe letst punkt uf todo excel
 -irgendwie ihbaue dasmer eh roadmap chan erstelle mit key points und deadlines für die keypoints etc
 -ihbaue dasmer eh sequenz vo tasks vorplane chan, dasmer alles scho dureplant het für die wo das wönd. wenn denn aktion fertig chunts in capture bin aber nur zum frage ob negst aktion no korrekt isch oder gänderet werde muess
 -buttons chasch nöd systemwit customize, erstellsch halt fucking klasse etc. vlt sogar gar kei buttons meh sondern bilder?
-Push plugin installiert und Push in Providers in app.module.ts hinzuegfüegt, meh nonig
--forgot password implementiere
+-Push plugin installiert und Push in Providers in app.module.ts hinzuegfüegt, meh nonig
+-forgot password implementiere (chasch uf firebase bi authentification ihrichte)
 -meh chan unendlich viel tabs ufenand staple, wemer uf reviewgoal isch und immer wieder via menu review goals öffnet. söll also zersch checke obs scho uf dere site isch
 -muess integrierbar si fürde pc zum sache bearbeite etc. (procese z.b. goht besser am pc) und au websitene etc via references ufrüefe
 -fortschritt, timeline etc. glich visualisiere wie das wod amel bi quora gsehsch (au da wo de diego zeichned het)

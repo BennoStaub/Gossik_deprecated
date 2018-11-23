@@ -42,13 +42,16 @@ $colors: (
 );
 
 
-//There two variables change application wide button text color
+// There two variables change application wide button text color
 $button-md-text-color: #000000;
 $button-ios-text-color: #000000;
 
-//These two variable change application wide button background color
+// These two variable change application wide button background color
 $button-md-background-color: map-get($colors, primary);
 $button-ios-background-color: map-get($colors, primary);
+
+// This line changes the color of all the placeholder in ion-textarea and ion-input
+$text-input-placeholder-color: #000000;
 
 
 // App iOS Variables
