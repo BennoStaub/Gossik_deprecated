@@ -26,7 +26,7 @@ export class ProcessCapturePage {
   nextActionList: Observable<Action[]>;
   delegationList: Observable<Delegation[]>;
   newGoal = {} as Goal;
-  processCtrl: string = 'start';
+  processCtrl: string = 'chooseGoal';
   assignedGoal = {} as Goal;
   showNextActions: boolean = false;
   showDelegations: boolean = false;
@@ -65,16 +65,6 @@ export class ProcessCapturePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProcessCapturePage with capture: ' + this.capture.content);
-  }
-  
-  deleteCapture(capture: Capture) {
-    this.dataHandlingProvider.deleteCapture(capture, this.auth.userid).then(ref => {
-      this.navCtrl.setRoot(HomePage);
-    })
-  }
-
-  goToProcessCapture() {
-    this.processCtrl = 'chooseGoal';
   }
 
   addGoal(goalname) {
