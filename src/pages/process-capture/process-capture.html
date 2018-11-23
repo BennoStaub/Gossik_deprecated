@@ -18,13 +18,13 @@
   <p>{{errorMsg}}</p>
 
   <div *ngIf="processCtrl == 'chooseGoal'">
-      <p>Assign to goal</p> 
+      <p>To which goal belongs this capture?</p> 
       <ion-item no-lines *ngFor="let goal of goalList | async" (click)="addToGoal(goal)">
         {{goal.name}}
       </ion-item>
       <br>
       <ion-item no-lines>
-        <ion-label stacked>Or create new goal</ion-label><br>
+        <ion-label stacked>Create new goal for this capture</ion-label><br>
         <ion-textarea [(ngModel)]="goalname" placeholder="Goal name"></ion-textarea>
       </ion-item>
       <button ion-button block (click)="addGoal(goalname)">Create new goal</button>
