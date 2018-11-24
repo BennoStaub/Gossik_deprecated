@@ -21,7 +21,6 @@ export class HomePage {
   
 	captureList: Observable<Capture[]>;
 	takenActionList: Observable<Action[]>;
-	Oplatform: string[];
  
   constructor(
 		public navCtrl: NavController,
@@ -29,27 +28,25 @@ export class HomePage {
 		private db: DataHandlingProvider,
 		public platform: Platform
 	) {
-  	this.Oplatform = this.platform.platforms()
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
 		}
-	  this.captureList = this.db.getCaptureListFromUser(this.auth.userid)
-	  .snapshotChanges()
-	  .map(
-	  changes => {
+		this.captureList = this.db.getCaptureListFromUser(this.auth.userid)
+		.snapshotChanges()
+		.map(
+		changes => {
 		return changes.map(c => ({
 		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
 		}))
 		});
 		this.takenActionList = this.db.getTakenActionListFromUser(this.auth.userid)
-	  .snapshotChanges()
-	  .map(
-	  changes => {
+		.snapshotChanges()
+		.map(
+		changes => {
 		return changes.map(c => ({
 		  key: c.payload.key, ...c.payload.val()
 		}))
 		});
-		
   	}
 
   	removeCapture(capture: Capture) {
