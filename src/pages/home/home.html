@@ -16,9 +16,13 @@
   </ion-col>
   </ion-row>
   <ion-row>
-  <ion-col style="text-align: center">
-		<button navPush="AddCapturePage" ion-button round>Add new capture</button>
-	</ion-col>
+    <p>{{errorMsg}}</p>
+ 
+  <ion-item>
+    <ion-label stacked>Content</ion-label>
+    <ion-textarea [(ngModel)]="newCapture.content" placeholder="Input new capture"></ion-textarea>
+  </ion-item>
+  <button ion-button block (click)="addCapture(newCapture)">Add</button>
   </ion-row>
   <ion-item no-lines text-wrap *ngFor="let takenAction of takenActionList | async" navPush="ProcessTakenActionPage" [navParams]="{takenAction:takenAction}">
     <div class="ion-item-bg"></div>

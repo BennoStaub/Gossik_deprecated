@@ -2,15 +2,12 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
-
-
 import { Capture } from '../../model/capture/capture.model';
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 import { LoginPage } from '../login/login';
 import { Action } from '../../model/action/action.model';
 
-import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -21,12 +18,12 @@ export class HomePage {
   
 	captureList: Observable<Capture[]>;
 	takenActionList: Observable<Action[]>;
+	newCapture = {} as Capture;
  
   constructor(
 		public navCtrl: NavController,
 		private auth: AuthentificationProvider,
-		private db: DataHandlingProvider,
-		public platform: Platform
+		private db: DataHandlingProvider
 	) {
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
@@ -47,6 +44,18 @@ export class HomePage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
 		});
+  	}
+
+  	addCapture(capture: Capture) {
+	    if(capture.content !== '' && capture.content !== null && capture.content !== undefined) {
+	      this.errorMsg = "";
+	      capture.userid = this.auth.userid;
+	      this.db.addCapture(capture, this.auth.userid).then(ref => {
+	        this.navCtrl.setRoot(HomePage);
+	      })
+	    } else {
+	      this.errorMsg = "You cannot save an empty capture.";
+	    }
   	}
 
   	removeCapture(capture: Capture) {
