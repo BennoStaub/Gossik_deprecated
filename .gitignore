@@ -34,4 +34,5 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 src/app/firebase.credentials.ts
+src/app/gossik.sublime-project
 Todo.txt

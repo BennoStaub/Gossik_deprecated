@@ -24,6 +24,7 @@ import { TakeActionPage } from '../pages/take-action/take-action';
 import { TakeActionPageModule } from '../pages/take-action/take-action.module';
 import { CalendarPage } from '../pages/calendar/calendar';
 import { CalendarPageModule } from '../pages/calendar/calendar.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,13 +34,14 @@ import { CalendarPageModule } from '../pages/calendar/calendar.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-	AngularFireModule.initializeApp(firebaseConfig),
-  AngularFireDatabaseModule,
-  LoginPageModule,
-  SignupPageModule,
-  ReviewGoalPageModule,
-  TakeActionPageModule,
-  CalendarPageModule
+	  AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    BrowserAnimationsModule,
+    LoginPageModule,
+    SignupPageModule,
+    ReviewGoalPageModule,
+    TakeActionPageModule,
+    CalendarPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
