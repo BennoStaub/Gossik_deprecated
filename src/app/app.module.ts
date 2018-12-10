@@ -22,6 +22,8 @@ import { ReviewGoalPage } from '../pages/review-goal/review-goal';
 import { ReviewGoalPageModule } from '../pages/review-goal/review-goal.module';
 import { TakeActionPage } from '../pages/take-action/take-action';
 import { TakeActionPageModule } from '../pages/take-action/take-action.module';
+import { CalendarPage } from '../pages/calendar/calendar';
+import { CalendarPageModule } from '../pages/calendar/calendar.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { TakeActionPageModule } from '../pages/take-action/take-action.module';
   LoginPageModule,
   SignupPageModule,
   ReviewGoalPageModule,
-  TakeActionPageModule
+  TakeActionPageModule,
+  CalendarPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,7 +48,8 @@ import { TakeActionPageModule } from '../pages/take-action/take-action.module';
     LoginPage,
     SignupPage,
     ReviewGoalPage,
-    TakeActionPage
+    TakeActionPage,
+    CalendarPage
   ],
   providers: [
     StatusBar,

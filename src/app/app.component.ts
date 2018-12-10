@@ -8,6 +8,7 @@ import { AuthentificationProvider } from '../providers/authentification/authenti
 import { HomePage } from '../pages/home/home';
 import { ReviewGoalPage } from '../pages/review-goal/review-goal';
 import { TakeActionPage } from '../pages/take-action/take-action';
+import { CalendarPage } from '../pages/calendar/calendar';
 
 export interface PageInterface {
   title: string;
@@ -71,6 +72,11 @@ export class MyApp {
   goToTakeActionPage() {
     this.menu.close();
     this.nav.push(TakeActionPage);
+  }
+
+  goToCalendarPage() {
+    this.menu.close();
+    this.nav.push(CalendarPage);
   }
   
 }

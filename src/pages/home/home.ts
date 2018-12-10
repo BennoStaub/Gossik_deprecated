@@ -19,6 +19,7 @@ export class HomePage {
 	captureList: Observable<Capture[]>;
 	takenActionList: Observable<Action[]>;
 	newCapture = {} as Capture;
+	errorMsg: String;
  
   constructor(
 		public navCtrl: NavController,
