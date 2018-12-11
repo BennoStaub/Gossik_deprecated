@@ -7,12 +7,31 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Calendar</ion-title>
+    <ion-title>Gossik</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addEvent()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+	<ion-row>
+  	<ion-col style="text-align: center">
+    <h2>{{ viewTitle }}</h2>
+  	</ion-col>
+  	</ion-row>
+  	
+	<calendar [eventSource]="eventSource"
+        [calendarMode]="calendar.mode"
+        [currentDate]="calendar.currentDate"
+        (onEventSelected)="onEventSelected($event)"
+        (onTitleChanged)="onViewTitleChanged($event)"
+        (onTimeSelected)="onTimeSelected($event)"
+        step="30"
+        class="calendar">
+    </calendar>
 </ion-content>

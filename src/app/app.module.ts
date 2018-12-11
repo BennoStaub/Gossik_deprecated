@@ -10,6 +10,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { firebaseConfig } from './firebase.credentials';
 
+import { NgCalendarModule } from 'ionic2-calendar'
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPageModule } from '../pages/login/login.module';
@@ -24,6 +26,8 @@ import { TakeActionPage } from '../pages/take-action/take-action';
 import { TakeActionPageModule } from '../pages/take-action/take-action.module';
 import { CalendarPage } from '../pages/calendar/calendar';
 import { CalendarPageModule } from '../pages/calendar/calendar.module';
+import { CalendarEventModalPage } from '../pages/calendar-event-modal/calendar-event-modal';
+import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/calendar-event-modal.module';
 
 @NgModule({
   declarations: [
@@ -35,11 +39,13 @@ import { CalendarPageModule } from '../pages/calendar/calendar.module';
     IonicModule.forRoot(MyApp),
 	  AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
+    NgCalendarModule,
     LoginPageModule,
     SignupPageModule,
     ReviewGoalPageModule,
     TakeActionPageModule,
-    CalendarPageModule
+    CalendarPageModule,
+    CalendarEventModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -49,7 +55,8 @@ import { CalendarPageModule } from '../pages/calendar/calendar.module';
     SignupPage,
     ReviewGoalPage,
     TakeActionPage,
-    CalendarPage
+    CalendarPage,
+    CalendarEventModalPage
   ],
   providers: [
     StatusBar,
