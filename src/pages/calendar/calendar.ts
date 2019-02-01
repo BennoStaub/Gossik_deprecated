@@ -21,7 +21,7 @@ export class CalendarPage {
   	selectedDay = new Date();
  
   	calendar = {
-    	mode: 'month',
+    	mode: 'week',
     	currentDate: new Date()
   	};
   	constructor(
