@@ -9,7 +9,7 @@ import * as moment from 'moment';
 })
 export class CalendarEventModalPage {
 
-  event = { startTime: new Date().toISOString(), endTime: new Date().toISOString(), allDay: false };
+  event = { startTime: new Date().toISOString(), endTime: new Date().toISOString() };
   minDate = new Date().toISOString();
  
   constructor(public navCtrl: NavController, private navParams: NavParams, public viewCtrl: ViewController) {

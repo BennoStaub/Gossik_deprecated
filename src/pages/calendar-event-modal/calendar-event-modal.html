@@ -24,11 +24,6 @@
       <ion-label>End</ion-label>
       <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
     </ion-item>
- 
-    <ion-item>
-      <ion-label>All Day?</ion-label>
-      <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
-    </ion-item>
   </ion-list>
  
   <button ion-button full icon-left (click)="save()">
