@@ -13,7 +13,7 @@ import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
 export class CalendarEventModalPage {
 
   event = {} as CalendarEvent;
-  minDate = new Date().toISOString();
+  minDate = new Date(new Date().setHours(0,0,0,0)).toISOString();
  
   constructor(public navCtrl: NavController, private navParams: NavParams, public viewCtrl: ViewController) {
     let preselectedDate = moment(this.navParams.get('selectedDay')).format();
