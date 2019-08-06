@@ -12,6 +12,7 @@ import { Goal } from '../../model/goal/goal.model';
 import { Reference } from '../../model/reference/reference.model';
 import { Action } from '../../model/action/action.model';
 import { Delegation } from '../../model/delegation/delegation.model';
+import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
 
 @IonicPage()
 @Component({
@@ -145,6 +146,13 @@ export class ProcessCapturePage {
           if(this.checkDeadline === true) {
             if(this.newAction.deadline !== '' && this.newAction.deadline !== null && this.newAction.deadline !== undefined) {
               this.errorMsg = "";
+              let eventData: CalendarEvent = {
+                userid: this.auth.userid,
+                startTime: Date.parse(this.newAction.deadline),
+                endTime: Date.parse(this.newAction.deadline) + 3600000,
+                title: 'Deadline: ' + this.newAction.content
+              }
+              this.db.addCalendarEvent(eventData, this.auth.userid)
               this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
               this.navCtrl.setRoot(HomePage);
               });
@@ -185,6 +193,13 @@ export class ProcessCapturePage {
       if(this.checkDeadline === true) {
         if(this.newDelegation.deadline !== '' && this.newDelegation.deadline !== null && this.newDelegation.deadline !== undefined) {
           this.errorMsg = "";
+          let eventData: CalendarEvent = {
+              userid: this.auth.userid,
+              startTime: Date.parse(this.newDelegation.deadline),
+              endTime: Date.parse(this.newDelegation.deadline) + 3600000,
+              title: 'Deadline: ' + this.newDelegation.content
+            }
+            this.db.addCalendarEvent(eventData, this.auth.userid)
           this.db.addDelegationToGoal(this.newDelegation, this.assignedGoal, this.capture, this.auth.userid).then( () => {
           this.navCtrl.setRoot(HomePage);
           });
