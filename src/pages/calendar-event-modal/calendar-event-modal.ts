@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import * as moment from 'moment';
 
+
+import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
+
 @IonicPage()
 @Component({
   selector: 'page-calendar-event-modal',
@@ -9,7 +12,7 @@ import * as moment from 'moment';
 })
 export class CalendarEventModalPage {
 
-  event = { startTime: new Date().toISOString(), endTime: new Date().toISOString() };
+  event = {} as CalendarEvent;
   minDate = new Date().toISOString();
  
   constructor(public navCtrl: NavController, private navParams: NavParams, public viewCtrl: ViewController) {

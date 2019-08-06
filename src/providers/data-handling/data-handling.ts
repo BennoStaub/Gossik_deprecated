@@ -6,6 +6,7 @@ import { User } from '../../model/user/user.model';
 import { Action } from '../../model/action/action.model';
 import { Reference } from '../../model/reference/reference.model';
 import { Delegation } from '../../model/delegation/delegation.model';
+import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
 
 
 @Injectable()
@@ -29,6 +30,14 @@ export class DataHandlingProvider {
 	
 	deleteCapture(capture: Capture, userid) {
         return this.db.list('/users/' + userid + '/captures').remove(capture.key);
+    }
+
+    getCalendarEventListFromUser(userid) {
+        return this.db.list('/users/' + userid + '/calendarEvents');
+    }
+
+    addCalendarEvent(calendarEvent: CalendarEvent, userid) {
+        return this.db.list('/users/' + userid + '/calendarEvents').push(calendarEvent);
     }
     
     deleteAction(action: Action, userid) {

@@ -24,14 +24,13 @@
     <h2>{{ viewTitle }}</h2>
   	</ion-col>
   	</ion-row>
-  	
-	<calendar [eventSource]="eventSource"
-        [calendarMode]="calendar.mode"
-        [currentDate]="calendar.currentDate"
-        (onEventSelected)="onEventSelected($event)"
-        (onTitleChanged)="onViewTitleChanged($event)"
-        (onTimeSelected)="onTimeSelected($event)"
-        step="30"
-        class="calendar">
-    </calendar>
+		<calendar [eventSource]="eventSource"
+	        [calendarMode]="calendar.mode"
+	        [currentDate]="calendar.currentDate"
+	        (onEventSelected)="onEventSelected($event)"
+	        (onTitleChanged)="onViewTitleChanged($event)"
+	        (onTimeSelected)="onTimeSelected($event)"
+	        step="30"
+	        class="calendar">
+	    </calendar>
 </ion-content>
