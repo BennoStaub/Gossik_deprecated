@@ -148,6 +148,7 @@ export class ProcessCapturePage {
               this.errorMsg = "";
               let eventData: CalendarEvent = {
                 userid: this.auth.userid,
+                goalid: this.assignedGoal.key,
                 startTime: Date.parse(this.newAction.deadline),
                 endTime: Date.parse(this.newAction.deadline) + 3600000,
                 title: 'Deadline: ' + this.newAction.content
@@ -195,6 +196,7 @@ export class ProcessCapturePage {
           this.errorMsg = "";
           let eventData: CalendarEvent = {
               userid: this.auth.userid,
+              goalid: this.assignedGoal.key,
               startTime: Date.parse(this.newDelegation.deadline),
               endTime: Date.parse(this.newDelegation.deadline) + 3600000,
               title: 'Deadline: ' + this.newDelegation.content
