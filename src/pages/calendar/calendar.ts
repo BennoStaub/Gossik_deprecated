@@ -76,11 +76,11 @@ export class CalendarPage {
 			if (data) {
 				let eventData: CalendarEvent = data;
 				eventData.userid = this.auth.userid;
-				eventData.startTime = Date.parse(data.startTime);
-				eventData.endTime = Date.parse(data.endTime);
+				console.log('addEvent eventData');
+				console.log(eventData);
 				this.db.addCalendarEvent(eventData, this.auth.userid)
-				eventData.startTime = new Date(data.startTime);
-				eventData.endTime = new Date(data.endTime);
+				eventData.startTime = new Date(eventData.startTime);
+		        eventData.endTime = new Date(eventData.endTime);
 				let events = this.eventSource;
 				events.push(eventData);
 				this.eventSource = [];

@@ -17,8 +17,6 @@ export class CalendarEventModalPage {
  
   constructor(public navCtrl: NavController, private navParams: NavParams, public viewCtrl: ViewController) {
     let preselectedDate = moment(this.navParams.get('selectedDay')).format();
-    this.event.startTime = preselectedDate;
-    this.event.endTime = preselectedDate;
   }
  
   cancel() {
@@ -26,6 +24,8 @@ export class CalendarEventModalPage {
   }
  
   save() {
+    console.log('save modal this.event.startTime');
+    console.log(this.event.startTime)
     this.viewCtrl.dismiss(this.event);
   }
  
