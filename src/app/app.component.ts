@@ -9,7 +9,6 @@ import { HomePage } from '../pages/home/home';
 import { ReviewGoalPage } from '../pages/review-goal/review-goal';
 import { TakeActionPage } from '../pages/take-action/take-action';
 import { CalendarPage } from '../pages/calendar/calendar';
-import { HomePage } from '../pages/home/home';
 
 export interface PageInterface {
   title: string;
