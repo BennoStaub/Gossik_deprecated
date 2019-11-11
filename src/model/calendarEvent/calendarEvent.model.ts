@@ -4,4 +4,6 @@ export interface CalendarEvent {
     goalid: string;
     startTime: Date;
     endTime: Date;
+    title: string;
+    allDay: boolean;
 }

@@ -79,7 +79,7 @@
         </ion-item>
         <div *ngIf="checkDeadline">
           <ion-item no-lines>
-            <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline" max="2099-12-31"></ion-datetime>
+            <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="Choose deadline" ></ion-datetime>
           </ion-item>
         </div>
         <button ion-button full type="submit">Define action</button>
@@ -100,7 +100,7 @@
           </ion-item>
           <div *ngIf="checkDeadline">
             <ion-item no-lines>
-              <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" placeholder="Choose deadline" max="2099-12-31"></ion-datetime>
+              <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="Choose deadline"></ion-datetime>
             </ion-item>
           </div>
           <button ion-button full type="submit">Define delegation</button>

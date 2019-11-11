@@ -132,6 +132,8 @@ export class ProcessCapturePage {
   }
 
   addAction() {
+    console.log('addAction newAction');
+    console.log(this.newAction);
     this.errorMsg = "";
     this.newAction.content = this.defineActionForm.value.content;
     this.newAction.deadline = this.defineActionForm.value.deadline;
@@ -144,15 +146,18 @@ export class ProcessCapturePage {
       if(this.newAction.priority != 0 && this.newAction.priority !== null && this.newAction.priority !== undefined) {
         if(this.newAction.time != 0 && this.newAction.time !== null && this.newAction.time !== undefined) {
           if(this.checkDeadline === true) {
-            if(this.newAction.deadline !== '' && this.newAction.deadline !== null && this.newAction.deadline !== undefined) {
+            if(this.newAction.deadline !== undefined && this.newAction.deadline !== null) {
               this.errorMsg = "";
               let eventData: CalendarEvent = {
                 userid: this.auth.userid,
                 goalid: this.assignedGoal.key,
-                startTime: Date.parse(this.newAction.deadline),
-                endTime: Date.parse(this.newAction.deadline) + 3600000,
-                title: 'Deadline: ' + this.newAction.content
+                startTime: this.newAction.deadline,
+                endTime: this.newAction.deadline,
+                title: 'Deadline: ' + this.newAction.content,
+                allDay: true
               }
+              console.log('addAction eventData');
+              console.log(eventData);
               this.db.addCalendarEvent(eventData, this.auth.userid)
               this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
               this.navCtrl.setRoot(HomePage);
@@ -192,14 +197,15 @@ export class ProcessCapturePage {
     this.newDelegation.userid = this.auth.userid;
     if(this.newDelegation.content !== '' && this.newDelegation.content !== null && this.newDelegation.content !== undefined) {
       if(this.checkDeadline === true) {
-        if(this.newDelegation.deadline !== '' && this.newDelegation.deadline !== null && this.newDelegation.deadline !== undefined) {
+        if(this.newDelegation.deadline !== null && this.newDelegation.deadline !== undefined) {
           this.errorMsg = "";
           let eventData: CalendarEvent = {
               userid: this.auth.userid,
               goalid: this.assignedGoal.key,
-              startTime: Date.parse(this.newDelegation.deadline),
-              endTime: Date.parse(this.newDelegation.deadline) + 3600000,
-              title: 'Deadline: ' + this.newDelegation.content
+              startTime: this.newDelegation.deadline,
+              endTime: this.newDelegation.deadline,
+              title: 'Deadline: ' + this.newDelegation.content,
+              allDay: true
             }
             this.db.addCalendarEvent(eventData, this.auth.userid)
           this.db.addDelegationToGoal(this.newDelegation, this.assignedGoal, this.capture, this.auth.userid).then( () => {

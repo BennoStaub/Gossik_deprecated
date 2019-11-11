@@ -42,16 +42,12 @@ export class CalendarPage {
 			.map(
 			changes => {
 			return changes.map(c => ({
-			  key: c.payload.key, userid: c.payload.val().userid, goalid: c.payload.val().goalid, startTime: c.payload.val().startTime, endTime: c.payload.val().endTime, title: c.payload.val().title
+			  key: c.payload.key, userid: c.payload.val().userid, goalid: c.payload.val().goalid, startTime: c.payload.val().startTime, endTime: c.payload.val().endTime, title: c.payload.val().title, allDay: c.payload.val().allDay
 			}))
 			});
 			this.calendarEventList.take(1).subscribe(
 		      calendarEventArray => {
 		        for(let calendarEvent of calendarEventArray) {
-		        	console.log('startTime');
-		        	console.log(calendarEvent.startTime);
-		        	console.log('endTime');
-		        	console.log(calendarEvent.endTime);
 		        	calendarEvent.startTime = new Date(calendarEvent.startTime);
 		        	calendarEvent.endTime = new Date(calendarEvent.endTime);
 		        	this.eventSource.push(calendarEvent);
@@ -76,6 +72,7 @@ export class CalendarPage {
 			if (data) {
 				let eventData: CalendarEvent = data;
 				eventData.userid = this.auth.userid;
+				eventData.allDay = false;
 				console.log('addEvent eventData');
 				console.log(eventData);
 				this.db.addCalendarEvent(eventData, this.auth.userid)
@@ -98,7 +95,7 @@ export class CalendarPage {
 
 		let alert = this.alertCtrl.create({
 				title: '' + event.title,
-				subTitle: 'Userid:' + event.userid + 'Goalid:' + event.goalid + 'From: ' + start + '<br>To: ' + end,
+				subTitle: 'Goalid:' + event.goalid + 'From: ' + start + '<br>To: ' + end + 'allDay:' + event.allDay,
 				buttons: ['OK']
 		})
 	alert.present();

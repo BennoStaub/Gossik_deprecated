@@ -3,5 +3,5 @@ export interface Delegation {
     userid: string;
     goalid: string;
     content: string;
-    deadline: string;
+    deadline: Date;
 }
