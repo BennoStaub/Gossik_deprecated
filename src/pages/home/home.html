@@ -11,6 +11,7 @@
  
   <ion-content padding>
 
+  <!-- HomePage -->
   <div *ngIf="viewpoint=='HomePage'">
     <ion-row>
     <ion-col style="text-align: center">
@@ -31,8 +32,126 @@
       <div>You started with action "{{takenAction.content}}", click here to process</div>
     </ion-item>
     <p>Thoughts captured and ready for processing:</p>
-    <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
+    <ion-item no-lines text-wrap *ngFor="let capture of captureList | async" (click)="goToProcessCapturePage(capture)">
       <div class="ion-item-bg" [innerHtml]="capture.content" (swipe)="removeCapture(capture)"></div>
     </ion-item>
   </div>
+
+  <!-- ProcessCapturePage -->
+  <div *ngIf="viewpoint=='ProcessCapturePage'">
+    <font face="courier new">
+      <ion-item [innerHtml]="capture.content"></ion-item>
+    </font>
+
+    <p>{{errorMsg}}</p>
+
+    <div *ngIf="processCtrl == 'chooseGoal'">
+        <p>To which goal belongs this capture?</p> 
+        <ion-item no-lines *ngFor="let goal of goalList | async" (click)="addToGoal(goal)">
+          {{goal.name}}
+        </ion-item>
+        <br>
+        <ion-item no-lines>
+          <ion-label stacked>Create new goal for this capture</ion-label><br>
+          <ion-textarea [(ngModel)]="goalname" placeholder="Goal name"></ion-textarea>
+        </ion-item>
+        <button ion-button block (click)="addGoal(goalname)">Create new goal</button>
+    </div>
+
+    <div *ngIf="processCtrl == 'reviewGoal'">
+      Reviewing Goal: {{assignedGoal.name}}
+      <button ion-button block (click)="nextActions()">Show next actions</button>
+      <div *ngIf="showNextActions">
+      <ion-item no-lines *ngFor="let action of nextActionList | async">
+        <div [innerHtml]="action.content"></div>
+      </ion-item>
+      </div>
+      <button ion-button block (click)="delegations()">Show delegations</button>
+      <div *ngIf="showDelegations">
+      <ion-item no-lines *ngFor="let delegation of delegationList | async">
+        <div [innerHtml]="delegation.content"></div>
+      </ion-item>
+      </div>
+      <button ion-button block (click)="references()">Show references</button>
+      <div *ngIf="showReferences">
+      <ion-item no-lines *ngFor="let reference of referenceList | async">
+        <div [innerHtml]="reference.content"></div>
+      </ion-item>
+      </div>
+      Is right now an action required from you or someone else for this capture?
+      <div class="buttons-flex-container">
+        <button class="button-left" ion-button round (click)="goToDefineAction()">From me</button>
+        <button class="button-left" ion-button round (click)="goToDefineDelegation()">From someone else</button>
+        <button class="button-right" ion-button round (click)="goToDefineReference()">No</button>
+      </div>
+    </div>
+
+    <div *ngIf="processCtrl == 'defineAction'">
+      Defining new action
+      <ion-list inset>
+        <ion-item no-lines>
+          <ion-label>Deadline required?</ion-label>
+          <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
+        </ion-item>
+        <form (ngSubmit)="addAction()" [formGroup]="defineActionForm">
+          <ion-item no-lines>
+            <ion-input type="text" placeholder="Action" formControlName="content"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Priority (1: low, 10: high):</ion-label>
+            <ion-input type="number" placeholder="0" min="0" max="10" formControlName="priority"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label block>Estimated time in min:</ion-label>
+              <ion-input type="number" placeholder="0" min="0" max="1000" formControlName="time"></ion-input>
+          </ion-item>
+          <div *ngIf="checkDeadline">
+            <ion-item no-lines>
+              <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="Choose deadline" ></ion-datetime>
+            </ion-item>
+          </div>
+          <button ion-button full type="submit">Define action</button>
+        </form>
+      </ion-list>
+    </div>
+
+    <div *ngIf="processCtrl == 'defineDelegation'">
+        Defining new delegation:
+        <ion-list inset>
+          <ion-item no-lines>
+            <ion-label>Deadline required?</ion-label>
+            <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
+          </ion-item>
+          <form (ngSubmit)="addDelegation()" [formGroup]="defineDelegationForm">
+            <ion-item no-lines>
+              <ion-input type="text" placeholder="Delegation" formControlName="content"></ion-input>
+            </ion-item>
+            <div *ngIf="checkDeadline">
+              <ion-item no-lines>
+                <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="Choose deadline"></ion-datetime>
+              </ion-item>
+            </div>
+            <button ion-button full type="submit">Define delegation</button>
+          </form>
+        </ion-list>
+      </div>
+
+    <div *ngIf="processCtrl == 'defineReference'">
+      Defining new reference:
+      <ion-list inset>
+        <form (ngSubmit)="addReference()" [formGroup]="defineReferenceForm">
+          <ion-item no-lines>
+            <ion-input type="text" value="{{capture.content}}" formControlName="content"></ion-input>
+          </ion-item>
+          <button ion-button full type="submit">Define reference</button>
+        </form>
+      </ion-list>
+    </div>
+  </div>
+
+
+
+
+
+
 </ion-content>
