@@ -9,27 +9,30 @@
   </ion-navbar>
 </ion-header>
  
-<ion-content padding>
-  <ion-row>
-  <ion-col style="text-align: center">
-    Capture any thought you have during your day to add it as a note for later processing!
-  </ion-col>
-  </ion-row>
-  <ion-row>
-    <p>{{errorMsg}}</p>
- 
-  <ion-item>
-    <ion-label stacked>Content</ion-label>
-    <ion-textarea [(ngModel)]="newCapture.content" placeholder="Input new capture"></ion-textarea>
-  </ion-item>
-  <button ion-button block (click)="addCapture(newCapture)">Add</button>
-  </ion-row>
-  <ion-item no-lines text-wrap *ngFor="let takenAction of takenActionList | async" navPush="ProcessTakenActionPage" [navParams]="{takenAction:takenAction}">
-    <div class="ion-item-bg"></div>
-    <div>You started with action "{{takenAction.content}}", click here to process</div>
-  </ion-item>
-  <p>Thoughts captured and ready for processing:<p>
-  <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
-    <div class="ion-item-bg" [innerHtml]="capture.content" (swipe)="removeCapture(capture)"></div>
-  </ion-item>
+  <ion-content padding>
+
+  <div *ngIf="viewpoint=='HomePage'">
+    <ion-row>
+    <ion-col style="text-align: center">
+      Capture any thought you have during your day to add it as a note for later processing!
+    </ion-col>
+    </ion-row>
+    <ion-row>
+      <p>{{errorMsg}}</p>
+   
+    <ion-item>
+      <ion-label stacked>Content</ion-label>
+      <ion-textarea [(ngModel)]="newCapture.content" placeholder="Input new capture"></ion-textarea>
+    </ion-item>
+    <button ion-button block (click)="addCapture(newCapture)">Add</button>
+    </ion-row>
+    <ion-item no-lines text-wrap *ngFor="let takenAction of takenActionList | async" navPush="ProcessTakenActionPage" [navParams]="{takenAction:takenAction}">
+      <div class="ion-item-bg"></div>
+      <div>You started with action "{{takenAction.content}}", click here to process</div>
+    </ion-item>
+    <p>Thoughts captured and ready for processing:</p>
+    <ion-item no-lines text-wrap class="captureList" *ngFor="let capture of captureList | async" navPush="ProcessCapturePage" [navParams]="{capture:capture}">
+      <div class="ion-item-bg" [innerHtml]="capture.content" (swipe)="removeCapture(capture)"></div>
+    </ion-item>
+  </div>
 </ion-content>

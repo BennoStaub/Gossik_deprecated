@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { Capture } from '../../model/capture/capture.model';
@@ -20,15 +20,20 @@ export class HomePage {
 	takenActionList: Observable<Action[]>;
 	newCapture = {} as Capture;
 	errorMsg: String;
+	isApp: boolean;
+	platforms: String;
  
   constructor(
 		public navCtrl: NavController,
 		private auth: AuthentificationProvider,
-		private db: DataHandlingProvider
+		private db: DataHandlingProvider,
+		public platform: Platform
 	) {
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
 		}
+		this.isApp = !this.platform.is('core')
+		this.viewpoint = 'HomePage';
 		this.captureList = this.db.getCaptureListFromUser(this.auth.userid)
 		.snapshotChanges()
 		.map(
