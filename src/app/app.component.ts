@@ -6,7 +6,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
 import { HomePage } from '../pages/home/home';
-import { TakeActionPage } from '../pages/take-action/take-action';
 import { CalendarPage } from '../pages/calendar/calendar';
 
 export interface PageInterface {
@@ -69,7 +68,6 @@ export class MyApp {
 
   goToTakeActionPage() {
     this.menu.close();
-    this.nav.setRoot(TakeActionPage);
   }
 
   goToCalendarPage() {

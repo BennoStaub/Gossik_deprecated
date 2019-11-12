@@ -13,6 +13,8 @@ import { Delegation } from '../../model/delegation/delegation.model';
 import { Goal } from '../../model/goal/goal.model';
 import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
 
+import 'rxjs/add/operator/take';
+
 
 @Component({
   selector: 'page-home',
@@ -57,6 +59,12 @@ export class HomePage {
   	editActionForm: FormGroup;
   	editDelegationForm: FormGroup;
   	editReferenceForm: FormGroup;
+  	doableActionList: Observable<Action[]>;
+	doableAction = {} as Action;
+	giveTimeForm: FormGroup;
+	doableActionArray: Action[] = [];
+	doableHighPriorityActions: Action[] = [];
+	goalFromAction = {} as Goal;
  
   constructor(
 		public navCtrl: NavController,
@@ -144,7 +152,15 @@ export class HomePage {
   		this.pageCtrl = '';
   	}
 
-  	//ProcessCapturePage functions
+  	goToTakeActionPage() {
+  		this.giveTimeForm = this.fb.group({
+      		timeEstimate: ['', Validators.required]
+    	});
+    	this.viewpoint = 'TakeActionPage';
+    	this.pageCtrl = '';
+  	}
+
+  	// ProcessCapturePage functions
   	addGoal(goalname) {
 		if(goalname !== '' && goalname !== null && goalname !== undefined) {
 			this.newGoal.userid = this.auth.userid;
@@ -483,6 +499,55 @@ export class HomePage {
   	deleteGoal(goal: Goal) {
 	    this.db.deleteGoal(goal.key, this.auth.userid).then( () => {
 	      this.pageCtrl = '';
+	    });
+  	}
+
+  	// TakeActionPage functions
+  	showDoableActions() {
+	    this.doableActionList = this.db.getNextActionListFromUser(this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+	    this.doableActionList.take(1).subscribe(
+	      doableActionArray => {
+	        for(let doableAction of doableActionArray) {
+	          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate) && !doableAction.taken) {
+	            this.doableActionArray.push(doableAction);
+	          }
+	        };
+	        if(this.doableActionArray.length > 0) {
+	          for(let numberDoableHighPriorityActions: number = 0; numberDoableHighPriorityActions < 3; numberDoableHighPriorityActions++) {
+	            if(this.doableActionArray.length == 0) {
+	              continue;
+	            }
+	            let maxPriority = 0;
+	            let index = 0;
+	            for(let counter: number = 0; counter <= this.doableActionArray.length-1; counter++) {
+	              if(this.doableActionArray[counter].priority > maxPriority) {
+	                maxPriority = this.doableActionArray[counter].priority;
+	                index = counter;
+	              }
+	            }
+	            this.doableHighPriorityActions.push(this.doableActionArray[index]);
+	            this.doableActionArray.splice(index, 1);
+	          }
+	          this.pageCtrl = 'showActions';
+	          this.errorMsg = '';
+	        } else {
+	          this.errorMsg = 'There is no doable action within that time.';
+	        };
+	      }
+	    );
+  	}
+
+  	takeThisAction(action: Action) {
+	    action.taken = true;
+	    this.db.editAction(action, this.auth.userid).then( () => {
+	      this.pageCtrl = 'actionTaken';
 	    });
   	}
  

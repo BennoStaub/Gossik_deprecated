@@ -11,6 +11,8 @@
  
   <ion-content padding>
     <ion-item (click)="goToReviewGoalsPage()">Review Goals</ion-item>
+    <ion-item (click)="goToTakeActionPage()">Take Action</ion-item>
+    <ion-item-divider></ion-item-divider>
 
   <!-- HomePage -->
   <div *ngIf="viewpoint=='HomePage'">
@@ -288,6 +290,32 @@
           </ion-list>
       </div>
     </div>
+
+    <!-- TakeActionPage -->
+    <div *ngIf="viewpoint == 'TakeActionPage'">
+      <div *ngIf="pageCtrl == ''">
+        <p>How many minutes do you have available right now?</p>
+        <form (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
+          <ion-item no-lines>
+            <ion-label>Time in min:</ion-label>
+            <ion-input type="number" placeholder="0" min="0" formControlName="timeEstimate"></ion-input>
+          </ion-item>
+          <button ion-button full type="submit">Show doable action</button>
+        </form>
+      </div>
+      
+      <p>{{errorMsg}}</p>
+      <div *ngIf="pageCtrl == 'showActions'">
+        <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
+          <div [innerHtml]="action.content"></div>
+        </ion-item>
+      </div>
+
+      <div *ngIf="pageCtrl == 'actionTaken'">
+        Great, have fun while taking Action!
+      </div>
+    </div>
+
 
 
 
