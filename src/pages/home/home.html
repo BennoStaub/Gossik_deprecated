@@ -27,7 +27,7 @@
     </ion-item>
     <button ion-button block (click)="addCapture(newCapture)">Add</button>
     </ion-row>
-    <ion-item no-lines text-wrap *ngFor="let takenAction of takenActionList | async" navPush="ProcessTakenActionPage" [navParams]="{takenAction:takenAction}">
+    <ion-item no-lines text-wrap *ngFor="let takenAction of takenActionList | async" (click)="goToProcessTakenActionPage(takenAction)">
       <div class="ion-item-bg"></div>
       <div>You started with action "{{takenAction.content}}", click here to process</div>
     </ion-item>
@@ -45,7 +45,7 @@
 
     <p>{{errorMsg}}</p>
 
-    <div *ngIf="processCtrl == 'chooseGoal'">
+    <div *ngIf="pageCtrl == 'chooseGoal'">
         <p>To which goal belongs this capture?</p> 
         <ion-item no-lines *ngFor="let goal of goalList | async" (click)="addToGoal(goal)">
           {{goal.name}}
@@ -58,7 +58,7 @@
         <button ion-button block (click)="addGoal(goalname)">Create new goal</button>
     </div>
 
-    <div *ngIf="processCtrl == 'reviewGoal'">
+    <div *ngIf="pageCtrl == 'reviewGoal'">
       Reviewing Goal: {{assignedGoal.name}}
       <button ion-button block (click)="nextActions()">Show next actions</button>
       <div *ngIf="showNextActions">
@@ -86,7 +86,7 @@
       </div>
     </div>
 
-    <div *ngIf="processCtrl == 'defineAction'">
+    <div *ngIf="pageCtrl == 'defineAction'">
       Defining new action
       <ion-list inset>
         <ion-item no-lines>
@@ -115,7 +115,7 @@
       </ion-list>
     </div>
 
-    <div *ngIf="processCtrl == 'defineDelegation'">
+    <div *ngIf="pageCtrl == 'defineDelegation'">
         Defining new delegation:
         <ion-list inset>
           <ion-item no-lines>
@@ -136,7 +136,7 @@
         </ion-list>
       </div>
 
-    <div *ngIf="processCtrl == 'defineReference'">
+    <div *ngIf="pageCtrl == 'defineReference'">
       Defining new reference:
       <ion-list inset>
         <form (ngSubmit)="addReference()" [formGroup]="defineReferenceForm">
@@ -149,7 +149,32 @@
     </div>
   </div>
 
+  <!-- Process Taken Action Page -->
+  <div *ngIf="viewpoint=='ProcessTakenActionPage'">
+    <div *ngIf="pageCtrl == ''">
+      Please indicate whether you finished the action or want to abort it.<br>
+      <div class="buttons-flex-container">
+        <button class="button-left" ion-button round (click)="actionFinished()">Finished</button>
+        <button class="button-right" ion-button round (click)="abortAction()">Abort</button>
+      </div>
+    </div>
 
+    <div *ngIf="pageCtrl == 'actionAborted'">
+      You aborted this action, it has been put back into your actions list
+    </div>
+
+    <div *ngIf="pageCtrl == 'actionFinished'">
+      Congrats! Is your goal now accomplished or does it need more action?
+      <div class="buttons-flex-container">
+        <button class="button-left" ion-button round (click)="goalFinished()">Accomplished</button>
+        <button class="button-right" ion-button round (click)="goalNotFinished()">Not yet</button>
+      </div>
+    </div>
+
+    <div *ngIf="pageCtrl == 'goalFinished'">
+      Congratulations to finishing your goal! Now let's head on to achieving the next ones!
+    </div>
+  </div>
 
 
 

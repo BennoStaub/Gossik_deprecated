@@ -33,7 +33,7 @@ export class HomePage {
 	nextActionList: Observable<Action[]>;
 	delegationList: Observable<Delegation[]>;
 	newGoal = {} as Goal;
-	processCtrl: string;
+	pageCtrl: string;
 	assignedGoal = {} as Goal;
 	showNextActions: boolean = false;
 	showDelegations: boolean = false;
@@ -46,6 +46,7 @@ export class HomePage {
 	newAction = {} as Action;
 	newDelegation = {} as Delegation;
 	newReference = {} as Reference;
+	takenAction = {} as Action;
  
   constructor(
 		public navCtrl: NavController,
@@ -105,7 +106,13 @@ export class HomePage {
 			}))
 	    });
   		this.viewpoint = 'ProcessCapturePage';
-  		this.processCtrl = 'chooseGoal';
+  		this.pageCtrl = 'chooseGoal';
+  	}
+
+  	goToProcessTakenActionPage(takenAction: Action) {
+  		this.viewpoint = 'ProcessTakenActionPage';
+  		this.pageCtrl = '';
+  		this.takenAction = takenAction;
   	}
 
   	//ProcessCapturePage functions
@@ -122,7 +129,7 @@ export class HomePage {
 	}
 
 	addToGoal(goal){
-		this.processCtrl = 'reviewGoal';
+		this.pageCtrl = 'reviewGoal';
 	    this.referenceList = this.db.getReferenceListFromGoal(goal.key, this.auth.userid)
 		  .snapshotChanges()
 		  .map(
@@ -164,7 +171,7 @@ export class HomePage {
 	}
 
 	goToDefineAction(){
-	    this.processCtrl = 'defineAction';
+	    this.pageCtrl = 'defineAction';
 	    this.defineActionForm = this.fb.group({
 			content: ['', Validators.required],
 			priority: ['', Validators.required],
@@ -221,7 +228,7 @@ export class HomePage {
 	}
 
 	goToDefineDelegation() {
-	    this.processCtrl = 'defineDelegation';
+	    this.pageCtrl = 'defineDelegation';
 	    this.defineDelegationForm = this.fb.group({
 				content: ['', Validators.required],
 	      deadline: ['', Validators.required]
@@ -264,7 +271,7 @@ export class HomePage {
 	}
 
 	goToDefineReference() {
-	    this.processCtrl = 'defineReference';
+	    this.pageCtrl = 'defineReference';
 	    this.defineReferenceForm = this.fb.group({
 				content: ['', Validators.required]
 	    });
@@ -282,6 +289,35 @@ export class HomePage {
 	    } else {
 	      this.errorMsg = "Please define what you want to save as reference.";
 	    }
+	}
+
+	// ProcessTakenActionPage function
+	actionFinished() {
+		this.pageCtrl = 'actionFinished';
+	}
+
+	abortAction() {
+		this.takenAction.taken = false;
+		this.db.editAction(this.takenAction, this.auth.userid);
+		this.pageCtrl = 'actionAborted';
+	}
+
+	goalFinished() {
+		this.db.deleteGoal(this.takenAction.goalid, this.auth.userid).then( () => {
+			this.pageCtrl = 'goalFinished';
+		});
+	}
+
+	goalNotFinished() {
+	this.db.getGoalFromGoalid(this.takenAction.goalid, this.auth.userid).valueChanges().take(1).subscribe( data => {
+		let capture = {} as Capture;
+		capture.content = 'Action finished: ' + this.takenAction.content + '\n from goal: ' + data.name;
+		capture.userid = this.auth.userid;
+		this.db.deleteAction(this.takenAction, this.auth.userid).then( () => {
+			this.db.addCapture(capture, this.auth.userid);
+			this.navCtrl.setRoot(HomePage);
+		});
+	});
 	}
  
 }

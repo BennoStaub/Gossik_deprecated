@@ -66,22 +66,22 @@ export class MyApp {
 
   goToReviewGoalPage() {
     this.menu.close();
-    this.nav.push(ReviewGoalPage);
+    this.nav.setRoot(ReviewGoalPage);
   }
 
   goToTakeActionPage() {
     this.menu.close();
-    this.nav.push(TakeActionPage);
+    this.nav.setRoot(TakeActionPage);
   }
 
   goToCalendarPage() {
     this.menu.close();
-    this.nav.push(CalendarPage);
+    this.nav.setRoot(CalendarPage);
   }
 
   goToHomePage() {
     this.menu.close();
-    this.nav.push(HomePage);
+    this.nav.setRoot(HomePage);
   }
   
 }
