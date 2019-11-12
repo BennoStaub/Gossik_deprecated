@@ -30,8 +30,12 @@ export class CalendarEventModalPage {
   }
  
   save() {
-  	this.event.startTime = new Date(this.eventStartTimeISOString);
-  	this.event.endTime = new Date(this.eventEndTimeISOString);
+  	console.log('modal: this.eventStartTimeISOString');
+  	console.log(this.eventStartTimeISOString);
+  	this.event.startTime = this.eventStartTimeISOString;
+  	console.log('modal: this.event.startTime');
+  	console.log(this.event.startTime);
+  	this.event.endTime = this.eventEndTimeISOString;
     this.viewCtrl.dismiss(this.event);
   }
  
