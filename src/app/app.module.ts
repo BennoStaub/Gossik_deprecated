@@ -20,8 +20,6 @@ import { DataHandlingProvider } from '../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
 import { SignupPage } from '../pages/sign-up/sign-up';
 import { SignupPageModule } from '../pages/sign-up/sign-up.module';
-import { ReviewGoalPage } from '../pages/review-goal/review-goal';
-import { ReviewGoalPageModule } from '../pages/review-goal/review-goal.module';
 import { TakeActionPage } from '../pages/take-action/take-action';
 import { TakeActionPageModule } from '../pages/take-action/take-action.module';
 import { CalendarPage } from '../pages/calendar/calendar';
@@ -42,7 +40,6 @@ import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/cale
     NgCalendarModule,
     LoginPageModule,
     SignupPageModule,
-    ReviewGoalPageModule,
     TakeActionPageModule,
     CalendarPageModule,
     CalendarEventModalPageModule
@@ -53,7 +50,6 @@ import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/cale
     HomePage,
     LoginPage,
     SignupPage,
-    ReviewGoalPage,
     TakeActionPage,
     CalendarPage,
     CalendarEventModalPage

@@ -10,6 +10,7 @@
 </ion-header>
  
   <ion-content padding>
+    <ion-item (click)="goToReviewGoalsPage()">Review Goals</ion-item>
 
   <!-- HomePage -->
   <div *ngIf="viewpoint=='HomePage'">
@@ -149,7 +150,7 @@
     </div>
   </div>
 
-  <!-- Process Taken Action Page -->
+  <!-- ProcessTakenActionPage -->
   <div *ngIf="viewpoint=='ProcessTakenActionPage'">
     <div *ngIf="pageCtrl == ''">
       Please indicate whether you finished the action or want to abort it.<br>
@@ -175,6 +176,119 @@
       Congratulations to finishing your goal! Now let's head on to achieving the next ones!
     </div>
   </div>
+
+  <!-- ReviewGoalPage -->
+  <div *ngIf="viewpoint == 'ReviewGoalsPage'">
+    <div *ngIf="pageCtrl == ''">
+      <ion-list>
+        <ion-item no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
+          {{goal.name}}
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <p>{{errorMsg}}</p>
+
+    <div *ngIf="pageCtrl == 'reviewGoal'">
+      Reviewing Goal: {{goal.name}}
+      <button ion-button block (click)="nextActions()">Show next actions</button>
+      <div *ngIf="showNextActions">
+        <ion-item no-lines *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
+          <div [innerHtml]="nextAction.content"></div>
+          <div *ngIf="showAction === nextAction.key">
+            <p>Priority: {{nextAction.priority}}</p>
+            <p>Time estimate: {{nextAction.time}}min</p>
+            <p *ngIf="nextAction.deadline === ''">No deadline</p>
+            <p *ngIf="nextAction.deadline !== ''">Deadline: {{nextAction.deadline}}</p>
+            <div class="buttons-flex-container">
+              <button class="button-left" ion-button round (click)="deleteAction(nextAction, goal)">Delete</button>
+              <button class="button-right" ion-button round (click)="goToEditAction(nextAction)">Edit</button>
+            </div>
+          </div>
+        </ion-item>
+      </div>
+      <button ion-button block (click)="delegations()">Show delegations</button>
+      <div *ngIf="showDelegations">
+      <ion-item no-lines *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
+          <div [innerHtml]="delegation.content"></div>
+        <div *ngIf="showDelegation === delegation.key">
+            <p *ngIf="delegation.deadline === ''">No deadline</p>
+            <p *ngIf="delegation.deadline !== ''">Deadline: {{delegation.deadline}}</p>
+            <div class="buttons-flex-container">
+              <button class="button-left" ion-button round (click)="deleteDelegation(delegation, goal)">Delete</button>
+              <button class="button-right" ion-button round (click)="goToEditDelegation(delegation)">Edit</button>
+            </div>
+        </div>
+      </ion-item>
+      </div>
+      <button ion-button block (click)="references()">Show references</button>
+      <div *ngIf="showReferences">
+      <ion-item no-lines *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
+          <div [innerHtml]="reference.content"></div>
+        <div *ngIf="showReference === reference.key">
+            <div class="buttons-flex-container">
+              <button class="button-left" ion-button round (click)="deleteReference(reference, goal)">Delete</button>
+              <button class="button-right" ion-button round (click)="goToEditReference(reference)">Edit</button>
+            </div>
+        </div>
+      </ion-item>
+      </div>
+      <button ion-button round (click)="deleteGoal(goal)">Delete Goal</button>
+    </div>
+
+    <div *ngIf="pageCtrl == 'editAction'">
+        Edit action
+        <ion-list inset>
+          <form (ngSubmit)="editAction()" [formGroup]="editActionForm">
+            <ion-item no-lines>
+              <ion-input type="text" value="{{action.content}}" formControlName="content"></ion-input>
+            </ion-item>
+            <ion-item no-lines>
+              <ion-label>Priority (1: low, 10: high):</ion-label>
+              <ion-input type="number" value="{{action.priority}}" min="0" max="10" formControlName="priority"></ion-input>
+            </ion-item>
+            <ion-item no-lines>
+                <ion-label block>Estimated time in min:</ion-label>
+                <ion-input type="number" value="{{action.time}}" min="0" max="1000" formControlName="time"></ion-input>
+            </ion-item>
+            <ion-item no-lines>
+              <ion-label>Deadline</ion-label>
+              <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
+            </ion-item>
+            <button ion-button full type="submit">Edit</button>
+          </form>
+        </ion-list>
+      </div>
+
+      <div *ngIf="pageCtrl == 'editDelegation'">
+        Edit delegation
+        <ion-list inset>
+          <form (ngSubmit)="editDelegation()" [formGroup]="editDelegationForm">
+            <ion-item no-lines>
+              <ion-input type="text" value="{{delegation.content}}" formControlName="content"></ion-input>
+            </ion-item>
+            <ion-item no-lines>
+              <ion-label>Deadline</ion-label>
+              <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
+            </ion-item>
+            <button ion-button full type="submit">Edit</button>
+          </form>
+        </ion-list>
+      </div>
+
+      <div *ngIf="pageCtrl == 'editReference'">
+          Edit reference
+          <ion-list inset>
+            <form (ngSubmit)="editReference()" [formGroup]="editReferenceForm">
+              <ion-item no-lines>
+                <ion-input type="text" value="{{reference.content}}" formControlName="content"></ion-input>
+              </ion-item>
+              <button ion-button full type="submit">Edit</button>
+            </form>
+          </ion-list>
+      </div>
+    </div>
+
 
 
 

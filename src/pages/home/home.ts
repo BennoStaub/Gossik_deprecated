@@ -41,12 +41,22 @@ export class HomePage {
 	defineActionForm: FormGroup;
 	defineDelegationForm: FormGroup;
 	defineReferenceForm: FormGroup;
-	checkDeadline;
+	checkDeadline: boolean;
 	deadline: string;
 	newAction = {} as Action;
 	newDelegation = {} as Delegation;
 	newReference = {} as Reference;
 	takenAction = {} as Action;
+	goal = {} as Goal;
+  	showAction: string;
+  	showDelegation: string;
+  	showReference: string;
+  	action = {} as Action;
+  	delegation = {} as Delegation;
+  	reference = {} as Reference;
+  	editActionForm: FormGroup;
+  	editDelegationForm: FormGroup;
+  	editReferenceForm: FormGroup;
  
   constructor(
 		public navCtrl: NavController,
@@ -113,6 +123,25 @@ export class HomePage {
   		this.viewpoint = 'ProcessTakenActionPage';
   		this.pageCtrl = '';
   		this.takenAction = takenAction;
+  	}
+
+  	goToReviewGoalsPage() {
+  		this.goal.name = '';
+	    this.goalList = this.db.getGoalList(this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+	    this.goalList.subscribe( goalList => {
+	      if(goalList.length == 0) {
+	        this.errorMsg = 'You don\'t have any goals yet. Capture your thoughts and process them to create goals!';
+	      }
+	    })
+  		this.viewpoint = 'ReviewGoalsPage';
+  		this.pageCtrl = '';
   	}
 
   	//ProcessCapturePage functions
@@ -319,5 +348,142 @@ export class HomePage {
 		});
 	});
 	}
+
+	// ReviewGoalsPage functions
+	reviewGoal(goal: Goal) {
+	    this.pageCtrl = 'reviewGoal';
+	    this.goal = goal;
+	    this.referenceList = this.db.getReferenceListFromGoal(goal.key, this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+	    this.nextActionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+	    this.delegationList = this.db.getDelegationListFromGoal(goal.key, this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+	}
+
+  	reviewAction(action: Action) {
+		this.showAction = action.key;
+  	}
+
+	reviewDelegation(delegation: Delegation) {
+		this.showDelegation = delegation.key
+	}
+
+  	reviewReference(reference: Reference) {
+    	this.showReference = reference.key;
+  	}
+
+  	deleteAction(action: Action, goal) {
+    	this.db.deleteAction(action, this.auth.userid);
+  	}
+
+  	deleteDelegation(delegation: Delegation, goal) {
+    	this.db.deleteDelegation(delegation, this.auth.userid);
+  	}
+
+  	deleteReference(reference: Reference, goal) {
+    	this.db.deleteReference(reference, this.auth.userid);
+  	}
+
+  	goToEditAction(action: Action) {
+	    this.action = action;
+	    this.pageCtrl = 'editAction';
+	    this.editActionForm = this.fb.group({
+				content: ['', Validators.required],
+	      priority: ['', Validators.required],
+	      deadline: [this.action.deadline, Validators.required],
+	      time: ['', Validators.required]
+	    });
+  	}
+
+  	goToEditDelegation(delegation: Delegation) {
+	    this.delegation = delegation;
+	    this.pageCtrl = 'editDelegation';
+	    this.editDelegationForm = this.fb.group({
+				content: ['', Validators.required],
+	      deadline: [this.delegation.deadline, Validators.required]
+	    });
+	}
+
+  	goToEditReference(reference: Reference) {
+	    this.reference = reference;
+	    this.pageCtrl = 'editReference';
+	    this.editReferenceForm = this.fb.group({
+				content: ['', Validators.required]
+	    });
+  	}
+
+
+  	editAction() {
+	    if(this.editActionForm.value.content !== '' && this.editActionForm.value.content !== null && this.editActionForm.value.content !== undefined) {
+	      if(this.editActionForm.value.priority != 0 && this.editActionForm.value.priority !== null && this.editActionForm.value.priority !== undefined) {
+	        if(this.editActionForm.value.time != 0 && this.editActionForm.value.time !== null && this.editActionForm.value.time !== undefined) {
+	          this.errorMsg = "";
+	          this.action.content = this.editActionForm.value.content;
+	          this.action.deadline = this.editActionForm.value.deadline;
+	          this.action.priority = this.editActionForm.value.priority;
+	          this.action.time = this.editActionForm.value.time;
+	          this.db.editAction(this.action, this.auth.userid).then( () => {
+	          this.pageCtrl = 'reviewGoal';
+	          });
+	        } else {
+	          this.errorMsg = "Please define a valid time estimate for this action";
+	        }
+	      } else {
+	        this.errorMsg = "Please define a priority.";
+	      }
+	    } else {
+	      this.errorMsg = "Please define an action.";
+	    }
+  	}
+
+  	editDelegation() {
+	    if(this.editDelegationForm.value.content !== '' && this.editDelegationForm.value.content !== null && this.editDelegationForm.value.content !== undefined) {
+	      this.errorMsg = "";
+	      this.delegation.content = this.editDelegationForm.value.content;
+	      this.delegation.deadline = this.editDelegationForm.value.deadline;
+	      this.db.editDelegation(this.delegation, this.auth.userid).then( () => {
+	      this.pageCtrl = 'reviewGoal';
+	      });
+	    } else {
+	      this.errorMsg = "Please define what you are waiting for.";
+	    }
+  	}
+
+  	editReference() {
+	    if(this.editReferenceForm.value.content !== '' && this.editReferenceForm.value.content !== null && this.editReferenceForm.value.content !== undefined) {
+	      this.errorMsg = "";
+	      this.reference.content = this.editReferenceForm.value.content;
+	      this.db.editReference(this.reference, this.auth.userid).then( () => {
+	      this.pageCtrl = 'reviewGoal';
+	      });
+	    } else {
+	      this.errorMsg = "Please define a valid reference.";
+	    }
+  	}
+
+  	deleteGoal(goal: Goal) {
+	    this.db.deleteGoal(goal.key, this.auth.userid).then( () => {
+	      this.pageCtrl = '';
+	    });
+  	}
  
 }
