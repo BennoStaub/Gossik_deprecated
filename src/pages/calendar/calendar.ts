@@ -106,7 +106,28 @@ export class CalendarPage {
 	}
 
 	onTimeSelected(event) {
-		this.selectedDay = event.selectedTime
+			if(event.events == undefined || event.events.length == 0) {
+			this.selectedDay = event.selectedTime
+			let modal = this.modalCtrl.create('CalendarEventModalPage', {selectedDay: this.selectedDay});
+			modal.present();
+			modal.onDidDismiss(data => {
+				if(data) {
+					let eventData: CalendarEvent = data;
+					eventData.userid = this.auth.userid;
+					eventData.allDay = false;
+					this.db.addCalendarEvent(eventData, this.auth.userid)
+					eventData.startTime = new Date(eventData.startTime);
+			        eventData.endTime = new Date(eventData.endTime);
+					let events = this.eventSource;
+					events.push(eventData);
+					this.eventSource = [];
+					setTimeout(() => {
+						this.eventSource = events;
+					});
+					
+				}
+			});
+		}
 	}
 
 }
