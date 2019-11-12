@@ -66,6 +66,7 @@ export class CalendarPage {
 
 
 	addEvent(){
+		this.selectedDay = new Date();
 		let modal = this.modalCtrl.create('CalendarEventModalPage', {selectedDay: this.selectedDay});
 		modal.present();
 		modal.onDidDismiss(data => {
@@ -107,7 +108,7 @@ export class CalendarPage {
 
 	onTimeSelected(event) {
 			if(event.events == undefined || event.events.length == 0) {
-			this.selectedDay = event.selectedTime
+			this.selectedDay = new Date(event.selectedTime);
 			let modal = this.modalCtrl.create('CalendarEventModalPage', {selectedDay: this.selectedDay});
 			modal.present();
 			modal.onDidDismiss(data => {

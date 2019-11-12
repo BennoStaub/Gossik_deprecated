@@ -13,12 +13,16 @@ import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
 export class CalendarEventModalPage {
 
   event = {} as CalendarEvent;
+  eventStartTimeISOString: string;
+  eventEndTimeISOString: string;
   minDate = new Date(new Date().setHours(0,0,0,0)).toISOString();
  
   constructor(public navCtrl: NavController, private navParams: NavParams, public viewCtrl: ViewController) {
     let preselectedDate = moment(this.navParams.get('selectedDay')).format();
-    this.event.startTime = preselectedDate;
-    this.event.endTime = preselectedDate;
+    console.log('calendar event modal: preselectedDate');
+    console.log(preselectedDate);
+    this.eventStartTimeISOString = preselectedDate;
+    this.eventEndTimeISOString = preselectedDate;
   }
  
   cancel() {
@@ -26,8 +30,8 @@ export class CalendarEventModalPage {
   }
  
   save() {
-    console.log('save modal this.event.startTime');
-    console.log(this.event.startTime)
+  	this.event.startTime = new Date(this.eventStartTimeISOString);
+  	this.event.endTime = new Date(this.eventEndTimeISOString);
     this.viewCtrl.dismiss(this.event);
   }
  
