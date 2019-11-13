@@ -12,6 +12,7 @@
   <ion-content padding>
     <ion-item (click)="goToReviewGoalsPage()">Review Goals</ion-item>
     <ion-item (click)="goToTakeActionPage()">Take Action</ion-item>
+    <ion-item (click)="goToCalendarPage()">Calendar</ion-item>
     <ion-item-divider></ion-item-divider>
 
   <!-- HomePage -->
@@ -314,6 +315,34 @@
       <div *ngIf="pageCtrl == 'actionTaken'">
         Great, have fun while taking Action!
       </div>
+    </div>
+
+    <!-- CalendarPage -->
+    <div *ngIf="viewpoint == 'CalendarPage'">
+      <ion-row>
+        <ion-buttons end>
+          <button ion-button icon-only (click)="addEvent()">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-col style="text-align: center">
+          <h2>{{ viewTitle }}</h2>
+        </ion-col>
+      </ion-row>
+      <calendar [eventSource]="eventSource"
+                [calendarMode]="calendar.mode"
+                [currentDate]="calendar.currentDate"
+                (onEventSelected)="onEventSelected($event)"
+                (onTitleChanged)="onViewTitleChanged($event)"
+                (onTimeSelected)="onTimeSelected($event)"
+                step="5"
+                class="calendar"
+                autoSelect="false">
+      </calendar>
+
+
+
+
     </div>
 
 

@@ -20,8 +20,6 @@ import { DataHandlingProvider } from '../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
 import { SignupPage } from '../pages/sign-up/sign-up';
 import { SignupPageModule } from '../pages/sign-up/sign-up.module';
-import { CalendarPage } from '../pages/calendar/calendar';
-import { CalendarPageModule } from '../pages/calendar/calendar.module';
 import { CalendarEventModalPage } from '../pages/calendar-event-modal/calendar-event-modal';
 import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/calendar-event-modal.module';
 
@@ -38,7 +36,6 @@ import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/cale
     NgCalendarModule,
     LoginPageModule,
     SignupPageModule,
-    CalendarPageModule,
     CalendarEventModalPageModule
   ],
   bootstrap: [IonicApp],
@@ -47,7 +44,6 @@ import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/cale
     HomePage,
     LoginPage,
     SignupPage,
-    CalendarPage,
     CalendarEventModalPage
   ],
   providers: [

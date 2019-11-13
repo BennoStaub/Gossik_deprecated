@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, NavParams, ModalController, AlertController, Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -12,8 +12,11 @@ import { Reference } from '../../model/reference/reference.model';
 import { Delegation } from '../../model/delegation/delegation.model';
 import { Goal } from '../../model/goal/goal.model';
 import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
+import { CalendarEventModalPage } from '../calendar-event-modal/calendar-event-modal';
+
 
 import 'rxjs/add/operator/take';
+import * as moment from 'moment';
 
 
 @Component({
@@ -65,13 +68,24 @@ export class HomePage {
 	doableActionArray: Action[] = [];
 	doableHighPriorityActions: Action[] = [];
 	goalFromAction = {} as Goal;
+	eventSource = [];
+	calendarEventList: Observable<CalendarEvent[]>;
+	viewTitle: string;
+	selectedDay = new Date();
+	calendar = {
+		mode: 'week',
+		currentDate: new Date()
+	};
  
   constructor(
 		public navCtrl: NavController,
 		private auth: AuthentificationProvider,
 		private db: DataHandlingProvider,
 		public platform: Platform,
-		private fb: FormBuilder
+		private fb: FormBuilder,
+		public navParams: NavParams,
+		private modalCtrl: ModalController,
+		private alertCtrl: AlertController,
 	) {
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
@@ -158,6 +172,33 @@ export class HomePage {
     	});
     	this.viewpoint = 'TakeActionPage';
     	this.pageCtrl = '';
+  	}
+
+  	goToCalendarPage() {
+  		this.eventSource = [];
+  		this.calendarEventList = this.db.getCalendarEventListFromUser(this.auth.userid)
+			.snapshotChanges()
+			.map(
+			changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, userid: c.payload.val().userid, goalid: c.payload.val().goalid, startTime: c.payload.val().startTime, endTime: c.payload.val().endTime, title: c.payload.val().title, allDay: c.payload.val().allDay
+			}))
+			});
+			this.calendarEventList.take(1).subscribe(
+		      	calendarEventArray => {
+		      	this.eventSource = [];
+		        for(let calendarEvent of calendarEventArray) {
+		        	calendarEvent.startTime = new Date(calendarEvent.startTime);
+		        	calendarEvent.endTime = new Date(calendarEvent.endTime);
+		        	this.eventSource.push(calendarEvent);
+		        };
+		        let events = this.eventSource;
+				this.eventSource = [];
+				setTimeout(() => {
+					this.eventSource = events;
+				});
+			});
+		this.viewpoint = 'CalendarPage';
   	}
 
   	// ProcessCapturePage functions
@@ -550,5 +591,72 @@ export class HomePage {
 	      this.pageCtrl = 'actionTaken';
 	    });
   	}
+
+  	// CalendarPage functions
+  	addEvent(){
+		this.selectedDay = new Date();
+		let modal = this.modalCtrl.create(CalendarEventModalPage, {selectedDay: this.selectedDay});
+		modal.present();
+		modal.onDidDismiss(data => {
+			if (data) {
+				let eventData: CalendarEvent = data;
+				eventData.userid = this.auth.userid;
+				eventData.allDay = false;
+				console.log('addEvent eventData');
+				console.log(eventData);
+				this.db.addCalendarEvent(eventData, this.auth.userid)
+				eventData.startTime = new Date(eventData.startTime);
+		        eventData.endTime = new Date(eventData.endTime);
+				let events = this.eventSource;
+				events.push(eventData);
+				this.eventSource = [];
+				setTimeout(() => {
+					this.eventSource = events;
+				});
+				
+			}
+		});
+	}
+
+	onEventSelected(event){
+		let start = moment(event.startTime).format('LLLL');
+		let end = moment(event.endTime).format('LLLL');
+
+		let alert = this.alertCtrl.create({
+				title: '' + event.title,
+				subTitle: 'Goalid:' + event.goalid + 'From: ' + start + '<br>To: ' + end + 'allDay:' + event.allDay,
+				buttons: ['OK']
+		})
+	alert.present();
+	}
+
+	onViewTitleChanged(title) {
+		this.viewTitle = title;
+	}
+
+	onTimeSelected(event) {
+			if(event.events == undefined || event.events.length == 0) {
+			this.selectedDay = new Date(event.selectedTime);
+			let modal = this.modalCtrl.create(CalendarEventModalPage, {selectedDay: this.selectedDay});
+			modal.present();
+			modal.onDidDismiss(data => {
+				if(data) {
+					let eventData: CalendarEvent = data;
+					eventData.userid = this.auth.userid;
+					eventData.allDay = false;
+					this.db.addCalendarEvent(eventData, this.auth.userid)
+					eventData.startTime = new Date(eventData.startTime);
+			        eventData.endTime = new Date(eventData.endTime);
+					let events = this.eventSource;
+					events.push(eventData);
+					this.eventSource = [];
+					setTimeout(() => {
+						this.eventSource = events;
+					});
+					
+				}
+			});
+		}
+	}
  
 }
