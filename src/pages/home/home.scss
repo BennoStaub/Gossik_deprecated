@@ -67,4 +67,8 @@ page-home {
     .calendar-hour-column, .weekview-allday-label {
     	width: 100px !important;
     }
+
+    .scroll-content, .content {
+    	scrollbar-width: none;
+    }
 }
