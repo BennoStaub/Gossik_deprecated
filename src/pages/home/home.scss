@@ -3,12 +3,36 @@ page-home {
         border-bottom: 1px solid #150931;
         white-space: pre-line;
     }
-    
-    ion-title {
-        text-align: center;
-    }
 
     div {
     	height: 100%;
+    }
+
+    ion-header {
+    	height: 110px;
+    }
+
+    .header-container {
+    	margin-left: 20px;
+    }
+
+    .header-logo {
+    	margin-top: 50px;
+    }
+
+    .header-icons-div {
+    	height: 22px;
+    	background-color: map-get($colors, primary);
+    	position: absolute;
+    	bottom: 0;
+    	right: 0;
+    	margin-bottom: 1px;
+    	margin-right: 20px;
+    }
+
+    .header-icon {
+    	background-color: map-get($colors, primary);
+    	color: #FFFFFF;
+    	font-size: 20px;
     }
 }

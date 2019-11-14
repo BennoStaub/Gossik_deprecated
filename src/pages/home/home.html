@@ -1,15 +1,25 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Gossik</ion-title>
-    <ion-buttons end>
-      <button ion-button menuToggle edge>
-        <ion-icon name="menu"></ion-icon>
+  <div class="header-container">
+    <img class="header-logo" src="../../assets/imgs/logo_schriftzug_weiss.png" height="60">
+    <div class="header-icons-div">
+      <button class="header-icon" (click)="goToCalendarPage()">
+        <img src="../../assets/icon/icon_calendar.png" height="20"> Calendar
       </button>
-    </ion-buttons>
-  </ion-navbar>
+      <button class="header-icon" (click)="goToToDoPage()">
+        <img src="../../assets/icon/icon_todo.png" height="20"> ToDo
+      </button>
+      <button class="header-icon">
+        <img src="../../assets/icon/icon_projects.png" height="20"> Projects
+      </button>
+      <button class="header-icon">
+        <img src="../../assets/icon/icon_captures.png" height="20"> Captures
+      </button>
+    </div>
+  </div>
 </ion-header>
  
   <ion-content padding>
+    <ion-item (click)="goToHomePage()">Home</ion-item>
     <ion-item (click)="goToReviewGoalsPage()">Review Goals</ion-item>
     <ion-item (click)="goToTakeActionPage()">Take Action</ion-item>
     <ion-item (click)="goToCalendarPage()">Calendar</ion-item>
@@ -292,8 +302,8 @@
       </div>
     </div>
 
-    <!-- TakeActionPage -->
-    <div *ngIf="viewpoint == 'TakeActionPage'">
+    <!-- ToDoPage -->
+    <div *ngIf="viewpoint == 'ToDoPage'">
       <div *ngIf="pageCtrl == ''">
         <p>How many minutes do you have available right now?</p>
         <form (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
@@ -303,12 +313,10 @@
           </ion-item>
           <button ion-button full type="submit">Show doable action</button>
         </form>
-      </div>
       
-      <p>{{errorMsg}}</p>
-      <div *ngIf="pageCtrl == 'showActions'">
+        <p>{{errorMsg}}</p>
         <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
-          <div [innerHtml]="action.content"></div>
+        <div [innerHtml]="action.content"></div>
         </ion-item>
       </div>
 

@@ -14,30 +14,11 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-.toolbar-content{
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    pointer-events: none;
-    color: #000000 !important;
- }
 
- //These 3 lines change the title text color application
-.toolbar-title.toolbar-title-md, 
-.toolbar-title.toolbar-title-ios, 
-.toolbar-title.toolbar-title-wp { 
-    color: #000000 !important; 
-}
-
-.toolbar-background{
-   background-color: map-get($colors, primary);
-   //background-image: url('../assets/imgs/brown_header.png');
-   //background-repeat: no-repeat;
-   //background-size: cover;
-}
+@import "../theme/icons";
 
 ion-title {
-   color: #000000 !important;
+   color: #FFFFFF !important;
 }
 
 ion-item {
@@ -52,12 +33,13 @@ ion-item {
 }
 
  
+ion-header {
+  width: 100% !important;
+  background-color: map-get($colors, primary) !important;
+}
 
 
 ion-content {
-    background-image: url('../assets/imgs/blue_background.png');
-    background-repeat: no-repeat;
-    background-size:cover;
     color: #000000 !important;
 }
 

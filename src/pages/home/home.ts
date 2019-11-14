@@ -127,6 +127,10 @@ export class HomePage {
   		this.db.deleteCapture(capture, this.auth.userid)
   	}
 
+  	goToHomePage() {
+  		this.viewpoint = 'HomePage';
+  	}
+
   	goToProcessCapturePage(capture: Capture) {
   		this.capture = capture;
   		this.goalList = this.db.getGoalList(this.auth.userid)
@@ -166,11 +170,12 @@ export class HomePage {
   		this.pageCtrl = '';
   	}
 
-  	goToTakeActionPage() {
+  	goToToDoPage() {
   		this.giveTimeForm = this.fb.group({
       		timeEstimate: ['', Validators.required]
     	});
-    	this.viewpoint = 'TakeActionPage';
+    	this.doableHighPriorityActions = [];
+    	this.viewpoint = 'ToDoPage';
     	this.pageCtrl = '';
   	}
 
@@ -545,6 +550,7 @@ export class HomePage {
 
   	// TakeActionPage functions
   	showDoableActions() {
+  		this.doableActionArray = [];
 	    this.doableActionList = this.db.getNextActionListFromUser(this.auth.userid)
 		  .snapshotChanges()
 		  .map(
@@ -561,23 +567,23 @@ export class HomePage {
 	          }
 	        };
 	        if(this.doableActionArray.length > 0) {
-	          for(let numberDoableHighPriorityActions: number = 0; numberDoableHighPriorityActions < 3; numberDoableHighPriorityActions++) {
-	            if(this.doableActionArray.length == 0) {
-	              continue;
-	            }
-	            let maxPriority = 0;
-	            let index = 0;
-	            for(let counter: number = 0; counter <= this.doableActionArray.length-1; counter++) {
-	              if(this.doableActionArray[counter].priority > maxPriority) {
-	                maxPriority = this.doableActionArray[counter].priority;
-	                index = counter;
-	              }
-	            }
-	            this.doableHighPriorityActions.push(this.doableActionArray[index]);
-	            this.doableActionArray.splice(index, 1);
-	          }
-	          this.pageCtrl = 'showActions';
-	          this.errorMsg = '';
+  				this.doableHighPriorityActions = [];
+	          	for(let numberDoableHighPriorityActions: number = 0; numberDoableHighPriorityActions < 3; numberDoableHighPriorityActions++) {
+		            if(this.doableActionArray.length == 0) {
+		              continue;
+		            }
+		            let maxPriority = 0;
+		            let index = 0;
+		            for(let counter: number = 0; counter <= this.doableActionArray.length-1; counter++) {
+		              if(this.doableActionArray[counter].priority > maxPriority) {
+		                maxPriority = this.doableActionArray[counter].priority;
+		                index = counter;
+		              }
+		            }
+		            this.doableHighPriorityActions.push(this.doableActionArray[index]);
+		            this.doableActionArray.splice(index, 1);
+	          	}
+	          	this.errorMsg = '';
 	        } else {
 	          this.errorMsg = 'There is no doable action within that time.';
 	        };
