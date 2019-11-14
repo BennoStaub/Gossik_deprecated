@@ -551,6 +551,7 @@ export class HomePage {
   	// TakeActionPage functions
   	showDoableActions() {
   		this.doableActionArray = [];
+  		this.doableHighPriorityActions = [];
 	    this.doableActionList = this.db.getNextActionListFromUser(this.auth.userid)
 		  .snapshotChanges()
 		  .map(
