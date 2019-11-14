@@ -35,4 +35,36 @@ page-home {
     	color: #FFFFFF;
     	font-size: 20px;
     }
+
+    .weekview-header, .weekview-allday-table, .weekview-normal-event-container {
+    	border: 0px;
+    	background-color: map-get($colors, secondary) !important;
+    }
+
+    .calendar-hour-column, .weekview-header {
+    	border: 0px !important;
+    }
+
+    .weekview-header, .slides-container {
+    	border: 0px;
+    	border-radius: 20px 20px 0px 0px;
+    }
+
+    .weekview-normal-event-container {
+    	bottom: 50px;
+    	border-radius: 0px 0px 20px 20px;
+    }
+
+    .weekview-container {
+    	width: 95% !important;
+    	margin: auto;
+    }
+
+    .swiper-slide, swiper-slide-active {
+    	width: 100% !important;
+    }
+
+    .calendar-hour-column, .weekview-allday-label {
+    	width: 100px !important;
+    }
 }

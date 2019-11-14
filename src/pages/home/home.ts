@@ -91,7 +91,7 @@ export class HomePage {
 			this.navCtrl.setRoot(LoginPage);
 		}
 		this.isApp = !this.platform.is('core')
-		this.viewpoint = 'HomePage';
+		this.viewpoint = 'CapturePage';
 		this.captureList = this.db.getCaptureListFromUser(this.auth.userid)
 		.snapshotChanges()
 		.map(
@@ -127,8 +127,8 @@ export class HomePage {
   		this.db.deleteCapture(capture, this.auth.userid)
   	}
 
-  	goToHomePage() {
-  		this.viewpoint = 'HomePage';
+  	goToCapturePage() {
+  		this.viewpoint = 'CapturePage';
   	}
 
   	goToProcessCapturePage(capture: Capture) {
@@ -151,7 +151,7 @@ export class HomePage {
   		this.takenAction = takenAction;
   	}
 
-  	goToReviewGoalsPage() {
+  	goToGoalsPage() {
   		this.goal.name = '';
 	    this.goalList = this.db.getGoalList(this.auth.userid)
 		  .snapshotChanges()
@@ -166,7 +166,7 @@ export class HomePage {
 	        this.errorMsg = 'You don\'t have any goals yet. Capture your thoughts and process them to create goals!';
 	      }
 	    })
-  		this.viewpoint = 'ReviewGoalsPage';
+  		this.viewpoint = 'GoalsPage';
   		this.pageCtrl = '';
   	}
 

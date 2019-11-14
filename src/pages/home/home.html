@@ -8,10 +8,10 @@
       <button class="header-icon" (click)="goToToDoPage()">
         <img src="../../assets/icon/icon_todo.png" height="20"> ToDo
       </button>
-      <button class="header-icon">
+      <button class="header-icon" (click)="goToGoalsPage()">
         <img src="../../assets/icon/icon_projects.png" height="20"> Projects
       </button>
-      <button class="header-icon">
+      <button class="header-icon" (click)="goToCapturePage()">
         <img src="../../assets/icon/icon_captures.png" height="20"> Captures
       </button>
     </div>
@@ -19,14 +19,9 @@
 </ion-header>
  
   <ion-content padding>
-    <ion-item (click)="goToHomePage()">Home</ion-item>
-    <ion-item (click)="goToReviewGoalsPage()">Review Goals</ion-item>
-    <ion-item (click)="goToTakeActionPage()">Take Action</ion-item>
-    <ion-item (click)="goToCalendarPage()">Calendar</ion-item>
-    <ion-item-divider></ion-item-divider>
 
-  <!-- HomePage -->
-  <div *ngIf="viewpoint=='HomePage'">
+  <!-- CapturePage -->
+  <div *ngIf="viewpoint == 'CapturePage'">
     <ion-row>
     <ion-col style="text-align: center">
       Capture any thought you have during your day to add it as a note for later processing!
@@ -190,8 +185,8 @@
     </div>
   </div>
 
-  <!-- ReviewGoalPage -->
-  <div *ngIf="viewpoint == 'ReviewGoalsPage'">
+  <!-- GoalsPage -->
+  <div *ngIf="viewpoint == 'GoalsPage'">
     <div *ngIf="pageCtrl == ''">
       <ion-list>
         <ion-item no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">

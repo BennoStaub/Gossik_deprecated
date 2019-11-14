@@ -25,22 +25,21 @@ ion-item {
    border-radius: 5px;
    margin-bottom: 1px !important;
    color: #000000 !important;
-   background-color: map-get($colors, primary) !important;
-   //background-image: url('../assets/imgs/brown_item3.png');
-   //background-repeat: no-repeat;
-   //background-size: 100% 100%;
+   background-color: map-get($colors, secondary) !important;
    opacity: 1;
 }
 
  
 ion-header {
-  width: 100% !important;
   background-color: map-get($colors, primary) !important;
 }
 
 
 ion-content {
+    margin-top: 50px !important;
+    background-color: map-get($colors, primary) !important;
     color: #000000 !important;
+    overflow: auto !important;
 }
 
 ion-label {
