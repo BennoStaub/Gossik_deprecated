@@ -71,4 +71,15 @@ page-home {
     .scroll-content, .content {
     	scrollbar-width: none;
     }
+
+    .primary {
+    	background-color: map-get($colors, primary);
+    	color: map-get($colors, secondary) !important;
+    }
+
+    ion-input{
+  		input::placeholder {
+    		color: map-get($colors, white) !important;
+  		}
+	}
 }

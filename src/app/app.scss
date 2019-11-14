@@ -24,9 +24,7 @@ ion-title {
 ion-item {
    border-radius: 5px;
    margin-bottom: 1px !important;
-   color: #000000 !important;
-   background-color: map-get($colors, secondary) !important;
-   opacity: 1;
+   background-color: map-get($colors, secondary);
 }
 
  
@@ -49,4 +47,13 @@ ion-label {
 
 p {
     color: #000000 !important;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
 }

@@ -90,7 +90,7 @@ export class HomePage {
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
 		}
-		this.isApp = !this.platform.is('core')
+		this.isApp = !this.platform.is('core');
 		this.viewpoint = 'CapturePage';
 		this.captureList = this.db.getCaptureListFromUser(this.auth.userid)
 		.snapshotChanges()

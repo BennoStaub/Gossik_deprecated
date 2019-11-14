@@ -300,19 +300,28 @@
     <!-- ToDoPage -->
     <div *ngIf="viewpoint == 'ToDoPage'">
       <div *ngIf="pageCtrl == ''">
-        <p>How many minutes do you have available right now?</p>
-        <form (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
-          <ion-item>
-            <ion-label>Time in min:</ion-label>
-            <ion-input type="number" placeholder="0" min="0" formControlName="timeEstimate"></ion-input>
-          </ion-item>
-          <button ion-button full type="submit">Show doable action</button>
-        </form>
-      
-        <p>{{errorMsg}}</p>
-        <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
-        <div [innerHtml]="action.content"></div>
-        </ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1">
+              <form (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
+                <ion-item class="primary">
+                  <ion-label class="primary">Time available in minutes:</ion-label>
+                  <ion-input class="placeholder-secondary" type="number" placeholder="0" min="0" formControlName="timeEstimate"></ion-input>
+                </ion-item>
+              </form>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <p>{{errorMsg}}</p>
+            <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
+            <div [innerHtml]="action.content"></div>
+            </ion-item>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <div *ngIf="pageCtrl == 'actionTaken'">
