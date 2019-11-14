@@ -77,9 +77,20 @@ page-home {
     	color: map-get($colors, secondary) !important;
     }
 
-    ion-input{
-  		input::placeholder {
-    		color: map-get($colors, white) !important;
+    ion-input {
+    	background-color: map-get($colors, secondary);
+    	border-radius: 20px;
+    	color: map-get($colors, primary);
+    	text-align: center;
+    	input {
+	    	text-align: center;
+	    	::-webkit-input-placeholder {
+	      		text-align: center;
+	    	}
   		}
+	}
+
+	.border-radius-20px {
+		border-radius: 20px;
 	}
 }
