@@ -177,6 +177,7 @@ export class HomePage {
     	this.doableHighPriorityActions = [];
     	this.viewpoint = 'ToDoPage';
     	this.pageCtrl = '';
+    	this.errorMsg = '';
   	}
 
   	goToCalendarPage() {

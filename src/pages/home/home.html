@@ -316,7 +316,7 @@
             </ion-col>
           </ion-row>
           <ion-row>
-            <p>{{errorMsg}}</p>
+            <p class="primary">{{errorMsg}}</p>
             <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
             <div [innerHtml]="action.content"></div>
             </ion-item>
