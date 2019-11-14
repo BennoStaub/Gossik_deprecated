@@ -302,7 +302,7 @@
       <div *ngIf="pageCtrl == ''">
         <p>How many minutes do you have available right now?</p>
         <form (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
-          <ion-item no-lines>
+          <ion-item>
             <ion-label>Time in min:</ion-label>
             <ion-input type="number" placeholder="0" min="0" formControlName="timeEstimate"></ion-input>
           </ion-item>
