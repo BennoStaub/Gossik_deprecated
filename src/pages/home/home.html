@@ -30,20 +30,24 @@
     <ion-row>
       <p>{{errorMsg}}</p>
    
-    <ion-item>
+    <ion-item class="secondary border-radius-20px">
       <ion-label stacked>Content</ion-label>
       <ion-textarea [(ngModel)]="newCapture.content" placeholder="Input new capture"></ion-textarea>
     </ion-item>
     <button ion-button block (click)="addCapture(newCapture)">Add</button>
     </ion-row>
-    <ion-item no-lines text-wrap *ngFor="let takenAction of takenActionList | async" (click)="goToProcessTakenActionPage(takenAction)">
-      <div class="ion-item-bg"></div>
-      <div>You started with action "{{takenAction.content}}", click here to process</div>
-    </ion-item>
+    <div class="secondary border-radius-20px">
+      <ion-item class="border-radius-20px" no-lines text-wrap *ngFor="let takenAction of takenActionList | async" (click)="goToProcessTakenActionPage(takenAction)">
+        <div class="ion-item-bg"></div>
+        <div>You started with action "{{takenAction.content}}", click here to process</div>
+      </ion-item>
+    </div>
     <p>Thoughts captured and ready for processing:</p>
-    <ion-item no-lines text-wrap *ngFor="let capture of captureList | async" (click)="goToProcessCapturePage(capture)">
-      <div class="ion-item-bg" [innerHtml]="capture.content" (swipe)="removeCapture(capture)"></div>
-    </ion-item>
+    <div class="secondary border-radius-20px">
+      <ion-item class="border-radius-20px" no-lines text-wrap *ngFor="let capture of captureList | async" (click)="goToProcessCapturePage(capture)">
+        <div class="ion-item-bg" [innerHtml]="capture.content" (swipe)="removeCapture(capture)"></div>
+      </ion-item>
+    </div>
   </div>
 
   <!-- ProcessCapturePage -->
@@ -186,9 +190,9 @@
   </div>
 
   <!-- ProjectsPage -->
-  <div *ngIf="viewpoint == 'ProjectsPage'">
+  <div class="height-100" *ngIf="viewpoint == 'ProjectsPage'">
     <div *ngIf="pageCtrl == ''">
-        <ion-item class="width-20" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
+        <ion-item class="width-20 secondary border-radius-20px min-height-150px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
           <h1>{{goal.name}}</h1>
           <p class="top-border" *ngFor="let action of actions[goal.key]">{{action.content}}</p>
       </ion-item>
@@ -196,15 +200,15 @@
 
     <p>{{errorMsg}}</p>
 
-    <div *ngIf="pageCtrl == 'ProjectOverview'">
+    <div class="height-100" *ngIf="pageCtrl == 'ProjectOverview'">
       <ion-grid class="height-70">
         <ion-row class="height-100">
           <ion-col col-9 class="no-padding">
             <ion-grid class="height-100 no-padding">
               <ion-row class="height-50">
                 <ion-col col-4>
-                  <ion-item class="height-45 margin-bottom-10"><h1>{{goal.name}}</h1></ion-item>
-                  <ion-item class="height-50">Team</ion-item>
+                  <ion-item class="height-45 margin-bottom-10 secondary border-radius-20px"><h1>{{goal.name}}</h1></ion-item>
+                  <ion-item class="height-50 secondary border-radius-20px">Team</ion-item>
                 </ion-col>
                 <ion-col col-8>
                   <calendar [eventSource]="eventSource"
@@ -220,12 +224,12 @@
                 </ion-col>
               </ion-row>
               <ion-row class="height-50 margin-5">
-                <ion-item class="height-100">Actions, Delegations, Material</ion-item>
+                <ion-item class="height-100 secondary border-radius-20px">Actions, Delegations, Material</ion-item>
               </ion-row>
             </ion-grid>
           </ion-col>
           <ion-col col-3>
-            <ion-item class="height-100">Chat</ion-item>
+            <ion-item class="height-100 secondary border-radius-20px">Chat</ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -369,7 +373,7 @@
     </div>
 
     <!-- CalendarPage -->
-    <div *ngIf="viewpoint == 'CalendarPage'">
+    <div class="height-100" *ngIf="viewpoint == 'CalendarPage'">
       <ion-row>
         <ion-buttons end>
           <button ion-button icon-only (click)="addEvent()">
@@ -380,7 +384,7 @@
           <h2>{{ viewTitle }}</h2>
         </ion-col>
       </ion-row>
-      <div class="padding-bottom-50">
+      <div class="padding-bottom-50 height-100">
         <calendar [eventSource]="eventSource"
                   [calendarMode]="calendar.mode"
                   [currentDate]="calendar.currentDate"

@@ -4,10 +4,6 @@ page-home {
         white-space: pre-line;
     }
 
-    div {
-    	height: 100%;
-    }
-
     .content-container {
     	background-color: map-get($colors, secondary);
     	border-radius: 20px;
@@ -84,7 +80,12 @@ page-home {
 
     .primary {
     	background-color: map-get($colors, primary);
-    	color: map-get($colors, secondary) !important;
+    	color: map-get($colors, white) !important;
+    }
+
+    .secondary {
+    	background-color: map-get($colors, secondary);
+    	color: #000000 !important;
     }
 
     ion-input {
@@ -149,6 +150,10 @@ page-home {
 		height: 45%;
 	}
 
+	.min-height-150px {
+		min-height: 150px;
+	}
+
 	.no-padding {
 		padding: 0;
 	}
@@ -159,5 +164,9 @@ page-home {
 
 	.margin-bottom-10 {
 		margin-bottom: 10px !important;
+	}
+
+	.label-md {
+		height: 90%;
 	}
 }
