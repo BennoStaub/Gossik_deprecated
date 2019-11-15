@@ -191,7 +191,7 @@ export class HomePage {
       		timeEstimate: ['', Validators.required]
     	});
     	this.doableHighPriorityActions = [];
-    	this.goal =  <Goal>{};;
+    	this.goal =  <Goal>{key: 'None'};;
     	this.viewpoint = 'ToDoPage';
     	this.pageCtrl = '';
     	this.errorMsg = '';
@@ -569,13 +569,20 @@ export class HomePage {
   	// ToDoPage functions
 
   	chooseGoal(goalid) {
-  		this.db.getGoalFromGoalid(goalid, this.auth.userid).valueChanges().take(1).subscribe( goal => {
-		this.goal = {key: goalid, name: goal.name, userid: goal.userid};
-		});
+  		if(goalid != 'None') {
+	  		this.db.getGoalFromGoalid(goalid, this.auth.userid).valueChanges().take(1).subscribe( goal => {
+			this.goal = {key: goalid, name: goal.name, userid: goal.userid};
+			});
+		} else {
+			this.goal.key = 'None';
+		}
   		this.showDoableActions();
   	}
 
   	showDoableActions() {
+  		if(!this.giveTimeForm.value.timeEstimate) {
+  			this.giveTimeForm.value.timeEstimate = 10000000;
+  		}
   		this.doableActionArray = [];
   		this.doableHighPriorityActions = [];
 	    this.doableActionList = this.db.getNextActionListFromUser(this.auth.userid)
@@ -589,7 +596,9 @@ export class HomePage {
 	    this.doableActionList.take(1).subscribe(
 	      doableActionArray => {
 	        for(let doableAction of doableActionArray) {
-	          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate) && !doableAction.taken && (doableAction.goalid == this.goal.key) || !Object.keys(this.goal).length) {
+	        	console.log('goal');
+	        	console.log(this.goal);
+	          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate) && !doableAction.taken && ((doableAction.goalid == this.goal.key) || this.goal.key == 'None')) {
 	            this.doableActionArray.push(doableAction);
 	          }
 	        };
@@ -621,8 +630,9 @@ export class HomePage {
   	takeThisAction(action: Action) {
 	    action.taken = true;
 	    this.db.editAction(action, this.auth.userid).then( () => {
-	      this.pageCtrl = 'actionTaken';
+	      this.errorMsg = 'Great, have fun while taking Action! Visit the Captures to process this action when you finished it.';
 	    });
+	    this.showDoableActions();
   	}
 
   	// CalendarPage functions

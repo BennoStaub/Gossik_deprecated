@@ -8,6 +8,12 @@ page-home {
     	height: 100%;
     }
 
+    .content-container {
+    	background-color: map-get($colors, secondary);
+    	border-radius: 20px;
+    	padding: 10px;
+    }
+
     ion-header {
     	height: 110px;
     }

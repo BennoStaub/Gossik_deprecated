@@ -320,16 +320,16 @@
             </ion-col>
           </ion-row>
           <ion-row>
+            <ion-col>
             <p class="primary">{{errorMsg}}</p>
-            <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
-            <div [innerHtml]="action.content"></div>
-            </ion-item>
+            <div class="content-container">
+              <ion-item no-lines *ngFor="let action of doableHighPriorityActions" (click)="takeThisAction(action)">
+                <div [innerHtml]="action.content"></div>
+              </ion-item>
+            </div>
+          </ion-col>
           </ion-row>
         </ion-grid>
-      </div>
-
-      <div *ngIf="pageCtrl == 'actionTaken'">
-        Great, have fun while taking Action!
       </div>
     </div>
 
