@@ -34,6 +34,7 @@ export class HomePage {
 	platforms: string;
 	capture: Capture;
 	goalList: Observable<Goal[]>;
+	goalArray: Goal[];
 	referenceList: Observable<Reference[]>;
 	nextActionList: Observable<Action[]>;
 	delegationList: Observable<Delegation[]>;
@@ -171,10 +172,26 @@ export class HomePage {
   	}
 
   	goToToDoPage() {
+  		this.goalArray = [];
+  		this.goalList = this.db.getGoalList(this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+		this.goalList.take(1).subscribe(
+	      goalArray => {
+	        for(let goal of goalArray) {
+	        	this.goalArray.push(goal);
+	        }
+	    })
   		this.giveTimeForm = this.fb.group({
       		timeEstimate: ['', Validators.required]
     	});
     	this.doableHighPriorityActions = [];
+    	this.goal =  <Goal>{};;
     	this.viewpoint = 'ToDoPage';
     	this.pageCtrl = '';
     	this.errorMsg = '';
@@ -549,7 +566,15 @@ export class HomePage {
 	    });
   	}
 
-  	// TakeActionPage functions
+  	// ToDoPage functions
+
+  	chooseGoal(goalid) {
+  		this.db.getGoalFromGoalid(goalid, this.auth.userid).valueChanges().take(1).subscribe( goal => {
+		this.goal = {key: goalid, name: goal.name, userid: goal.userid};
+		});
+  		this.showDoableActions();
+  	}
+
   	showDoableActions() {
   		this.doableActionArray = [];
   		this.doableHighPriorityActions = [];
@@ -564,7 +589,7 @@ export class HomePage {
 	    this.doableActionList.take(1).subscribe(
 	      doableActionArray => {
 	        for(let doableAction of doableActionArray) {
-	          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate) && !doableAction.taken) {
+	          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate) && !doableAction.taken && (doableAction.goalid == this.goal.key) || !Object.keys(this.goal).length) {
 	            this.doableActionArray.push(doableAction);
 	          }
 	        };

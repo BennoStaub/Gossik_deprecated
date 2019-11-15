@@ -1,5 +1,5 @@
 page-home {
-    .ion-item {
+    ion-item {
         border-bottom: 1px solid #150931;
         white-space: pre-line;
     }
@@ -88,6 +88,7 @@ page-home {
 	      		text-align: center;
 	    	}
   		}
+  		border-bottom-color: transparent;
 	}
 
 	.border-radius-20px {

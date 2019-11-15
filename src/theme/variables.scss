@@ -54,6 +54,10 @@ $button-ios-background-color: map-get($colors, primary);
 // This line changes the color of all the placeholder in ion-textarea and ion-input
 $text-input-placeholder-color: #000000;
 
+$text-input-highlight-color-valid:transparent;
+$text-input-highlight-color-invalid:transparent;
+$text-input-md-highlight-color:transparent;
+
 
 // App iOS Variables
 // --------------------------------------------------

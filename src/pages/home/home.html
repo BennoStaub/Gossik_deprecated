@@ -311,7 +311,12 @@
               </form>
             </ion-col>
             <ion-col col-8>
-              <ion-item class="border-radius-20px">sadf</ion-item>
+              <ion-item class="border-radius-20px">
+              <ion-select [(ngModel)]="goal.key" (ionChange)="chooseGoal($event)">
+                <ion-option selected value="None">All Projects</ion-option>
+                <ion-option *ngFor="let goal of goalArray" value="{{goal.key}}">{{goal.name}}</ion-option>
+              </ion-select>
+              </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
