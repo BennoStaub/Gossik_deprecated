@@ -77,6 +77,7 @@ export class HomePage {
 		mode: 'week',
 		currentDate: new Date()
 	};
+	actions = {};
  
   constructor(
 		public navCtrl: NavController,
@@ -152,8 +153,9 @@ export class HomePage {
   		this.takenAction = takenAction;
   	}
 
-  	goToGoalsPage() {
+  	goToProjectsPage() {
   		this.goal.name = '';
+  		this.goalArray = [];
 	    this.goalList = this.db.getGoalList(this.auth.userid)
 		  .snapshotChanges()
 		  .map(
@@ -162,12 +164,26 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
-	    this.goalList.subscribe( goalList => {
-	      if(goalList.length == 0) {
-	        this.errorMsg = 'You don\'t have any goals yet. Capture your thoughts and process them to create goals!';
-	      }
-	    })
-  		this.viewpoint = 'GoalsPage';
+	    this.goalList.take(1).subscribe(
+	      goalArray => {
+	        for(let goal of goalArray) {
+	        	this.goalArray.push(goal);
+	        }
+	        for(let goal: Goal of this.goalArray) {
+		    	this.actionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
+				  .snapshotChanges()
+				  .map(
+				  changes => {
+					return changes.map(c => ({
+					  key: c.payload.key, ...c.payload.val()
+					}))
+			    });
+			    this.actionList.subscribe( actionList => {
+			      	this.actions[goal.key] = actionList;
+			    });
+			};
+	    });
+  		this.viewpoint = 'ProjectsPage';
   		this.pageCtrl = '';
   	}
 

@@ -8,7 +8,7 @@
       <button class="header-icon" (click)="goToToDoPage()">
         <img src="../../assets/icon/icon_todo.png" height="20"> ToDo
       </button>
-      <button class="header-icon" (click)="goToGoalsPage()">
+      <button class="header-icon" (click)="goToProjectsPage()">
         <img src="../../assets/icon/icon_projects.png" height="20"> Projects
       </button>
       <button class="header-icon" (click)="goToCapturePage()">
@@ -185,14 +185,13 @@
     </div>
   </div>
 
-  <!-- GoalsPage -->
-  <div *ngIf="viewpoint == 'GoalsPage'">
+  <!-- ProjectsPage -->
+  <div *ngIf="viewpoint == 'ProjectsPage'">
     <div *ngIf="pageCtrl == ''">
-      <ion-list>
-        <ion-item no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
-          {{goal.name}}
-        </ion-item>
-      </ion-list>
+        <ion-item class="width-20" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
+          <h1>{{goal.name}}</h1>
+          <p class="top-border" *ngFor="let action of actions[goal.key]">{{action.content}}</p>
+      </ion-item>
     </div>
 
     <p>{{errorMsg}}</p>
