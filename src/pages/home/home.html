@@ -196,7 +196,43 @@
 
     <p>{{errorMsg}}</p>
 
-    <div *ngIf="pageCtrl == 'reviewGoal'">
+    <div *ngIf="pageCtrl == 'ProjectOverview'">
+      <ion-grid class="height-70">
+        <ion-row class="height-100">
+          <ion-col col-9 class="no-padding">
+            <ion-grid class="height-100 no-padding">
+              <ion-row class="height-50">
+                <ion-col col-4>
+                  <ion-item class="height-45 margin-bottom-10"><h1>{{goal.name}}</h1></ion-item>
+                  <ion-item class="height-50">Team</ion-item>
+                </ion-col>
+                <ion-col col-8>
+                  <calendar [eventSource]="eventSource"
+                    [calendarMode]="calendar.mode"
+                    [currentDate]="calendar.currentDate"
+                    (onEventSelected)="onEventSelected($event)"
+                    (onTitleChanged)="onViewTitleChanged($event)"
+                    (onTimeSelected)="onTimeSelected($event)"
+                    step="5"
+                    class="calendar"
+                    autoSelect="false">
+                  </calendar>
+                </ion-col>
+              </ion-row>
+              <ion-row class="height-50 margin-5">
+                <ion-item class="height-100">Actions, Delegations, Material</ion-item>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+          <ion-col col-3>
+            <ion-item class="height-100">Chat</ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+
+
       Reviewing Goal: {{goal.name}}
       <button ion-button block (click)="nextActions()">Show next actions</button>
       <div *ngIf="showNextActions">
@@ -318,7 +354,7 @@
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row class="height-100">
             <ion-col>
             <p class="primary">{{errorMsg}}</p>
             <div class="content-container">
@@ -344,16 +380,18 @@
           <h2>{{ viewTitle }}</h2>
         </ion-col>
       </ion-row>
-      <calendar [eventSource]="eventSource"
-                [calendarMode]="calendar.mode"
-                [currentDate]="calendar.currentDate"
-                (onEventSelected)="onEventSelected($event)"
-                (onTitleChanged)="onViewTitleChanged($event)"
-                (onTimeSelected)="onTimeSelected($event)"
-                step="5"
-                class="calendar"
-                autoSelect="false">
-      </calendar>
+      <div class="padding-bottom-50">
+        <calendar [eventSource]="eventSource"
+                  [calendarMode]="calendar.mode"
+                  [currentDate]="calendar.currentDate"
+                  (onEventSelected)="onEventSelected($event)"
+                  (onTitleChanged)="onViewTitleChanged($event)"
+                  (onTimeSelected)="onTimeSelected($event)"
+                  step="5"
+                  class="calendar"
+                  autoSelect="false">
+        </calendar>
+      </div>
 
 
 

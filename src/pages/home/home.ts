@@ -71,6 +71,7 @@ export class HomePage {
 	goalFromAction = {} as Goal;
 	eventSource = [];
 	calendarEventList: Observable<CalendarEvent[]>;
+	actionList: Observable<Action[]>;
 	viewTitle: string;
 	selectedDay = new Date();
 	calendar = {
@@ -169,7 +170,7 @@ export class HomePage {
 	        for(let goal of goalArray) {
 	        	this.goalArray.push(goal);
 	        }
-	        for(let goal: Goal of this.goalArray) {
+	        for(let goal of this.goalArray) {
 		    	this.actionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
 				  .snapshotChanges()
 				  .map(
@@ -447,7 +448,30 @@ export class HomePage {
 
 	// ReviewGoalsPage functions
 	reviewGoal(goal: Goal) {
-	    this.pageCtrl = 'reviewGoal';
+		this.eventSource = [];
+  		this.calendarEventList = this.db.getCalendarEventListFromUser(this.auth.userid)
+			.snapshotChanges()
+			.map(
+			changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, userid: c.payload.val().userid, goalid: c.payload.val().goalid, startTime: c.payload.val().startTime, endTime: c.payload.val().endTime, title: c.payload.val().title, allDay: c.payload.val().allDay
+			}))
+			});
+			this.calendarEventList.take(1).subscribe(
+		      	calendarEventArray => {
+		      	this.eventSource = [];
+		        for(let calendarEvent of calendarEventArray) {
+		        	calendarEvent.startTime = new Date(calendarEvent.startTime);
+		        	calendarEvent.endTime = new Date(calendarEvent.endTime);
+		        	this.eventSource.push(calendarEvent);
+		        };
+		        let events = this.eventSource;
+				this.eventSource = [];
+				setTimeout(() => {
+					this.eventSource = events;
+				});
+			});
+	    this.pageCtrl = 'ProjectOverview';
 	    this.goal = goal;
 	    this.referenceList = this.db.getReferenceListFromGoal(goal.key, this.auth.userid)
 		  .snapshotChanges()
