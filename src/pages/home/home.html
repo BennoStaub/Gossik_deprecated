@@ -194,7 +194,7 @@
     <div *ngIf="pageCtrl == ''">
         <ion-item class="width-20 secondary border-radius-20px min-height-150px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
           <h1>{{goal.name}}</h1>
-          <p class="top-border" *ngFor="let action of actions[goal.key]">{{action.content}}</p>
+          <p class="border-top" *ngFor="let action of actions[goal.key]">{{action.content}}</p>
       </ion-item>
     </div>
 
@@ -224,7 +224,27 @@
                 </ion-col>
               </ion-row>
               <ion-row class="height-50 margin-5">
-                <ion-item class="height-100 secondary border-radius-20px">Actions, Delegations, Material</ion-item>
+                <ion-item class="height-100 secondary border-radius-20px">
+                  <ion-grid class="height-100">
+                    <ion-row class="height-100">
+                      <ion-col class="border-right">Actions
+                        <button class="block width-100 no-padding" *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
+                          <p class="border-top">{{nextAction.content}}</p>
+                        </button>
+                      </ion-col>
+                      <ion-col class="border-right">Delegations
+                        <button class="block width-100 no-padding" *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
+                          <p class="border-top">{{delegation.content}}</p>
+                        </button>
+                      </ion-col>
+                      <ion-col>Material
+                        <button class="block width-100 no-padding" *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
+                          <p class="border-top">{{reference.content}}</p>
+                        </button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
               </ion-row>
             </ion-grid>
           </ion-col>

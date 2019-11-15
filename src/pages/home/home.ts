@@ -446,7 +446,7 @@ export class HomePage {
 	});
 	}
 
-	// ReviewGoalsPage functions
+	// ProjectsPage functions
 	reviewGoal(goal: Goal) {
 		this.eventSource = [];
   		this.calendarEventList = this.db.getCalendarEventListFromUser(this.auth.userid)

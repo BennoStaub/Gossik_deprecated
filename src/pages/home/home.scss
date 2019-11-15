@@ -121,9 +121,17 @@ page-home {
 		display: inline-box
 	}
 
-	.top-border {
+	.width-100 {
+		width: 100%;
+	}
+
+	.border-top {
 		border-top: 1px solid;
 		margin-top: 5px;
+	}
+
+	.border-right {
+		border-right: 1px solid;
 	}
 
 	.height-100 {
@@ -168,5 +176,14 @@ page-home {
 
 	.label-md {
 		height: 90%;
+	}
+
+	.block {
+		display: block;
+	}
+
+	p {
+		white-space: normal;
+		text-align: left;
 	}
 }
