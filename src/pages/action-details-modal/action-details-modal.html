@@ -17,11 +17,13 @@
 
 
 <ion-content padding>
-<ion-item>
-	<p>{{this.action.content}}</p>
-	<br>
-	<p>Priority: {{this.action.priority}}</p>
-	<p>Time estimate: {{this.action.time}}min</p>
-	<p *ngIf="deadline">Deadline: {{this.action.deadline}}</p>
-</ion-item>
+	<ion-item>
+		<p>{{this.action.content}}</p>
+		<br>
+		<p>Priority: {{this.action.priority}}</p>
+		<p>Time estimate: {{this.action.time}}min</p>
+		<p *ngIf="deadline">Deadline: {{this.action.deadline}}</p>
+	</ion-item>
+	<button class="button-left" ion-button round (click)="deleteAction(action)">Delete</button>
+	<button class="button-right" ion-button round (click)="goToEditAction(action)">Edit</button>
 </ion-content>

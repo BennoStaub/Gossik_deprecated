@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
+import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
+import { AuthentificationProvider } from '../../providers/authentification/authentification';
+
 import { Action } from '../../model/action/action.model';
 /**
  * Generated class for the ActionDetailsModalPage page.
@@ -20,9 +23,11 @@ export class ActionDetailsModalPage {
 	deadline: boolean;
 
   constructor(
-  	public navCtrl: NavController,
-  	private navParams: NavParams,
-  	public viewCtrl: ViewController
+	  	public navCtrl: NavController,
+		private auth: AuthentificationProvider,
+	  	private navParams: NavParams,
+	  	private db: DataHandlingProvider,
+	  	public viewCtrl: ViewController
   	) {
     this.action = this.navParams.get('action');
     console.log(this.action);
@@ -39,6 +44,11 @@ export class ActionDetailsModalPage {
  
   save() {
     this.viewCtrl.dismiss(this.action);
+  }
+
+  deleteAction(action: Action) {
+    	this.db.deleteAction(action, this.auth.userid);
+    	this.viewCtrl.dismiss();
   }
 
 }
