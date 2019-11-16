@@ -11,8 +11,9 @@ import { Action } from '../../model/action/action.model';
 import { Reference } from '../../model/reference/reference.model';
 import { Delegation } from '../../model/delegation/delegation.model';
 import { Goal } from '../../model/goal/goal.model';
-import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
+import { CalendarEvent } from '../../model/calendarEvent/calendarEvent.model';
 import { CalendarEventModalPage } from '../calendar-event-modal/calendar-event-modal';
+import { ActionDetailsModalPage } from '../action-details-modal/action-details-modal';
 
 
 import 'rxjs/add/operator/take';
@@ -500,7 +501,8 @@ export class HomePage {
 	}
 
   	reviewAction(action: Action) {
-		this.showAction = action.key;
+		let modal = this.modalCtrl.create(ActionDetailsModalPage, {action: action});
+		modal.present();
   	}
 
 	reviewDelegation(delegation: Delegation) {

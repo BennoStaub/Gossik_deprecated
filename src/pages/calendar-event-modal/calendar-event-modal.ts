@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import * as moment from 'moment';
 
 
-import { CalendarEvent } from '../../model/CalendarEvent/calendarEvent.model';
+import { CalendarEvent } from '../../model/calendarEvent/calendarEvent.model';
 
 @IonicPage()
 @Component({

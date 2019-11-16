@@ -22,6 +22,8 @@ import { SignupPage } from '../pages/sign-up/sign-up';
 import { SignupPageModule } from '../pages/sign-up/sign-up.module';
 import { CalendarEventModalPage } from '../pages/calendar-event-modal/calendar-event-modal';
 import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/calendar-event-modal.module';
+import { ActionDetailsModalPage } from '../pages/action-details-modal/action-details-modal';
+import { ActionDetailsModalPageModule } from '../pages/action-details-modal/action-details-modal.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/cale
     NgCalendarModule,
     LoginPageModule,
     SignupPageModule,
-    CalendarEventModalPageModule
+    CalendarEventModalPageModule,
+    ActionDetailsModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -44,7 +47,8 @@ import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/cale
     HomePage,
     LoginPage,
     SignupPage,
-    CalendarEventModalPage
+    CalendarEventModalPage,
+    ActionDetailsModalPage
   ],
   providers: [
     StatusBar,
