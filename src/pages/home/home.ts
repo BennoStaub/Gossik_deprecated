@@ -641,16 +641,14 @@ export class HomePage {
 
   	// CalendarPage functions
   	addEvent(){
-		this.selectedDay = new Date();
+  		this.selectedDay = new Date();
 		let modal = this.modalCtrl.create(CalendarEventModalPage, {selectedDay: this.selectedDay});
 		modal.present();
 		modal.onDidDismiss(data => {
-			if (data) {
+			if(data) {
 				let eventData: CalendarEvent = data;
 				eventData.userid = this.auth.userid;
 				eventData.allDay = false;
-				console.log('addEvent eventData');
-				console.log(eventData);
 				this.db.addCalendarEvent(eventData, this.auth.userid)
 				eventData.startTime = new Date(eventData.startTime);
 		        eventData.endTime = new Date(eventData.endTime);

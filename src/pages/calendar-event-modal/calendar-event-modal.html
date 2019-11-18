@@ -14,6 +14,13 @@
     <ion-item>
       <ion-input type="text" placeholder="Title" [(ngModel)]="event.title"></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-label>Project</ion-label>
+      <ion-select [(ngModel)]="goalid">
+        <ion-option *ngFor="let goal of goalList | async" value="{{goal.key}}">{{goal.name}}</ion-option>
+      </ion-select>
+    </ion-item>
  
     <ion-item>
       <ion-label>Start</ion-label>
@@ -26,7 +33,7 @@
     </ion-item>
   </ion-list>
  
-  <button ion-button full icon-left (click)="save()">
+  <button class="darkbutton" ion-button full icon-left (click)="save()">
     <ion-icon name="checkmark"></ion-icon> Add Event
   </button>
 </ion-content>
