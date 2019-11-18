@@ -666,15 +666,24 @@ export class HomePage {
 	}
 
 	onEventSelected(event){
-		let start = moment(event.startTime).format('LLLL');
-		let end = moment(event.endTime).format('LLLL');
-
-		let alert = this.alertCtrl.create({
-				title: '' + event.title,
-				subTitle: 'Goalid:' + event.goalid + 'From: ' + start + '<br>To: ' + end + 'allDay:' + event.allDay,
-				buttons: ['OK']
-		})
-	alert.present();
+		this.db.getGoalFromGoalid(event.goalid, this.auth.userid).valueChanges().take(1).subscribe( data => {
+			let goal = '';
+			let time = ''
+			if(data != null) {
+				goal = 'Goal: ' + data.name + '<br>';
+			}
+			if(!event.allDay) {
+				let start = moment(event.startTime).format('HH:mm');
+				let end = moment(event.endTime).format('HH:mm');
+				time = 'Time: ' + start + ' - ' + end;
+			}
+			let alert = this.alertCtrl.create({
+					title: '' + event.title,
+					subTitle: goal + time,
+					buttons: ['OK']
+			});
+			alert.present();
+		});
 	}
 
 	onViewTitleChanged(title) {
