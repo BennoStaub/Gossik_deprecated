@@ -322,11 +322,12 @@ export class HomePage {
 	          if(this.checkDeadline === true) {
 	            if(this.newAction.deadline !== undefined && this.newAction.deadline !== null) {
 	              this.errorMsg = "";
+	              let newEndTime = new Date (this.newAction.deadline).setHours(2);
 	              let eventData: CalendarEvent = {
 	                userid: this.auth.userid,
 	                goalid: this.assignedGoal.key,
-	                startTime: this.newAction.deadline,
-	                endTime: this.newAction.deadline,
+	                startTime: new Date(this.newAction.deadline).toISOString(),
+	                endTime: new Date (newEndTime).toISOString(),
 	                title: 'Deadline: ' + this.newAction.content,
 	                allDay: true
 	              }
