@@ -443,9 +443,11 @@ export class HomePage {
 		      	calendarEventArray => {
 		      	this.eventSource = [];
 		        for(let calendarEvent of calendarEventArray) {
-		        	calendarEvent.startTime = new Date(calendarEvent.startTime);
-		        	calendarEvent.endTime = new Date(calendarEvent.endTime);
-		        	this.eventSource.push(calendarEvent);
+		        	if(calendarEvent.goalid == goal.key) {
+			        	calendarEvent.startTime = new Date(calendarEvent.startTime);
+			        	calendarEvent.endTime = new Date(calendarEvent.endTime);
+			        	this.eventSource.push(calendarEvent);
+			        }
 		        };
 		        let events = this.eventSource;
 				this.eventSource = [];
