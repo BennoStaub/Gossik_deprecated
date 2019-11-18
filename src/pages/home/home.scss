@@ -106,13 +106,20 @@ page-home {
 		border-radius: 20px;
 	}
 
-	.width-20 {
-		width: 18%;
-		margin: 10px;
-		display: inline-block;
-		height: 20%;
+	.overflow-scroll {
 		overflow: scroll;
+	}
+
+	.no-scrollbar {
 		scrollbar-width: none;
+	}
+
+	.margin-10 {
+		margin: 10px;
+	}
+
+	.display-inline-block {
+		display: inline-block;
 	}
 
 	.width-70 {
@@ -123,6 +130,18 @@ page-home {
 
 	.width-100 {
 		width: 100%;
+	}
+
+	.width-18 {
+		width: 18%;
+	}
+
+	.width-20 {
+		width: 20%;
+	}
+
+	.width-auto {
+		width: auto;
 	}
 
 	.border-top {
@@ -158,6 +177,10 @@ page-home {
 		height: 45%;
 	}
 
+	.height-20 {
+		height: 20%;
+	}
+
 	.min-height-150px {
 		min-height: 150px;
 	}
@@ -189,5 +212,13 @@ page-home {
 
 	.white {
 		color: map-get($colors, white);
+	}
+
+	.margin-right-10 {
+		margin-right: 10px;
+	}
+
+	.margin-top-0 {
+		margin-top: 0px;
 	}
 }

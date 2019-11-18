@@ -62,6 +62,7 @@ export class HomePage {
   	action = {} as Action;
   	delegation = {} as Delegation;
   	reference = {} as Reference;
+  	newGoalForm: FormGroup;
   	editActionForm: FormGroup;
   	editDelegationForm: FormGroup;
   	editReferenceForm: FormGroup;
@@ -146,8 +147,11 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
+	  	this.newGoalForm = this.fb.group({
+  			newGoal: ['', Validators.required]
+    	});
   		this.viewpoint = 'ProcessCapturePage';
-  		this.pageCtrl = 'chooseGoal';
+  		this.pageCtrl = '';
   	}
 
   	goToProcessTakenActionPage(takenAction: Action) {
@@ -256,35 +260,7 @@ export class HomePage {
 		}
 	}
 
-	addToGoal(goal){
-		this.pageCtrl = 'reviewGoal';
-	    this.referenceList = this.db.getReferenceListFromGoal(goal.key, this.auth.userid)
-		  .snapshotChanges()
-		  .map(
-		  changes => {
-			return changes.map(c => ({
-			  key: c.payload.key, ...c.payload.val()
-			}))
-	    });
-	    this.nextActionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
-		  .snapshotChanges()
-		  .map(
-		  changes => {
-			return changes.map(c => ({
-			  key: c.payload.key, ...c.payload.val()
-			}))
-	    });
-	    this.delegationList = this.db.getDelegationListFromGoal(goal.key, this.auth.userid)
-		  .snapshotChanges()
-		  .map(
-		  changes => {
-			return changes.map(c => ({
-			  key: c.payload.key, ...c.payload.val()
-			}))
-	    });
-	    this.assignedGoal = goal;
-	    
-	}
+	
 
 	nextActions() {
 	    this.showNextActions = !this.showNextActions;
@@ -298,7 +274,8 @@ export class HomePage {
 	    this.showReferences = !this.showReferences;
 	}
 
-	goToDefineAction(){
+	goToDefineAction(goal){
+		this.assignedGoal = goal
 	    this.pageCtrl = 'defineAction';
 	    this.defineActionForm = this.fb.group({
 			content: ['', Validators.required],
@@ -356,7 +333,8 @@ export class HomePage {
 	    }
 	}
 
-	goToDefineDelegation() {
+	goToDefineDelegation(goal) {
+		this.assignedGoal = goal
 	    this.pageCtrl = 'defineDelegation';
 	    this.defineDelegationForm = this.fb.group({
 				content: ['', Validators.required],
@@ -399,7 +377,8 @@ export class HomePage {
 	    }
 	}
 
-	goToDefineReference() {
+	goToDefineMaterial(goal) {
+		this.assignedGoal = goal
 	    this.pageCtrl = 'defineReference';
 	    this.defineReferenceForm = this.fb.group({
 				content: ['', Validators.required]
@@ -647,27 +626,6 @@ export class HomePage {
 	          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate) && !doableAction.taken && ((doableAction.goalid == this.goal.key) || this.goal.key == 'None')) {
 	            this.doableActionArray.push(doableAction);
 	          }
-	        };
-	        if(this.doableActionArray.length > 0) {
-  				this.doableHighPriorityActions = [];
-	          	for(let numberDoableHighPriorityActions: number = 0; numberDoableHighPriorityActions < 3; numberDoableHighPriorityActions++) {
-		            if(this.doableActionArray.length == 0) {
-		              continue;
-		            }
-		            let maxPriority = 0;
-		            let index = 0;
-		            for(let counter: number = 0; counter <= this.doableActionArray.length-1; counter++) {
-		              if(this.doableActionArray[counter].priority > maxPriority) {
-		                maxPriority = this.doableActionArray[counter].priority;
-		                index = counter;
-		              }
-		            }
-		            this.doableHighPriorityActions.push(this.doableActionArray[index]);
-		            this.doableActionArray.splice(index, 1);
-	          	}
-	          	this.errorMsg = '';
-	        } else {
-	          this.errorMsg = 'There is no doable action within that time.';
 	        };
 	      }
 	    );
