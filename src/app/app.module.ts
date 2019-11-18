@@ -24,6 +24,8 @@ import { CalendarEventModalPage } from '../pages/calendar-event-modal/calendar-e
 import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/calendar-event-modal.module';
 import { ActionDetailsModalPage } from '../pages/action-details-modal/action-details-modal';
 import { ActionDetailsModalPageModule } from '../pages/action-details-modal/action-details-modal.module';
+import { DelegationDetailsModalPage } from '../pages/delegation-details-modal/delegation-details-modal';
+import { DelegationDetailsModalPageModule } from '../pages/delegation-details-modal/delegation-details-modal.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { ActionDetailsModalPageModule } from '../pages/action-details-modal/acti
     LoginPageModule,
     SignupPageModule,
     CalendarEventModalPageModule,
-    ActionDetailsModalPageModule
+    ActionDetailsModalPageModule,
+    DelegationDetailsModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +51,8 @@ import { ActionDetailsModalPageModule } from '../pages/action-details-modal/acti
     LoginPage,
     SignupPage,
     CalendarEventModalPage,
-    ActionDetailsModalPage
+    ActionDetailsModalPage,
+    DelegationDetailsModalPage
   ],
   providers: [
     StatusBar,

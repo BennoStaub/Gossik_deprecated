@@ -1,5 +1,5 @@
 <!--
-  Generated template for the ActionDetailsModalPage page.
+  Generated template for the DelegationDetailsModalPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -11,18 +11,16 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Action Details</ion-title>
+    <ion-title>Delegation Details</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
 	<ion-item>
-		<p>{{this.action.content}}</p>
+		<p>{{this.delegation.content}}</p>
 		<br>
-		<p>Priority: {{this.action.priority}}</p>
-		<p>Time estimate: {{this.action.time}}min</p>
-		<p *ngIf="deadline">Deadline: {{this.action.deadline}}</p>
+		<p *ngIf="deadline">Deadline: {{this.delegation.deadline}}</p>
 	</ion-item>
-	<button class="button-left" ion-button round (click)="deleteAction(action)">Delete</button>
+	<button class="button-left" ion-button round (click)="deleteDelegation(delegation)">Delete</button>
 </ion-content>

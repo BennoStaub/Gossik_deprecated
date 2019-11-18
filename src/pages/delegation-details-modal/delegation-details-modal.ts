@@ -4,9 +4,10 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 
-import { Action } from '../../model/action/action.model';
+import { Delegation } from '../../model/delegation/delegation.model';
+
 /**
- * Generated class for the ActionDetailsModalPage page.
+ * Generated class for the DelegationDetailsModalPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -14,12 +15,12 @@ import { Action } from '../../model/action/action.model';
 
 @IonicPage()
 @Component({
-  selector: 'page-action-details-modal',
-  templateUrl: 'action-details-modal.html',
+  selector: 'page-delegation-details-modal',
+  templateUrl: 'delegation-details-modal.html',
 })
-export class ActionDetailsModalPage {
+export class DelegationDetailsModalPage {
 
-	action = {} as Action;
+	delegation = {} as Delegation;
 	deadline: boolean;
 
   constructor(
@@ -29,8 +30,9 @@ export class ActionDetailsModalPage {
 	  	private db: DataHandlingProvider,
 	  	public viewCtrl: ViewController
   	) {
-    this.action = this.navParams.get('action');
-    if(!this.action.deadline) {
+    this.delegation = this.navParams.get('delegation');
+    console.log(this.delegation);
+    if(!this.delegation.deadline) {
     	this.deadline = false;
     } else {
     	this.deadline = true;
@@ -41,8 +43,8 @@ export class ActionDetailsModalPage {
     this.viewCtrl.dismiss();
   }
 
-  deleteAction(action: Action) {
-    	this.db.deleteAction(action, this.auth.userid);
+  deleteDelegation(delegation: Delegation) {
+    	this.db.deleteDelegation(delegation, this.auth.userid);
     	this.viewCtrl.dismiss();
   }
 
