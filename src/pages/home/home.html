@@ -34,7 +34,7 @@
       <ion-label stacked>Content</ion-label>
       <ion-textarea [(ngModel)]="newCapture.content" placeholder="Input new capture"></ion-textarea>
     </ion-item>
-    <button ion-button block (click)="addCapture(newCapture)">Add</button>
+    <button class="darkbutton" ion-button block (click)="addCapture(newCapture)">Add</button>
     </ion-row>
     <div class="secondary border-radius-20px">
       <ion-item class="border-radius-20px" no-lines text-wrap *ngFor="let takenAction of takenActionList | async" (click)="goToProcessTakenActionPage(takenAction)">
@@ -68,24 +68,24 @@
           <ion-label stacked>Create new goal for this capture</ion-label><br>
           <ion-textarea [(ngModel)]="goalname" placeholder="Goal name"></ion-textarea>
         </ion-item>
-        <button ion-button block (click)="addGoal(goalname)">Create new goal</button>
+        <button class="darkbutton" ion-button block (click)="addGoal(goalname)">Create new goal</button>
     </div>
 
     <div *ngIf="pageCtrl == 'reviewGoal'">
       Reviewing Goal: {{assignedGoal.name}}
-      <button ion-button block (click)="nextActions()">Show next actions</button>
+      <button class="darkbutton" ion-button block (click)="nextActions()">Show next actions</button>
       <div *ngIf="showNextActions">
       <ion-item no-lines *ngFor="let action of nextActionList | async">
         <div [innerHtml]="action.content"></div>
       </ion-item>
       </div>
-      <button ion-button block (click)="delegations()">Show delegations</button>
+      <button class="darkbutton" ion-button block (click)="delegations()">Show delegations</button>
       <div *ngIf="showDelegations">
       <ion-item no-lines *ngFor="let delegation of delegationList | async">
         <div [innerHtml]="delegation.content"></div>
       </ion-item>
       </div>
-      <button ion-button block (click)="references()">Show references</button>
+      <button class="darkbutton" ion-button block (click)="references()">Show references</button>
       <div *ngIf="showReferences">
       <ion-item no-lines *ngFor="let reference of referenceList | async">
         <div [innerHtml]="reference.content"></div>
@@ -93,9 +93,9 @@
       </div>
       Is right now an action required from you or someone else for this capture?
       <div class="buttons-flex-container">
-        <button class="button-left" ion-button round (click)="goToDefineAction()">From me</button>
-        <button class="button-left" ion-button round (click)="goToDefineDelegation()">From someone else</button>
-        <button class="button-right" ion-button round (click)="goToDefineReference()">No</button>
+        <button class="darkbutton button-left" ion-button round (click)="goToDefineAction()">From me</button>
+        <button class="darkbutton button-left" ion-button round (click)="goToDefineDelegation()">From someone else</button>
+        <button class="darkbutton button-right" ion-button round (click)="goToDefineReference()">No</button>
       </div>
     </div>
 
@@ -123,7 +123,7 @@
               <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="Choose deadline" ></ion-datetime>
             </ion-item>
           </div>
-          <button ion-button full type="submit">Define action</button>
+          <button class="darkbutton" ion-button full type="submit">Define action</button>
         </form>
       </ion-list>
     </div>
@@ -144,7 +144,7 @@
                 <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="Choose deadline"></ion-datetime>
               </ion-item>
             </div>
-            <button ion-button full type="submit">Define delegation</button>
+            <button class="darkbutton" ion-button full type="submit">Define delegation</button>
           </form>
         </ion-list>
       </div>
@@ -156,7 +156,7 @@
           <ion-item no-lines>
             <ion-input type="text" value="{{capture.content}}" formControlName="content"></ion-input>
           </ion-item>
-          <button ion-button full type="submit">Define reference</button>
+          <button class="darkbutton" ion-button full type="submit">Define reference</button>
         </form>
       </ion-list>
     </div>
@@ -167,8 +167,8 @@
     <div *ngIf="pageCtrl == ''">
       Please indicate whether you finished the action or want to abort it.<br>
       <div class="buttons-flex-container">
-        <button class="button-left" ion-button round (click)="actionFinished()">Finished</button>
-        <button class="button-right" ion-button round (click)="abortAction()">Abort</button>
+        <button class="darkbutton button-left" ion-button round (click)="actionFinished()">Finished</button>
+        <button class="darkbutton button-right" ion-button round (click)="abortAction()">Abort</button>
       </div>
     </div>
 
@@ -179,8 +179,8 @@
     <div *ngIf="pageCtrl == 'actionFinished'">
       Congrats! Is your goal now accomplished or does it need more action?
       <div class="buttons-flex-container">
-        <button class="button-left" ion-button round (click)="goalFinished()">Accomplished</button>
-        <button class="button-right" ion-button round (click)="goalNotFinished()">Not yet</button>
+        <button class="darkbutton button-left" ion-button round (click)="goalFinished()">Accomplished</button>
+        <button class="darkbutton button-right" ion-button round (click)="goalNotFinished()">Not yet</button>
       </div>
     </div>
 
@@ -274,7 +274,7 @@
               <ion-label>Deadline</ion-label>
               <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
             </ion-item>
-            <button ion-button full type="submit">Edit</button>
+            <button class="darkbutton" ion-button full type="submit">Edit</button>
           </form>
         </ion-list>
       </div>
@@ -290,7 +290,7 @@
               <ion-label>Deadline</ion-label>
               <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
             </ion-item>
-            <button ion-button full type="submit">Edit</button>
+            <button class="darkbutton" ion-button full type="submit">Edit</button>
           </form>
         </ion-list>
       </div>
@@ -302,7 +302,7 @@
               <ion-item no-lines>
                 <ion-input type="text" value="{{reference.content}}" formControlName="content"></ion-input>
               </ion-item>
-              <button ion-button full type="submit">Edit</button>
+              <button class="darkbutton" ion-button full type="submit">Edit</button>
             </form>
           </ion-list>
       </div>
@@ -348,12 +348,12 @@
     <div class="height-100" *ngIf="viewpoint == 'CalendarPage'">
       <ion-row>
         <ion-buttons end>
-          <button ion-button icon-only (click)="addEvent()">
+          <button class="darkbutton" ion-button icon-only (click)="addEvent()">
             <ion-icon name="add"></ion-icon>
           </button>
         </ion-buttons>
         <ion-col style="text-align: center">
-          <h2>{{ viewTitle }}</h2>
+          <h2 class="white">{{ viewTitle }}</h2>
         </ion-col>
       </ion-row>
       <div class="padding-bottom-50 height-100">

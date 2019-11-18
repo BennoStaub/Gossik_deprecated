@@ -186,4 +186,8 @@ page-home {
 		white-space: normal;
 		text-align: left;
 	}
+
+	.white {
+		color: map-get($colors, white);
+	}
 }
