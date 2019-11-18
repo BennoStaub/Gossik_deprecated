@@ -15,7 +15,7 @@ import { CalendarEvent } from '../../model/calendarEvent/calendarEvent.model';
 import { CalendarEventModalPage } from '../calendar-event-modal/calendar-event-modal';
 import { ActionDetailsModalPage } from '../action-details-modal/action-details-modal';
 import { DelegationDetailsModalPage } from '../delegation-details-modal/delegation-details-modal';
-
+import { MaterialDetailsModalPage } from '../material-details-modal/material-details-modal';
 
 import 'rxjs/add/operator/take';
 import * as moment from 'moment';
@@ -513,7 +513,8 @@ export class HomePage {
 	}
 
   	reviewReference(reference: Reference) {
-    	this.showReference = reference.key;
+		let modal = this.modalCtrl.create(MaterialDetailsModalPage, {material: reference});
+		modal.present();
   	}
 
   	deleteAction(action: Action, goal) {

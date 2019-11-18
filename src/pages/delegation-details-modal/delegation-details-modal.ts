@@ -31,7 +31,6 @@ export class DelegationDetailsModalPage {
 	  	public viewCtrl: ViewController
   	) {
     this.delegation = this.navParams.get('delegation');
-    console.log(this.delegation);
     if(!this.delegation.deadline) {
     	this.deadline = false;
     } else {

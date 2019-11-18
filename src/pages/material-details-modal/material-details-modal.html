@@ -5,16 +5,14 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Delegation Details</ion-title>
+    <ion-title>Material Details</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
 	<ion-item>
-		<p>{{this.delegation.content}}</p>
-		<br>
-		<p *ngIf="deadline">Deadline: {{this.delegation.deadline}}</p>
+		<p>{{this.material.content}}</p>
 	</ion-item>
-	<button class="button-left" ion-button round (click)="deleteDelegation(delegation)">Delete</button>
+	<button class="button-left" ion-button round (click)="deleteMaterial(material)">Delete</button>
 </ion-content>

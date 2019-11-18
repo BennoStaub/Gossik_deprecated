@@ -201,7 +201,7 @@
     <p>{{errorMsg}}</p>
 
     <div class="height-100" *ngIf="pageCtrl == 'ProjectOverview'">
-      <ion-grid class="height-70">
+      <ion-grid class="height-100">
         <ion-row class="height-100">
           <ion-col col-9 class="no-padding">
             <ion-grid class="height-100 no-padding">
@@ -253,54 +253,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-
-
-
-
-      Reviewing Goal: {{goal.name}}
-      <button ion-button block (click)="nextActions()">Show next actions</button>
-      <div *ngIf="showNextActions">
-        <ion-item no-lines *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
-          <div [innerHtml]="nextAction.content"></div>
-          <div *ngIf="showAction === nextAction.key">
-            <p>Priority: {{nextAction.priority}}</p>
-            <p>Time estimate: {{nextAction.time}}min</p>
-            <p *ngIf="nextAction.deadline === ''">No deadline</p>
-            <p *ngIf="nextAction.deadline !== ''">Deadline: {{nextAction.deadline}}</p>
-            <div class="buttons-flex-container">
-              <button class="button-left" ion-button round (click)="deleteAction(nextAction, goal)">Delete</button>
-              <button class="button-right" ion-button round (click)="goToEditAction(nextAction)">Edit</button>
-            </div>
-          </div>
-        </ion-item>
-      </div>
-      <button ion-button block (click)="delegations()">Show delegations</button>
-      <div *ngIf="showDelegations">
-      <ion-item no-lines *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
-          <div [innerHtml]="delegation.content"></div>
-        <div *ngIf="showDelegation === delegation.key">
-            <p *ngIf="delegation.deadline === ''">No deadline</p>
-            <p *ngIf="delegation.deadline !== ''">Deadline: {{delegation.deadline}}</p>
-            <div class="buttons-flex-container">
-              <button class="button-left" ion-button round (click)="deleteDelegation(delegation, goal)">Delete</button>
-              <button class="button-right" ion-button round (click)="goToEditDelegation(delegation)">Edit</button>
-            </div>
-        </div>
-      </ion-item>
-      </div>
-      <button ion-button block (click)="references()">Show references</button>
-      <div *ngIf="showReferences">
-      <ion-item no-lines *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
-          <div [innerHtml]="reference.content"></div>
-        <div *ngIf="showReference === reference.key">
-            <div class="buttons-flex-container">
-              <button class="button-left" ion-button round (click)="deleteReference(reference, goal)">Delete</button>
-              <button class="button-right" ion-button round (click)="goToEditReference(reference)">Edit</button>
-            </div>
-        </div>
-      </ion-item>
-      </div>
-      <button ion-button round (click)="deleteGoal(goal)">Delete Goal</button>
     </div>
 
     <div *ngIf="pageCtrl == 'editAction'">
