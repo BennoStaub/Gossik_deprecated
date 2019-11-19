@@ -4,6 +4,9 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 
+
+import { TranslateService } from '@ngx-translate/core';
+
 import { Delegation } from '../../model/delegation/delegation.model';
 
 /**
@@ -28,7 +31,8 @@ export class DelegationDetailsModalPage {
 		private auth: AuthentificationProvider,
 	  	private navParams: NavParams,
 	  	private db: DataHandlingProvider,
-	  	public viewCtrl: ViewController
+	  	public viewCtrl: ViewController,
+	  	public translate: TranslateService
   	) {
     this.delegation = this.navParams.get('delegation');
     if(!this.delegation.deadline) {

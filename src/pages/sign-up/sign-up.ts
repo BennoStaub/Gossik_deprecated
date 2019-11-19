@@ -4,6 +4,8 @@ import { NavController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 
@@ -19,7 +21,8 @@ export class SignupPage {
 		fb: FormBuilder,
     	private navCtrl: NavController,
 		private auth: AuthentificationProvider,
-		private db: DataHandlingProvider
+		private db: DataHandlingProvider,
+		public translate: TranslateService
 	) {
 		this.form = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],

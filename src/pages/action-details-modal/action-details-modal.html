@@ -11,7 +11,7 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Action Details</ion-title>
+    <ion-title>{{"Action Details" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -20,9 +20,9 @@
 	<ion-item>
 		<p>{{this.action.content}}</p>
 		<br>
-		<p>Priority: {{this.action.priority}}</p>
-		<p>Time estimate: {{this.action.time}}min</p>
-		<p *ngIf="deadline">Deadline: {{this.action.deadline}}</p>
+		<p>{{"Priority" | translate }}: {{this.action.priority}}</p>
+		<p>{{"Time estimate" | translate }}: {{this.action.time}}min</p>
+		<p *ngIf="deadline">{{"Deadline" | translate }}: {{this.action.deadline}}</p>
 	</ion-item>
-	<button class="button-left" ion-button round (click)="deleteAction(action)">Delete</button>
+	<button class="button-left" ion-button round (click)="deleteAction(action)">{{"Delete" | translate }}</button>
 </ion-content>

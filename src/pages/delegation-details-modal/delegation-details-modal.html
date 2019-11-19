@@ -5,7 +5,7 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Delegation Details</ion-title>
+    <ion-title>{{"Delegation Details" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
 	<ion-item>
 		<p>{{this.delegation.content}}</p>
 		<br>
-		<p *ngIf="deadline">Deadline: {{this.delegation.deadline}}</p>
+		<p *ngIf="deadline">{{"Deadline" | translate }}: {{this.delegation.deadline}}</p>
 	</ion-item>
-	<button class="button-left" ion-button round (click)="deleteDelegation(delegation)">Delete</button>
+	<button class="button-left" ion-button round (click)="deleteDelegation(delegation)">{{"Delete" | translate }}</button>
 </ion-content>

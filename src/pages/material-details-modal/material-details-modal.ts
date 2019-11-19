@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 
+import { TranslateService } from '@ngx-translate/core';
 
 import { Reference } from '../../model/reference/reference.model';
 
@@ -21,7 +22,8 @@ export class MaterialDetailsModalPage {
 		private auth: AuthentificationProvider,
 	  	private navParams: NavParams,
 	  	private db: DataHandlingProvider,
-	  	public viewCtrl: ViewController
+	  	public viewCtrl: ViewController,
+	  	public translate: TranslateService
   	) {
     this.material = this.navParams.get('material');
   }

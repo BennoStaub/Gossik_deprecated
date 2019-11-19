@@ -19,6 +19,7 @@ import { MaterialDetailsModalPage } from '../material-details-modal/material-det
 
 import 'rxjs/add/operator/take';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -92,6 +93,7 @@ export class HomePage {
 		public navParams: NavParams,
 		private modalCtrl: ModalController,
 		private alertCtrl: AlertController,
+		public translate: TranslateService
 	) {
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);

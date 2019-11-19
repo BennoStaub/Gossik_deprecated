@@ -29,6 +29,15 @@ import { DelegationDetailsModalPageModule } from '../pages/delegation-details-mo
 import { MaterialDetailsModalPage } from '../pages/material-details-modal/material-details-modal';
 import { MaterialDetailsModalPageModule } from '../pages/material-details-modal/material-details-modal.module';
 
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+export function setTranslateLoader(http: HttpClient) {
+ return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -37,6 +46,14 @@ import { MaterialDetailsModalPageModule } from '../pages/material-details-modal/
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+       provide: TranslateLoader,
+       useFactory: (setTranslateLoader),
+       deps: [HttpClient]
+     }
+    }),
 	  AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     NgCalendarModule,

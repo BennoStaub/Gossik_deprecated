@@ -5,6 +5,9 @@ import { DataHandlingProvider } from '../../providers/data-handling/data-handlin
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 
 import { Action } from '../../model/action/action.model';
+
+
+import { TranslateService } from '@ngx-translate/core';
 /**
  * Generated class for the ActionDetailsModalPage page.
  *
@@ -27,7 +30,8 @@ export class ActionDetailsModalPage {
 		private auth: AuthentificationProvider,
 	  	private navParams: NavParams,
 	  	private db: DataHandlingProvider,
-	  	public viewCtrl: ViewController
+	  	public viewCtrl: ViewController,
+	  	public translate: TranslateService
   	) {
     this.action = this.navParams.get('action');
     if(!this.action.deadline) {

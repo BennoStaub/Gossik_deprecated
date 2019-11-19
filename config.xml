@@ -85,4 +85,7 @@
     <plugin name="phonegap-plugin-push" spec="^2.1.3">
         <variable name="FCM_VERSION" value="11.6.2" />
     </plugin>
+    <plugin name="cordova-plugin-advanced-http" spec="^2.2.0">
+        <variable name="OKHTTP_VERSION" value="3.10.0" />
+    </plugin>
 </widget>

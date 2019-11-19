@@ -7,6 +7,8 @@ import { LoginPage } from '../pages/login/login';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
 import { HomePage } from '../pages/home/home';
 
+import { TranslateService } from '@ngx-translate/core';
+
 export interface PageInterface {
   title: string;
   name: string;
@@ -31,11 +33,16 @@ export class MyApp {
               statusBar: StatusBar,
               splashScreen: SplashScreen,
               private auth: AuthentificationProvider,
-              menu: MenuController) {
+              menu: MenuController,
+              public translate: TranslateService) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.menu = menu;
+      let language = this.translate.getBrowserLang();
+      translate.setDefaultLang(language);
+      console.log('language');
+      console.log(language);
       statusBar.styleDefault();
       splashScreen.hide();
       this.auth.afAuth.authState

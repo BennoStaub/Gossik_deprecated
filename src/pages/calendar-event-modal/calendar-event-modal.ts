@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
 
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 
@@ -29,7 +31,8 @@ export class CalendarEventModalPage {
   		private navParams: NavParams,
   		public viewCtrl: ViewController,
 		private auth: AuthentificationProvider,
-		private db: DataHandlingProvider
+		private db: DataHandlingProvider,
+		public translate: TranslateService
 	) {
 	    let preselectedDate = moment(this.navParams.get('selectedDay')).format();
 	    console.log('calendar event modal: preselectedDate');

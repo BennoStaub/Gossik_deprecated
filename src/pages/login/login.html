@@ -9,13 +9,13 @@
 		<ion-list inset>
 
 			<ion-item no-lines>
-				<ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
+				<ion-input type="text" placeholder="{{'Email' | translate }}" formControlName="email"></ion-input>
 			</ion-item>
 
 			
 
 			<ion-item no-lines>
-				<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+				<ion-input type="password" placeholder="{{'Password' | translate }}" formControlName="password"></ion-input>
 			</ion-item>
 
 		
@@ -24,16 +24,16 @@
 		<div padding-horizontal>
 			<div class="form-error">{{loginError}}</div>
 
-			<button ion-button full type="submit" [disabled]="!loginForm.valid">Log in</button>			
+			<button ion-button full type="submit" [disabled]="!loginForm.valid">{{"Log in" | translate }}</button>			
 		</div>
 	</form>
 	<ion-list>
 		<button ion-button icon-left class="signInButton" (click)="signup()">
 			<ion-icon name="person-add"></ion-icon>
-			Sign up
+			{{"Sign up" | translate }}
 		</button>
 		<button ion-button icon-left class="signInButton" (click)="forgotPassword()">
-			Forgot password?
+			{{"Forgot password" | translate }}
 		</button>
 	</ion-list>
 </ion-content>

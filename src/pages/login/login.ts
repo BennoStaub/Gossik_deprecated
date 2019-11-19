@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IonicPage, NavController } from 'ionic-angular';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { HomePage } from '../home/home';
 import { SignupPage } from '../sign-up/sign-up';
 
@@ -19,7 +21,8 @@ export class LoginPage {
 	constructor(
 		private navCtrl: NavController,
 		private auth: AuthentificationProvider,
-    fb: FormBuilder
+    	fb: FormBuilder,
+    	public translate: TranslateService
 	) {
 		this.loginForm = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],

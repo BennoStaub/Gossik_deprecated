@@ -3,16 +3,16 @@
     <img class="header-logo" src="../../assets/imgs/logo_schriftzug_weiss.png" height="60">
     <div class="header-icons-div">
       <button class="header-icon" (click)="goToCalendarPage()">
-        <img src="../../assets/icon/icon_calendar.png" height="20"> Calendar
+        <img src="../../assets/icon/icon_calendar.png" height="20"> {{"Calendar" | translate }}
       </button>
       <button class="header-icon" (click)="goToToDoPage()">
-        <img src="../../assets/icon/icon_todo.png" height="20"> ToDo
+        <img src="../../assets/icon/icon_todo.png" height="20"> {{"ToDo" | translate }}
       </button>
       <button class="header-icon" (click)="goToProjectsPage()">
-        <img src="../../assets/icon/icon_projects.png" height="20"> Projects
+        <img src="../../assets/icon/icon_projects.png" height="20"> {{"Projects" | translate }}
       </button>
       <button class="header-icon" (click)="goToCapturePage()">
-        <img src="../../assets/icon/icon_captures.png" height="20"> Captures
+        <img src="../../assets/icon/icon_captures.png" height="20"> {{"Captures" | translate }}
       </button>
     </div>
   </div>
@@ -23,26 +23,21 @@
   <!-- CapturePage -->
   <div *ngIf="viewpoint == 'CapturePage'">
     <ion-row>
-    <ion-col style="text-align: center">
-      Capture any thought you have during your day to add it as a note for later processing!
-    </ion-col>
-    </ion-row>
-    <ion-row>
-      <p>{{errorMsg}}</p>
+      <p>{{errorMsg | translate}}</p>
    
     <ion-item class="secondary border-radius-20px">
-      <ion-label stacked>Content</ion-label>
-      <ion-textarea [(ngModel)]="newCapture.content" placeholder="Input new capture"></ion-textarea>
+      <ion-label stacked>{{"Content" | translate}}</ion-label>
+      <ion-textarea [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-textarea>
     </ion-item>
-    <button class="darkbutton" ion-button block (click)="addCapture(newCapture)">Add</button>
+    <button class="darkbutton" ion-button block (click)="addCapture(newCapture)">{{"Add" | translate}}</button>
     </ion-row>
     <div class="secondary border-radius-20px">
       <ion-item class="border-radius-20px" no-lines text-wrap *ngFor="let takenAction of takenActionList | async" (click)="goToProcessTakenActionPage(takenAction)">
         <div class="ion-item-bg"></div>
-        <div>You started with action "{{takenAction.content}}", click here to process</div>
+        <div>{{"You started with action" |translate}} "{{takenAction.content}}" {{", click here to process" | translate }}</div>
       </ion-item>
     </div>
-    <p>Thoughts captured and ready for processing:</p>
+    <p>{{"Thoughts captured and ready for processing" | translate}}:</p>
     <div class="secondary border-radius-20px">
       <ion-item class="border-radius-20px" no-lines text-wrap *ngFor="let capture of captureList | async" (click)="goToProcessCapturePage(capture)">
         <div class="ion-item-bg" [innerHtml]="capture.content" (swipe)="removeCapture(capture)"></div>
@@ -52,6 +47,7 @@
 
   <!-- ProcessCapturePage -->
   <div *ngIf="viewpoint=='ProcessCapturePage'">
+    <p>{{errorMsg}}</p>
     <div *ngIf="pageCtrl == ''">
       <ion-grid>
         <ion-row class="width-100">
@@ -62,16 +58,16 @@
           </ion-col>
           <ion-col>
             <ion-card class="width-20 height-20 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
-            <ion-input type="text" [(ngModel)]="goalname" placeholder="Goal name"></ion-input>
+            <ion-input type="text" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
 
-          <button ion-button round class="darkbutton" (click)="addGoal(goalname)">Create new goal</button>
+          <button ion-button round class="darkbutton" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
         </ion-card>
             
             <ion-item class="width-auto height-20 overflow-scroll no-scrollbar margin-10 display-inline-block secondary border-radius-20px min-height-150px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
               <h1>{{goal.name}}</h1>
-              <button class="darkbutton button-left" ion-button round (click)="goToDefineAction(goal)">Action</button>
-              <button class="darkbutton button-left" ion-button round (click)="goToDefineDelegation(goal)">Delegation</button>
-              <button class="darkbutton button-left" ion-button round (click)="goToDefineMaterial(goal)">Material</button>
+              <button class="darkbutton button-left" ion-button round (click)="goToDefineAction(goal)">{{"Action" | translate }}</button>
+              <button class="darkbutton button-left" ion-button round (click)="goToDefineDelegation(goal)">{{"Delegation" | translate }}</button>
+              <button class="darkbutton button-left" ion-button round (click)="goToDefineMaterial(goal)">{{"Reference" | translate }}</button>
                 
             </ion-item>
           </ion-col>
@@ -79,66 +75,65 @@
       </ion-grid>
     </div>
 
-    <p>{{errorMsg}}</p>
 
     <div *ngIf="pageCtrl == 'defineAction'">
-      Defining new action
+      {{"Defining new action" | translate }}
       <ion-list inset>
         <ion-item no-lines>
-          <ion-label>Deadline required?</ion-label>
+          <ion-label>{{"Deadline required?" | translate }}</ion-label>
           <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
         </ion-item>
         <form (ngSubmit)="addAction()" [formGroup]="defineActionForm">
           <ion-item no-lines>
-            <ion-input type="text" placeholder="Action" formControlName="content"></ion-input>
+            <ion-input type="text" placeholder="{{'Action' | translate }}" formControlName="content"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Priority (1: low, 10: high):</ion-label>
+            <ion-label>{{"Priority (1: low, 10: high)" | translate }}:</ion-label>
             <ion-input type="number" placeholder="0" min="0" max="10" formControlName="priority"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-label block>Estimated time in min:</ion-label>
+              <ion-label block>{{"Estimated time in min" | translate }}:</ion-label>
               <ion-input type="number" placeholder="0" min="0" max="1000" formControlName="time"></ion-input>
           </ion-item>
           <div *ngIf="checkDeadline">
             <ion-item no-lines>
-              <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="Choose deadline" ></ion-datetime>
+              <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="{{'Choose deadline' | translate }}" ></ion-datetime>
             </ion-item>
           </div>
-          <button class="darkbutton" ion-button full type="submit">Define action</button>
+          <button class="darkbutton" ion-button full type="submit">{{"Define action" | translate }}</button>
         </form>
       </ion-list>
     </div>
 
     <div *ngIf="pageCtrl == 'defineDelegation'">
-        Defining new delegation:
+        {{"Defining new delegation" | translate }}:
         <ion-list inset>
           <ion-item no-lines>
-            <ion-label>Deadline required?</ion-label>
+            <ion-label>{{"Deadline required?" | translate }}</ion-label>
             <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
           </ion-item>
           <form (ngSubmit)="addDelegation()" [formGroup]="defineDelegationForm">
             <ion-item no-lines>
-              <ion-input type="text" placeholder="Delegation" formControlName="content"></ion-input>
+              <ion-input type="text" placeholder="{{'Delegation' | translate }}" formControlName="content"></ion-input>
             </ion-item>
             <div *ngIf="checkDeadline">
               <ion-item no-lines>
-                <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="Choose deadline"></ion-datetime>
+                <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="{{'Choose deadline' | translate }}"></ion-datetime>
               </ion-item>
             </div>
-            <button class="darkbutton" ion-button full type="submit">Define delegation</button>
+            <button class="darkbutton" ion-button full type="submit">{{"Define delegation" | translate }}</button>
           </form>
         </ion-list>
       </div>
 
     <div *ngIf="pageCtrl == 'defineReference'">
-      Defining new reference:
+      {{"Defining new reference:" | translate }}
       <ion-list inset>
         <form (ngSubmit)="addReference()" [formGroup]="defineReferenceForm">
           <ion-item no-lines>
             <ion-input type="text" value="{{capture.content}}" formControlName="content"></ion-input>
           </ion-item>
-          <button class="darkbutton" ion-button full type="submit">Define reference</button>
+          <button class="darkbutton" ion-button full type="submit">{{"Define reference" | translate }}</button>
         </form>
       </ion-list>
     </div>
@@ -147,27 +142,27 @@
   <!-- ProcessTakenActionPage -->
   <div *ngIf="viewpoint=='ProcessTakenActionPage'">
     <div *ngIf="pageCtrl == ''">
-      Please indicate whether you finished the action or want to abort it.<br>
+      {{"Please indicate whether you finished the action or want to abort it." | translate }}<br>
       <div class="buttons-flex-container">
-        <button class="darkbutton button-left" ion-button round (click)="actionFinished()">Finished</button>
-        <button class="darkbutton button-right" ion-button round (click)="abortAction()">Abort</button>
+        <button class="darkbutton button-left" ion-button round (click)="actionFinished()">{{"Finished" | translate }}</button>
+        <button class="darkbutton button-right" ion-button round (click)="abortAction()">{{"Abort" | translate }}</button>
       </div>
     </div>
 
     <div *ngIf="pageCtrl == 'actionAborted'">
-      You aborted this action, it has been put back into your actions list
+      {{"You aborted this action, it has been put back into your actions list." | translate }}
     </div>
 
     <div *ngIf="pageCtrl == 'actionFinished'">
-      Congrats! Is your goal now accomplished or does it need more action?
+      {{"Congrats! Is your project now accomplished or does it need more action?" | translate }}
       <div class="buttons-flex-container">
-        <button class="darkbutton button-left" ion-button round (click)="goalFinished()">Accomplished</button>
-        <button class="darkbutton button-right" ion-button round (click)="goalNotFinished()">Not yet</button>
+        <button class="darkbutton button-left" ion-button round (click)="goalFinished()">{{"Accomplished" | translate }}</button>
+        <button class="darkbutton button-right" ion-button round (click)="goalNotFinished()">{{"Not yet" | translate }}</button>
       </div>
     </div>
 
     <div *ngIf="pageCtrl == 'goalFinished'">
-      Congratulations to finishing your goal! Now let's head on to achieving the next ones!
+      {{"Congratulations to finishing your goal! Now let's head on to achieving the next ones!" | translate }}
     </div>
   </div>
 
@@ -190,7 +185,7 @@
               <ion-row class="height-50">
                 <ion-col col-4>
                   <ion-item class="height-45 margin-bottom-10 secondary border-radius-20px"><h1>{{goal.name}}</h1></ion-item>
-                  <ion-item class="height-50 secondary border-radius-20px">Team</ion-item>
+                  <ion-item class="height-50 secondary border-radius-20px">{{"Team" | translate }}</ion-item>
                 </ion-col>
                 <ion-col col-8>
                   <calendar [eventSource]="eventSource"
@@ -209,17 +204,17 @@
                 <ion-item class="height-100 secondary border-radius-20px">
                   <ion-grid class="height-100">
                     <ion-row class="height-100">
-                      <ion-col class="border-right">Actions
+                      <ion-col class="border-right">{{"Actions" | translate }}
                         <button class="block width-100 no-padding" *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
                           <p class="border-top">{{nextAction.content}}</p>
                         </button>
                       </ion-col>
-                      <ion-col class="border-right">Delegations
+                      <ion-col class="border-right">{{"Delegations" | translate }}
                         <button class="block width-100 no-padding" *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
                           <p class="border-top">{{delegation.content}}</p>
                         </button>
                       </ion-col>
-                      <ion-col>Material
+                      <ion-col>{{"References" | translate }}
                         <button class="block width-100 no-padding" *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
                           <p class="border-top">{{reference.content}}</p>
                         </button>
@@ -231,29 +226,29 @@
             </ion-grid>
           </ion-col>
           <ion-col col-3>
-            <ion-item class="height-100 secondary border-radius-20px">Chat</ion-item>
+            <ion-item class="height-100 secondary border-radius-20px">{{"Chat" | translate }}</ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
 
     <div *ngIf="pageCtrl == 'editAction'">
-        Edit action
+        {{"Edit action" | translate }}
         <ion-list inset>
           <form (ngSubmit)="editAction()" [formGroup]="editActionForm">
             <ion-item no-lines>
               <ion-input type="text" value="{{action.content}}" formControlName="content"></ion-input>
             </ion-item>
             <ion-item no-lines>
-              <ion-label>Priority (1: low, 10: high):</ion-label>
+              <ion-label>{{"Priority (1: low, 10: high)" | translate }}:</ion-label>
               <ion-input type="number" value="{{action.priority}}" min="0" max="10" formControlName="priority"></ion-input>
             </ion-item>
             <ion-item no-lines>
-                <ion-label block>Estimated time in min:</ion-label>
+                <ion-label block>{{"Estimated time in min" | translate }}:</ion-label>
                 <ion-input type="number" value="{{action.time}}" min="0" max="1000" formControlName="time"></ion-input>
             </ion-item>
             <ion-item no-lines>
-              <ion-label>Deadline</ion-label>
+              <ion-label>{{"Deadline" | translate }}</ion-label>
               <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
             </ion-item>
             <button class="darkbutton" ion-button full type="submit">Edit</button>
@@ -262,29 +257,29 @@
       </div>
 
       <div *ngIf="pageCtrl == 'editDelegation'">
-        Edit delegation
+        {{"Edit delegation" | translate }}
         <ion-list inset>
           <form (ngSubmit)="editDelegation()" [formGroup]="editDelegationForm">
             <ion-item no-lines>
               <ion-input type="text" value="{{delegation.content}}" formControlName="content"></ion-input>
             </ion-item>
             <ion-item no-lines>
-              <ion-label>Deadline</ion-label>
-              <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="Choose deadline"></ion-datetime>
+              <ion-label>{{"Deadline" | translate }}</ion-label>
+              <ion-datetime displayFormat="D.MMM.YYYY" formControlName="deadline" max="2099-12-31" placeholder="{{'Choose deadline' | translate }}"></ion-datetime>
             </ion-item>
-            <button class="darkbutton" ion-button full type="submit">Edit</button>
+            <button class="darkbutton" ion-button full type="submit">{{"Edit" | translate }}</button>
           </form>
         </ion-list>
       </div>
 
       <div *ngIf="pageCtrl == 'editReference'">
-          Edit reference
+          {{"Edit reference" | translate }}
           <ion-list inset>
             <form (ngSubmit)="editReference()" [formGroup]="editReferenceForm">
               <ion-item no-lines>
                 <ion-input type="text" value="{{reference.content}}" formControlName="content"></ion-input>
               </ion-item>
-              <button class="darkbutton" ion-button full type="submit">Edit</button>
+              <button class="darkbutton" ion-button full type="submit">{{"Edit" | translate }}</button>
             </form>
           </ion-list>
       </div>
@@ -298,7 +293,7 @@
             <ion-col size="1">
               <form (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
                 <ion-item class="primary">
-                  <ion-label class="primary">Time available in minutes:</ion-label>
+                  <ion-label class="primary">{{"Time available in minutes" | translate }}:</ion-label>
                   <ion-input type="number" min="0" formControlName="timeEstimate"></ion-input>
                 </ion-item>
               </form>
@@ -306,7 +301,7 @@
             <ion-col col-8>
               <ion-item class="border-radius-20px">
               <ion-select [(ngModel)]="goal.key" (ionChange)="chooseGoal($event)">
-                <ion-option selected value="None">All Projects</ion-option>
+                <ion-option selected value="None">{{"All Projects" | translate }}</ion-option>
                 <ion-option *ngFor="let goal of goalArray" value="{{goal.key}}">{{goal.name}}</ion-option>
               </ion-select>
               </ion-item>
