@@ -21,27 +21,21 @@
   <ion-content padding>
 
   <!-- CapturePage -->
-  <div *ngIf="viewpoint == 'CapturePage'">
-    <ion-row>
+  <div class="primary" *ngIf="viewpoint == 'CapturePage'">
+    <ion-row class="width-40 margin-auto height-20">
       <p>{{errorMsg | translate}}</p>
-   
-    <ion-item class="secondary border-radius-20px">
-      <ion-label stacked>{{"Content" | translate}}</ion-label>
-      <ion-textarea [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-textarea>
-    </ion-item>
-    <button class="darkbutton" ion-button block (click)="addCapture(newCapture)">{{"Add" | translate}}</button>
+      <ion-card class="text-align-center height-40 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
+        <ion-input class="height-50" type="text" [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-input>
+        <button class="darkbutton width-auto" round ion-button (click)="addCapture(newCapture)">{{"Add" | translate}}</button>
+      </ion-card>
     </ion-row>
-    <div class="secondary border-radius-20px">
-      <ion-item class="border-radius-20px" no-lines text-wrap *ngFor="let takenAction of takenActionList | async" (click)="goToProcessTakenActionPage(takenAction)">
-        <div class="ion-item-bg"></div>
-        <div>{{"You started with action" |translate}} "{{takenAction.content}}" {{", click here to process" | translate }}</div>
-      </ion-item>
-    </div>
-    <p>{{"Thoughts captured and ready for processing" | translate}}:</p>
-    <div class="secondary border-radius-20px">
-      <ion-item class="border-radius-20px" no-lines text-wrap *ngFor="let capture of captureList | async" (click)="goToProcessCapturePage(capture)">
-        <div class="ion-item-bg" [innerHtml]="capture.content" (swipe)="removeCapture(capture)"></div>
-      </ion-item>
+    <div class="secondary border-radius-20px padding-bottom-10">
+      <h3 class="padding-left-20">{{"Taken actions ready for processing" | translate}}:</h3>
+      <p class="border-bottom-1 padding-left-20 padding-top-10" *ngFor="let takenAction of takenActionList | async" (click)="goToProcessTakenActionPage(takenAction)">{{"You started with action" |translate}} "{{takenAction.content}}" {{", click here to process" | translate }}
+      </p>
+    <h3 class="padding-left-20">{{"Thoughts captured and ready for processing" | translate}}:</h3>
+      <p class="border-bottom-1 padding-left-20" *ngFor="let capture of captureList | async" (click)="goToProcessCapturePage(capture)">{{capture.content}}
+      </p>
     </div>
   </div>
 
@@ -58,10 +52,10 @@
           </ion-col>
           <ion-col>
             <ion-card class="width-20 height-20 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
-            <ion-input type="text" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+              <ion-input type="text" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
 
-          <button ion-button round class="darkbutton" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
-        </ion-card>
+              <button ion-button round class="darkbutton" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
+            </ion-card>
             
             <ion-item class="width-auto height-20 overflow-scroll no-scrollbar margin-10 display-inline-block secondary border-radius-20px min-height-150px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
               <h1>{{goal.name}}</h1>
