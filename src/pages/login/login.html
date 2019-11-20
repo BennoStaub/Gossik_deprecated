@@ -6,28 +6,42 @@
 
 <ion-content>
 	<ion-card class="secondary">
-		<form (ngSubmit)="login()" [formGroup]="loginForm">
-			<ion-list inset>
-				<ion-item no-lines>
-					<ion-input type="text" placeholder="{{'Email' | translate }}" formControlName="email"></ion-input>
-				</ion-item>
-				<ion-item no-lines>
-					<ion-input type="password" placeholder="{{'Password' | translate }}" formControlName="password"></ion-input>
-				</ion-item>
+		<div *ngIf="pageCtrl == ''">
+			<form (ngSubmit)="login()" [formGroup]="loginForm">
+				<ion-list inset>
+					<ion-item no-lines>
+						<ion-input type="text" placeholder="{{'Email' | translate }}" formControlName="email"></ion-input>
+					</ion-item>
+					<ion-item no-lines>
+						<ion-input type="password" placeholder="{{'Password' | translate }}" formControlName="password"></ion-input>
+					</ion-item>
+				</ion-list>
+				<div padding-horizontal>
+					<div class="form-error">{{loginError}}</div>
+					<button ion-button full type="submit" [disabled]="!loginForm.valid">{{"Log in" | translate }}</button>			
+				</div>
+			</form>
+			<ion-list>
+				<button ion-button icon-left class="signInButton" (click)="signup()">
+					<ion-icon name="person-add"></ion-icon>
+					{{"Sign up" | translate }}
+				</button>
+				<button ion-button icon-left class="signInButton" (click)="goToForgotPassword()">
+					{{"Forgot password" | translate }}
+				</button>
 			</ion-list>
-			<div padding-horizontal>
-				<div class="form-error">{{loginError}}</div>
-				<button ion-button full type="submit" [disabled]="!loginForm.valid">{{"Log in" | translate }}</button>			
-			</div>
-		</form>
-		<ion-list>
-			<button ion-button icon-left class="signInButton" (click)="signup()">
-				<ion-icon name="person-add"></ion-icon>
-				{{"Sign up" | translate }}
-			</button>
-			<button ion-button icon-left class="signInButton" (click)="forgotPassword()">
-				{{"Forgot password" | translate }}
-			</button>
-		</ion-list>
+		</div>
+		<div *ngIf="pageCtrl == 'forgotPassword'">
+			<form (ngSubmit)="resetPassword()" [formGroup]="forgotPasswordForm">
+				<ion-list inset>
+					<ion-item no-lines>
+						<ion-input type="text" placeholder="{{'Email' | translate }}" formControlName="email"></ion-input>
+					</ion-item>
+				</ion-list>
+				<div padding-horizontal>
+					<button ion-button full type="submit" [disabled]="!forgotPasswordForm.valid">{{"Reset password" | translate }}</button>			
+				</div>
+			</form>
+		</div>
 	</ion-card>
 </ion-content>

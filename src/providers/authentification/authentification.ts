@@ -22,7 +22,6 @@ export class AuthentificationProvider {
 	}
 
 	signInWithEmail(credentials) {
-		console.log('Sign in with email');
 		return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
 			 credentials.password);
 	}
@@ -32,9 +31,12 @@ export class AuthentificationProvider {
 	}
 
 	signOut(): Promise<void> {
-		console.log('Sign out');
 		return this.afAuth.auth.signOut();
-	  }
+	}
+
+	sendPasswordResetEmail(email: string) {
+		return this.afAuth.auth.sendPasswordResetEmail(email);
+	}
 
 
 	get checkLoggedIn() {

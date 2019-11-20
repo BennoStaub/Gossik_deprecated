@@ -17,6 +17,8 @@ import { AuthentificationProvider } from '../../providers/authentification/authe
 export class LoginPage {
 	loginForm: FormGroup;
 	loginError: string;
+	pageCtrl: string;
+	forgotPasswordForm: FormGroup;
 
 	constructor(
 		private navCtrl: NavController,
@@ -24,13 +26,17 @@ export class LoginPage {
     	fb: FormBuilder,
     	public translate: TranslateService
 	) {
+		this.pageCtrl = '';
 		this.loginForm = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
 		});
-  }
+		this.forgotPasswordForm = fb.group({
+			email: ['', Validators.compose([Validators.required, Validators.email])]
+		});
+  	}
   
-  login() {
+  	login() {
 		let data = this.loginForm.value;
 
 		if (!data.email) {
@@ -46,13 +52,26 @@ export class LoginPage {
 				() => this.navCtrl.setRoot(HomePage),
 				error => this.loginError = error.message
 			);
-  } 
+  	} 
 
-  signup(){
-	this.navCtrl.push(SignupPage);
+  	signup(){
+		this.navCtrl.push(SignupPage);
 	}
 	
-	forgotPassword() {
-		//TODO
+	goToForgotPassword() {
+		this.pageCtrl = 'forgotPassword';
+	}
+
+	resetPassword() {
+		let email = this.forgotPasswordForm.value.email;
+
+		if (!email) {
+			return;
+		}
+
+		this.auth.sendPasswordResetEmail(email)
+			.then(
+				() => this.navCtrl.setRoot(LoginPage)
+				);
 	}
 }
