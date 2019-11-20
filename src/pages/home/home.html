@@ -205,7 +205,18 @@
             <ion-grid class="height-100 no-padding">
               <ion-row class="height-50">
                 <ion-col col-4>
-                  <ion-item class="height-45 margin-bottom-10 secondary border-radius-20px"><h1>{{goal.name}}</h1></ion-item>
+                  <ion-card class="height-45 margin-0 margin-bottom-10 width-100 secondary border-radius-20px">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col col-9>
+                          <h1>{{goal.name}}</h1>
+                        </ion-col>
+                        <ion-col>
+                          <ion-card class="margin-top-0 margin-right-0 project-color" [ngStyle]="{'background-color': goal.color}"></ion-card>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-card>
                   <ion-item class="height-50 secondary border-radius-20px">{{"Team" | translate }}</ion-item>
                 </ion-col>
                 <ion-col col-8>
