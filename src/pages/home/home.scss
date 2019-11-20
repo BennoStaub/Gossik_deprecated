@@ -201,6 +201,14 @@ page-home {
 		margin-bottom: 10px !important;
 	}
 
+	.margin-vertical-center-parent {
+		display: flex;
+	}
+
+	.margin-vertical-center {
+		margin: auto 0;
+	}
+
 	.label-md {
 		height: 90%;
 	}
