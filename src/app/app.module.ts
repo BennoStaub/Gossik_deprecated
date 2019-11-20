@@ -18,8 +18,6 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { LoginPage } from '../pages/login/login';
 import { DataHandlingProvider } from '../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../providers/authentification/authentification';
-import { SignupPage } from '../pages/sign-up/sign-up';
-import { SignupPageModule } from '../pages/sign-up/sign-up.module';
 import { CalendarEventModalPage } from '../pages/calendar-event-modal/calendar-event-modal';
 import { CalendarEventModalPageModule } from '../pages/calendar-event-modal/calendar-event-modal.module';
 import { ActionDetailsModalPage } from '../pages/action-details-modal/action-details-modal';
@@ -58,7 +56,6 @@ export function setTranslateLoader(http: HttpClient) {
     AngularFireDatabaseModule,
     NgCalendarModule,
     LoginPageModule,
-    SignupPageModule,
     CalendarEventModalPageModule,
     ActionDetailsModalPageModule,
     DelegationDetailsModalPageModule,
@@ -69,7 +66,6 @@ export function setTranslateLoader(http: HttpClient) {
     MyApp,
     HomePage,
     LoginPage,
-    SignupPage,
     CalendarEventModalPage,
     ActionDetailsModalPage,
     DelegationDetailsModalPage,
