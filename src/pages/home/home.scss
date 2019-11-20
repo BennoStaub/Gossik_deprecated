@@ -205,6 +205,10 @@ page-home {
 		margin: 5px;
 	}
 
+	.margin--1 {
+		margin: -1 !important;
+	}
+
 	.margin-bottom-10 {
 		margin-bottom: 10px !important;
 	}
@@ -300,5 +304,9 @@ page-home {
 
 	.max-width-400px {
 		max-width: 400px;
+	}
+
+	.item-inner {
+		border-bottom-color: transparent;
 	}
 }
