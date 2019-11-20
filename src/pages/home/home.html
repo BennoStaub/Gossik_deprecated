@@ -51,21 +51,22 @@
               <p class="margin-vertical-center">{{capture.content}}</p>
             </div>
             </ion-item>
+            <ion-card class="text-align-center margin-top-10 overflow-scroll no-scrollbar width-100 margin-left-0 display-inline-block secondary border-radius-20px">
+              <ion-input type="text white" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+
+              <button ion-button round class="darkbutton margin-auto" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
+            </ion-card>
           </ion-col>
           <ion-col>
-            <ion-card class="width-20 height-20 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
-              <ion-input type="text" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
-
-              <button ion-button round class="darkbutton" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
-            </ion-card>
             
-            <ion-item class="width-auto height-20 overflow-scroll no-scrollbar margin-10 display-inline-block secondary border-radius-20px min-height-150px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
-              <h1>{{goal.name}}</h1>
+            
+            <ion-card class="max-width-400px overflow-x-hidden text-align-center padding-10 width-auto margin-top-0 height-20 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-100px" no-lines *ngFor="let goal of goalList | async">
+              <h1 class="max-height-30px overflow-x-hidden width-100">{{goal.name}}</h1>
               <button class="darkbutton button-left" ion-button round (click)="goToDefineAction(goal)">{{"Action" | translate }}</button>
               <button class="darkbutton button-left" ion-button round (click)="goToDefineDelegation(goal)">{{"Delegation" | translate }}</button>
               <button class="darkbutton button-left" ion-button round (click)="goToDefineMaterial(goal)">{{"Reference" | translate }}</button>
                 
-            </ion-item>
+            </ion-card>
           </ion-col>
         </ion-row>
       </ion-grid>

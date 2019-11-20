@@ -89,7 +89,7 @@ page-home {
     }
 
     ion-input {
-    	background-color: map-get($colors, secondary);
+    	background-color: map-get($colors, white);
     	border-radius: 20px;
     	color: map-get($colors, primary);
     	text-align: center;
@@ -116,6 +116,10 @@ page-home {
 
 	.margin-10 {
 		margin: 10px;
+	}
+
+	.margin-left-0 {
+		margin-left: 0px;
 	}
 
 	.display-inline-block {
@@ -189,6 +193,10 @@ page-home {
 		min-height: 150px;
 	}
 
+	.min-height-100px {
+		min-height: 100px;
+	}
+
 	.no-padding {
 		padding: 0;
 	}
@@ -223,7 +231,7 @@ page-home {
 	}
 
 	.white {
-		color: map-get($colors, white);
+		color: map-get($colors, white) !important;
 	}
 
 	.margin-right-10 {
@@ -250,6 +258,10 @@ page-home {
 		padding-left: 20px;
 	}
 
+	.padding-10 {
+		padding: 10px;
+	}
+
 	.border-bottom-1 {
 		border-bottom: 1px solid !important;
 	}
@@ -264,5 +276,29 @@ page-home {
 
 	.padding-top-10 {
 		padding-top: 10px;
+	}
+
+	.flex {
+		display: flex;
+	}
+
+	.overflow-x-hidden {
+		overflow-x: hidden;
+	}
+
+	.max-width-50 {
+		max-width: 50%;
+	}
+
+	.max-height-30px {
+		max-height: 30px;
+	}
+
+	.overflow-x-hidden {
+		overflow-x: hidden;
+	}
+
+	.max-width-400px {
+		max-width: 400px;
 	}
 }
