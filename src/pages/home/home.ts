@@ -83,6 +83,8 @@ export class HomePage {
 		currentDate: new Date()
 	};
 	actions = {};
+	goals: number;
+	projectColors: string[] = ['#F38787', '#F0D385', '#C784E4', '#B7ED7B', '#8793E8', '#87E8E5', '#B9BB86', '#EAA170']
  
   constructor(
 		public navCtrl: NavController,
@@ -251,15 +253,19 @@ export class HomePage {
 
   	// ProcessCapturePage functions
   	addGoal(goalname) {
-		if(goalname !== '' && goalname !== null && goalname !== undefined) {
-			this.newGoal.userid = this.auth.userid;
-			this.newGoal.name = goalname;
-			goalname = '';
-			this.db.addGoal(this.newGoal, this.auth.userid);
-			this.errorMsg = "";
-		} else {
-			this.errorMsg = "You cannot create a goal without a name.";
-		}
+  		this.goalList.take(1).subscribe(
+	      goalArray => {
+	        if(goalname !== '' && goalname !== null && goalname !== undefined) {
+				this.newGoal.userid = this.auth.userid;
+				this.newGoal.name = goalname;
+				this.newGoal.color = this.projectColors[goalArray.length]
+				goalname = '';
+				this.db.addGoal(this.newGoal, this.auth.userid);
+				this.errorMsg = "";
+			} else {
+				this.errorMsg = "You cannot create a goal without a name.";
+			}
+	    });
 	}
 
 	
@@ -600,7 +606,7 @@ export class HomePage {
   	chooseGoal(goalid) {
   		if(goalid != 'None') {
 	  		this.db.getGoalFromGoalid(goalid, this.auth.userid).valueChanges().take(1).subscribe( goal => {
-			this.goal = {key: goalid, name: goal.name, userid: goal.userid};
+			this.goal = {key: goalid, name: goal.name, userid: goal.userid, color: goal.color};
 			});
 		} else {
 			this.goal.key = 'None';

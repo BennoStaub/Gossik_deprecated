@@ -1,4 +1,6 @@
 page-home {
+	
+
     ion-item {
         border-bottom: 1px solid #150931;
         white-space: pre-line;
@@ -308,5 +310,23 @@ page-home {
 
 	.item-inner {
 		border-bottom-color: transparent;
+	}
+
+	.project-color {
+		width: 20px;
+		height: 20px;
+		border-radius: 10px;
+	}
+
+	.width-90 {
+		width: 90%;
+	}
+
+	.margin-right-0 {
+		margin-right: 0px;
+	}
+
+	.text-align-right-important {
+		text-align: right !important;
 	}
 }

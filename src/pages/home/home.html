@@ -1,7 +1,7 @@
 <ion-header>
   <div class="header-container">
     <img class="header-logo" src="../../assets/imgs/logo_schriftzug_weiss.png" height="60">
-    <div class="header-icons-div">
+    <div class="header-icons-div" *ngIf="!isApp">
       <button class="header-icon" (click)="goToCalendarPage()">
         <img src="../../assets/icon/icon_calendar.png" height="20"> {{"Calendar" | translate }}
       </button>
@@ -61,11 +61,22 @@
             
             
             <ion-card class="max-width-400px overflow-x-hidden text-align-center padding-10 width-auto margin-top-0 height-20 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-100px" no-lines *ngFor="let goal of goalList | async">
-              <h1 class="max-height-30px overflow-x-hidden width-100">{{goal.name}}</h1>
+              <ion-grid>
+                <ion-row>
+                  <ion-col col-10>
+                    <h1 class="max-height-30px overflow-x-hidden width-90">{{goal.name}}</h1>
+                  </ion-col>
+                  <ion-col>
+                    <ion-card class="margin-top-0 margin-right-0 project-color" [ngStyle]="{'background-color': goal.color}"></ion-card>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+              
               <button class="darkbutton button-left" ion-button round (click)="goToDefineAction(goal)">{{"Action" | translate }}</button>
               <button class="darkbutton button-left" ion-button round (click)="goToDefineDelegation(goal)">{{"Delegation" | translate }}</button>
               <button class="darkbutton button-left" ion-button round (click)="goToDefineMaterial(goal)">{{"Reference" | translate }}</button>
-                
+                </ion-row>
+              </ion-grid>
             </ion-card>
           </ion-col>
         </ion-row>
@@ -166,10 +177,23 @@
   <!-- ProjectsPage -->
   <div class="height-100" *ngIf="viewpoint == 'ProjectsPage'">
     <div *ngIf="pageCtrl == ''">
-        <ion-item class="width-18 height-20 overflow-scroll no-scrollbar margin-10 display-inline-block secondary border-radius-20px min-height-150px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
-          <h1>{{goal.name}}</h1>
-          <p class="border-top" *ngFor="let action of actions[goal.key]">{{action.content}}</p>
-      </ion-item>
+      
+        <ion-card class="width-18 height-20 overflow-x-hidden text-align-center margin-10 display-inline-block secondary border-radius-20px min-height-150px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
+          <ion-grid>
+                <ion-row>
+                  <ion-col col-9>
+                    <h1 class="max-height-30px overflow-x-hidden width-90">{{goal.name}}</h1>
+                  </ion-col>
+                  <ion-col>
+                    <ion-card class="margin-top-0 margin-right-0 project-color" [ngStyle]="{'background-color': goal.color}"></ion-card>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+              
+              <p class="border-top" *ngFor="let action of actions[goal.key]">{{action.content}}</p>
+                </ion-row>
+              </ion-grid>
+      </ion-card>
     </div>
 
     <p>{{errorMsg}}</p>
