@@ -5,9 +5,9 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { HomePage } from '../home/home';
-import { SignupPage } from '../sign-up/sign-up';
 
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
+import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 
 @IonicPage()
 @Component({
@@ -19,10 +19,13 @@ export class LoginPage {
 	loginError: string;
 	pageCtrl: string;
 	forgotPasswordForm: FormGroup;
+	signUpForm: FormGroup;
+	signUpError: string;
 
 	constructor(
 		private navCtrl: NavController,
 		private auth: AuthentificationProvider,
+		private db: DataHandlingProvider,
     	fb: FormBuilder,
     	public translate: TranslateService
 	) {
@@ -33,6 +36,10 @@ export class LoginPage {
 		});
 		this.forgotPasswordForm = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])]
+		});
+		this.signUpForm = fb.group({
+			email: ['', Validators.compose([Validators.required, Validators.email])],
+			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
 		});
   	}
   
@@ -54,9 +61,21 @@ export class LoginPage {
 			);
   	} 
 
-  	signup(){
-		this.navCtrl.push(SignupPage);
+  	goToSignUp(){
+		this.pageCtrl = 'signUp';
 	}
+
+	signUp() {
+		let data = this.signUpForm.value;
+		let credentials = {
+			email: data.email,
+			password: data.password
+		};
+		this.auth.signUp(credentials).then(user =>  {console.log('done');this.db.createUser(user.user.uid, user.user.email)}).then(
+			() => this.pageCtrl = '',
+			error => this.signUpError = error.message
+		);
+  	}
 	
 	goToForgotPassword() {
 		this.pageCtrl = 'forgotPassword';
