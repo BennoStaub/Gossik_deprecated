@@ -280,15 +280,22 @@ export class HomePage {
 	    });
 	}
 
-	adddAction(goal) {
+	addAction(goal) {
 		let modal = this.modalCtrl.create(DefineActionModalPage);
 		modal.present();
 		modal.onDidDismiss(data => {
-			if(data) {
+			if(data && data.content) {
 				let action: Action = data;
 				action.userid = this.auth.userid;
 				action.taken = false;
 				action.goalid = goal.key;
+				console.log(action);
+				if(!action.priority) {
+					action.priority = 0
+				}
+				if(!action.time) {
+					action.time = 0
+				}
 				this.db.addAction(action, this.capture, this.auth.userid);
 				if(action.deadline) {
 					let deadlineTime = new Date (action.deadline).setHours(2);
@@ -302,57 +309,17 @@ export class HomePage {
 					}
 		            this.db.addCalendarEvent(eventData, this.auth.userid)
 		        }
+			} else {
+				let alert = this.alertCtrl.create({
+					title: 'No action defined!',
+					buttons: ['OK']
+				});
+				alert.present();
 			}
 		});
 	}
 
-	addAction() {
-	    this.errorMsg = "";
-	    this.newAction.content = this.defineActionForm.value.content;
-	    this.newAction.deadline = this.defineActionForm.value.deadline;
-	    this.newAction.priority = Number(this.defineActionForm.value.priority);
-	    this.newAction.time = Number(this.defineActionForm.value.time);
-	    this.newAction.goalid = this.assignedGoal.key;
-	    this.newAction.userid = this.auth.userid;
-	    this.newAction.taken = false;
-	    if(this.newAction.content !== '' && this.newAction.content !== null && this.newAction.content !== undefined) {
-	      if(this.newAction.priority != 0 && this.newAction.priority !== null && this.newAction.priority !== undefined) {
-	        if(this.newAction.time != 0 && this.newAction.time !== null && this.newAction.time !== undefined) {
-	          if(this.checkDeadline === true) {
-	            if(this.newAction.deadline !== undefined && this.newAction.deadline !== null) {
-	              this.errorMsg = "";
-	              let newEndTime = new Date (this.newAction.deadline).setHours(2);
-	              let eventData: CalendarEvent = {
-	                userid: this.auth.userid,
-	                goalid: this.assignedGoal.key,
-	                startTime: new Date(this.newAction.deadline).toISOString(),
-	                endTime: new Date (newEndTime).toISOString(),
-	                title: 'Deadline: ' + this.newAction.content,
-	                allDay: true
-	              }
-	              this.db.addCalendarEvent(eventData, this.auth.userid)
-	              this.db.addAction(this.newAction, this.capture, this.auth.userid).then( () => {
-	              this.navCtrl.setRoot(HomePage);
-	              });
-	            } else {
-	              this.errorMsg = "Please define a deadline or deselct the deadline checkbox.";
-	            }
-	          } else {
-	            this.errorMsg = "";
-	            this.db.addAction(this.newAction, this.capture, this.auth.userid).then( () => {
-	            this.navCtrl.setRoot(HomePage);
-	            });
-	          }
-	        } else {
-	          this.errorMsg = "Please define a valid time estimate for this action";
-	        }
-	      } else {
-	        this.errorMsg = "Please define a priority.";
-	      }
-	    } else {
-	      this.errorMsg = "Please define an action.";
-	    }
-	}
+	
 
 	goToDefineDelegation(goal) {
 		this.assignedGoal = goal
