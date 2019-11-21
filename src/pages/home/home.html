@@ -173,17 +173,17 @@
                 <ion-item class="height-100 secondary border-radius-20px">
                   <ion-grid class="height-100">
                     <ion-row class="height-100">
-                      <ion-col class="border-right">{{"Actions" | translate }}
+                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar">{{"Actions" | translate }}
                         <button class="block width-100 no-padding" *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
                           <p class="border-top">{{nextAction.content}}</p>
                         </button>
                       </ion-col>
-                      <ion-col class="border-right">{{"Delegations" | translate }}
+                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar">{{"Delegations" | translate }}
                         <button class="block width-100 no-padding" *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
                           <p class="border-top">{{delegation.content}}</p>
                         </button>
                       </ion-col>
-                      <ion-col>{{"References" | translate }}
+                      <ion-col class="height-100 overflow-scroll no-scrollbar">{{"References" | translate }}
                         <button class="block width-100 no-padding" *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
                           <p class="border-top">{{reference.content}}</p>
                         </button>
