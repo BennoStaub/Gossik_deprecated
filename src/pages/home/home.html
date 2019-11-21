@@ -173,17 +173,35 @@
                 <ion-item class="height-100 secondary border-radius-20px">
                   <ion-grid class="height-100">
                     <ion-row class="height-100">
-                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar"><h1>{{"Actions" | translate }}</h1>
+                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar">
+                        <ion-buttons start>
+                          <h1 class="display-inline-block margin-right-10">{{"Actions" | translate }}</h1>
+                          <button class="darkbutton size-20px border-radius-20px margin-top-0" ion-button icon-only (click)="addAction(goal)">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        </ion-buttons>
                         <button class="block width-100 no-padding" *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
                           <p class="border-top">{{nextAction.content}}</p>
                         </button>
                       </ion-col>
-                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar"><h1>{{"Delegations" | translate }}</h1>
+                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar">
+                        <ion-buttons start>
+                          <h1 class="display-inline-block margin-right-10">{{"Delegations" | translate }}</h1>
+                          <button class="darkbutton size-20px border-radius-20px margin-top-0" ion-button icon-only (click)="addDelegation(goal)">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        </ion-buttons>
                         <button class="block width-100 no-padding" *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
                           <p class="border-top">{{delegation.content}}</p>
                         </button>
                       </ion-col>
-                      <ion-col class="height-100 overflow-scroll no-scrollbar"><h1>{{"References" | translate }}</h1>
+                      <ion-col class="height-100 overflow-scroll no-scrollbar">
+                        <ion-buttons start>
+                          <h1 class="display-inline-block margin-right-10">{{"References" | translate }}</h1>
+                          <button class="darkbutton size-20px border-radius-20px margin-top-0" ion-button icon-only (click)="addReference(goal)">
+                            <ion-icon name="add"></ion-icon>
+                          </button>
+                        </ion-buttons>
                         <button class="block width-100 no-padding" *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
                           <p class="border-top">{{reference.content}}</p>
                         </button>

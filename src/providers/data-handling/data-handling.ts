@@ -86,15 +86,30 @@ export class DataHandlingProvider {
     }
 
     addAction(action: Action, capture: Capture, userid) {
-        return this.db.list('users/' + userid + '/nextActions').push(action).then( () => this.deleteCapture(capture, userid));
+        return this.db.list('users/' + userid + '/nextActions').push(action)
+        .then( () => {
+            if(capture.key) {
+                this.deleteCapture(capture, userid);
+            }
+        });
     }
 
     addDelegation(delegation: Delegation, capture: Capture, userid) {
-        return this.db.list('users/' + userid + '/delegations').push(delegation).then( () => this.deleteCapture(capture, userid));
+        return this.db.list('users/' + userid + '/delegations').push(delegation)
+        .then( () => {
+            if(capture.key) {
+                this.deleteCapture(capture, userid);
+            }
+        });
     }
 
     addReference(reference: Reference, capture: Capture, userid){
-        return this.db.list('/users/' + userid + '/references').push(reference).then( () => this.deleteCapture(capture, userid));
+        return this.db.list('/users/' + userid + '/references').push(reference)
+        .then( () => {
+            if(capture.key) {
+                this.deleteCapture(capture, userid);
+            }
+        });
     }
 
     editAction(action: Action, userid) {

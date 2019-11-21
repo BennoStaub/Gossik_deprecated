@@ -287,7 +287,8 @@ export class HomePage {
 				if(!action.time) {
 					action.time = 0
 				}
-				this.db.addAction(action, this.capture, this.auth.userid);
+				let capture : Capture = {key: '', userid: '', content: ''};
+				this.db.addAction(action, capture, this.auth.userid);
 				if(action.deadline) {
 					let deadlineTime = new Date (action.deadline).setHours(2);
 					let eventData: CalendarEvent = {
@@ -318,7 +319,8 @@ export class HomePage {
 				let delegation: Delegation = data;
 				delegation.userid = this.auth.userid;
 				delegation.goalid = goal.key;
-				this.db.addDelegation(delegation, this.capture, this.auth.userid);
+				let capture : Capture = {key: '', userid: '', content: ''};
+				this.db.addDelegation(delegation, capture, this.auth.userid);
 				if(delegation.deadline) {
 					let deadlineTime = new Date (delegation.deadline).setHours(2);
 					let eventData: CalendarEvent = {
@@ -349,7 +351,8 @@ export class HomePage {
 				let reference: Reference = data;
 				reference.userid = this.auth.userid;
 				reference.goalid = goal.key;
-				this.db.addReference(reference, this.capture, this.auth.userid);
+				let capture : Capture = {key: '', userid: '', content: ''};
+				this.db.addReference(reference, capture, this.auth.userid);
 			} else {
 				let alert = this.alertCtrl.create({
 					title: 'No reference defined!',
