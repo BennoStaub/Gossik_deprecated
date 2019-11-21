@@ -293,7 +293,6 @@ export class HomePage {
 					action.time = 0
 				}
 				let capture : Capture = {key: '', userid: '', content: ''};
-				this.db.addAction(action, capture, this.auth.userid);
 				if(action.deadline) {
 					let deadlineTime = new Date (action.deadline).setHours(2);
 					let eventData: CalendarEvent = {
@@ -304,8 +303,13 @@ export class HomePage {
 						title: 'Deadline: ' + action.content,
 						allDay: true
 					}
-		            this.db.addCalendarEvent(eventData, this.auth.userid)
-		        }
+		            this.db.addCalendarEvent(eventData, this.auth.userid).then( event => {
+		            	action.deadlineid = event.key;
+		            	this.db.addAction(action, capture, this.auth.userid);
+		            })
+		        } else {
+					this.db.addAction(action, capture, this.auth.userid);
+				}
 			}
 		});
 	}
@@ -641,7 +645,8 @@ export class HomePage {
 						      	{
 							        text: 'Delete',
 							        handler: () => {
-							          this.db.deleteCalendarEvent(event, this.auth.userid).then( () => this.goToCalendarPage());
+							        	console.log(event);
+							          	this.db.deleteCalendarEvent(event.key, this.auth.userid).then( () => this.goToCalendarPage());
 							        }
 						      	}
 						    ]

@@ -45,13 +45,13 @@ export class DataHandlingProvider {
         return this.db.list('/users/' + userid + '/nextActions').remove(action.key).then( () =>
             {
                 if(action.deadline) {
-                    //this.deleteCalendarEvent(action.deadlineid);
+                    this.deleteCalendarEvent(action.deadlineid, userid);
                 }
             });
     }
 
-    deleteCalendarEvent(event: CalendarEvent, userid) {
-        return this.db.list('/users/' + userid + '/calendarEvents').remove(event.key);
+    deleteCalendarEvent(eventid, userid) {
+        return this.db.list('/users/' + userid + '/calendarEvents').remove(eventid);
     }
 
     deleteDelegation(delegation: Delegation, userid) {
