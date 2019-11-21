@@ -28,6 +28,8 @@ import { MaterialDetailsModalPage } from '../pages/material-details-modal/materi
 import { MaterialDetailsModalPageModule } from '../pages/material-details-modal/material-details-modal.module';
 import { DefineActionModalPage } from '../pages/define-action-modal/define-action-modal';
 import { DefineActionModalPageModule } from '../pages/define-action-modal/define-action-modal.module';
+import { DefineDelegationModalPage } from '../pages/define-delegation-modal/define-delegation-modal';
+import { DefineDelegationModalPageModule } from '../pages/define-delegation-modal/define-delegation-modal.module';
 
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -62,7 +64,8 @@ export function setTranslateLoader(http: HttpClient) {
     ActionDetailsModalPageModule,
     DelegationDetailsModalPageModule,
     MaterialDetailsModalPageModule,
-    DefineActionModalPageModule
+    DefineActionModalPageModule,
+    DefineDelegationModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -73,7 +76,8 @@ export function setTranslateLoader(http: HttpClient) {
     ActionDetailsModalPage,
     DelegationDetailsModalPage,
     MaterialDetailsModalPage,
-    DefineActionModalPage
+    DefineActionModalPage,
+    DefineDelegationModalPage
   ],
   providers: [
     StatusBar,

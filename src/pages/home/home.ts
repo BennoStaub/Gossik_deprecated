@@ -17,6 +17,7 @@ import { ActionDetailsModalPage } from '../action-details-modal/action-details-m
 import { DelegationDetailsModalPage } from '../delegation-details-modal/delegation-details-modal';
 import { MaterialDetailsModalPage } from '../material-details-modal/material-details-modal';
 import { DefineActionModalPage } from '../define-action-modal/define-action-modal';
+import { DefineDelegationModalPage } from '../define-delegation-modal/define-delegation-modal';
 
 import 'rxjs/add/operator/take';
 import * as moment from 'moment';
@@ -269,17 +270,6 @@ export class HomePage {
 	    });
 	}
 
-	goToDefineAction(goal){
-		this.assignedGoal = goal
-	    this.pageCtrl = 'defineAction';
-	    this.defineActionForm = this.fb.group({
-			content: ['', Validators.required],
-			priority: ['', Validators.required],
-			deadline: ['', Validators.required],
-			time: ['', Validators.required]
-	    });
-	}
-
 	addAction(goal) {
 		let modal = this.modalCtrl.create(DefineActionModalPage);
 		modal.present();
@@ -319,50 +309,35 @@ export class HomePage {
 		});
 	}
 
-	
-
-	goToDefineDelegation(goal) {
-		this.assignedGoal = goal
-	    this.pageCtrl = 'defineDelegation';
-	    this.defineDelegationForm = this.fb.group({
-				content: ['', Validators.required],
-	      deadline: ['', Validators.required]
-	    });
-	}
-
-	addDelegation() {
-	    this.newDelegation.content = this.defineDelegationForm.value.content;
-	    this.newDelegation.deadline = this.defineDelegationForm.value.deadline;
-	    this.newDelegation.goalid = this.assignedGoal.key;
-	    this.newDelegation.userid = this.auth.userid;
-	    if(this.newDelegation.content !== '' && this.newDelegation.content !== null && this.newDelegation.content !== undefined) {
-	      if(this.checkDeadline === true) {
-	        if(this.newDelegation.deadline !== null && this.newDelegation.deadline !== undefined) {
-	          this.errorMsg = "";
-	          let eventData: CalendarEvent = {
-	              userid: this.auth.userid,
-	              goalid: this.assignedGoal.key,
-	              startTime: this.newDelegation.deadline,
-	              endTime: this.newDelegation.deadline,
-	              title: 'Deadline: ' + this.newDelegation.content,
-	              allDay: true
-	            }
-	            this.db.addCalendarEvent(eventData, this.auth.userid)
-	          this.db.addDelegationToGoal(this.newDelegation, this.assignedGoal, this.capture, this.auth.userid).then( () => {
-	          this.navCtrl.setRoot(HomePage);
-	          });
-	        } else {
-	          this.errorMsg = "Please define a deadline or deselect the deadline checkbox.";
-	        }
-	      } else {
-	        this.errorMsg = "";
-	        this.db.addDelegationToGoal(this.newDelegation, this.assignedGoal, this.capture, this.auth.userid).then( () => {
-	        this.navCtrl.setRoot(HomePage);
-	        });
-	      }
-	    } else {
-	      this.errorMsg = "Please define what you are waiting for.";
-	    }
+	addDelegation(goal) {
+		let modal = this.modalCtrl.create(DefineDelegationModalPage);
+		modal.present();
+		modal.onDidDismiss(data => {
+			if(data && data.content) {
+				let delegation: Delegation = data;
+				delegation.userid = this.auth.userid;
+				delegation.goalid = goal.key;
+				this.db.addDelegation(delegation, this.capture, this.auth.userid);
+				if(delegation.deadline) {
+					let deadlineTime = new Date (delegation.deadline).setHours(2);
+					let eventData: CalendarEvent = {
+						userid: this.auth.userid,
+						goalid: goal.key,
+						startTime: new Date(delegation.deadline).toISOString(),
+						endTime: new Date (deadlineTime).toISOString(),
+						title: 'Deadline Delegation: ' + delegation.content,
+						allDay: true
+					}
+		            this.db.addCalendarEvent(eventData, this.auth.userid)
+		        }
+			} else {
+				let alert = this.alertCtrl.create({
+					title: 'No delegation defined!',
+					buttons: ['OK']
+				});
+				alert.present();
+			}
+		});
 	}
 
 	goToDefineMaterial(goal) {

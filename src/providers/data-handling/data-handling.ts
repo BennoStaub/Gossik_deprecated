@@ -89,7 +89,7 @@ export class DataHandlingProvider {
         return this.db.list('users/' + userid + '/nextActions').push(action).then( () => this.deleteCapture(capture, userid));
     }
 
-    addDelegationToGoal(delegation: Delegation, goal: Goal, capture: Capture, userid) {
+    addDelegation(delegation: Delegation, capture: Capture, userid) {
         return this.db.list('users/' + userid + '/delegations').push(delegation).then( () => this.deleteCapture(capture, userid));
     }
 

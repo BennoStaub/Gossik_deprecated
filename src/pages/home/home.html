@@ -73,7 +73,7 @@
                 <ion-row>
               
               <button class="darkbutton button-left" ion-button round (click)="addAction(goal)">{{"Action" | translate }}</button>
-              <button class="darkbutton button-left" ion-button round (click)="goToDefineDelegation(goal)">{{"Delegation" | translate }}</button>
+              <button class="darkbutton button-left" ion-button round (click)="addDelegation(goal)">{{"Delegation" | translate }}</button>
               <button class="darkbutton button-left" ion-button round (click)="goToDefineMaterial(goal)">{{"Reference" | translate }}</button>
                 </ion-row>
               </ion-grid>
@@ -82,57 +82,6 @@
         </ion-row>
       </ion-grid>
     </div>
-
-
-    <div *ngIf="pageCtrl == 'defineAction'">
-      {{"Defining new action" | translate }}
-      <ion-list inset>
-        <ion-item no-lines>
-          <ion-label>{{"Deadline required?" | translate }}</ion-label>
-          <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
-        </ion-item>
-        <form (ngSubmit)="addAction()" [formGroup]="defineActionForm">
-          <ion-item no-lines>
-            <ion-input type="text" placeholder="{{'Action' | translate }}" formControlName="content"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>{{"Priority (1: low, 10: high)" | translate }}:</ion-label>
-            <ion-input type="number" placeholder="0" min="0" max="10" formControlName="priority"></ion-input>
-          </ion-item>
-          <ion-item>
-              <ion-label block>{{"Estimated time in min" | translate }}:</ion-label>
-              <ion-input type="number" placeholder="0" min="0" max="1000" formControlName="time"></ion-input>
-          </ion-item>
-          <div *ngIf="checkDeadline">
-            <ion-item no-lines>
-              <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="{{'Choose deadline' | translate }}" ></ion-datetime>
-            </ion-item>
-          </div>
-          <button class="darkbutton" ion-button full type="submit">{{"Define action" | translate }}</button>
-        </form>
-      </ion-list>
-    </div>
-
-    <div *ngIf="pageCtrl == 'defineDelegation'">
-        {{"Defining new delegation" | translate }}:
-        <ion-list inset>
-          <ion-item no-lines>
-            <ion-label>{{"Deadline required?" | translate }}</ion-label>
-            <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
-          </ion-item>
-          <form (ngSubmit)="addDelegation()" [formGroup]="defineDelegationForm">
-            <ion-item no-lines>
-              <ion-input type="text" placeholder="{{'Delegation' | translate }}" formControlName="content"></ion-input>
-            </ion-item>
-            <div *ngIf="checkDeadline">
-              <ion-item no-lines>
-                <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="{{'Choose deadline' | translate }}"></ion-datetime>
-              </ion-item>
-            </div>
-            <button class="darkbutton" ion-button full type="submit">{{"Define delegation" | translate }}</button>
-          </form>
-        </ion-list>
-      </div>
 
     <div *ngIf="pageCtrl == 'defineReference'">
       {{"Defining new reference:" | translate }}
