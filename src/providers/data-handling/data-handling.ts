@@ -37,6 +37,7 @@ export class DataHandlingProvider {
     }
 
     addCalendarEvent(calendarEvent: CalendarEvent, userid) {
+        console.log(calendarEvent);
         return this.db.list('/users/' + userid + '/calendarEvents').push(calendarEvent);
     }
     

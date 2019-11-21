@@ -268,20 +268,6 @@ export class HomePage {
 	    });
 	}
 
-	
-
-	nextActions() {
-	    this.showNextActions = !this.showNextActions;
-	}
-
-	delegations() {
-		this.showDelegations = !this.showDelegations;
-	}
-
-	references() {
-	    this.showReferences = !this.showReferences;
-	}
-
 	goToDefineAction(goal){
 		this.assignedGoal = goal
 	    this.pageCtrl = 'defineAction';
@@ -656,6 +642,9 @@ export class HomePage {
 		modal.present();
 		modal.onDidDismiss(data => {
 			if(data) {
+				if(!data.goalid) {
+					data.goalid = '';
+				}
 				let eventData: CalendarEvent = data;
 				eventData.userid = this.auth.userid;
 				eventData.allDay = false;
@@ -705,6 +694,9 @@ export class HomePage {
 			modal.present();
 			modal.onDidDismiss(data => {
 				if(data) {
+					if(!data.goalid) {
+						data.goalid = '';
+					}
 					let eventData: CalendarEvent = data;
 					eventData.userid = this.auth.userid;
 					eventData.allDay = false;
