@@ -46,11 +46,13 @@
       <ion-grid>
         <ion-row class="width-100">
           <ion-col col-3>
-            <ion-item class="secondary border-radius-20px padding-vertical-auto">
-              <div class="margin-vertical-center-parent height-100 width-100">
-              <p class="margin-vertical-center">{{capture.content}}</p>
+            <ion-card class="secondary border-radius-20px text-align-center padding-vertical-auto overflow-y-scroll no-scrollbar">
+              <div class="max-height-500px margin-vertical-center-parent overflow-y-scroll no-scrollbar">
+              <p class="width-100 margin-10px overflow-y-scroll no-scrollbar">{{capture.content}}</p>
+            
             </div>
-            </ion-item>
+            <button ion-button round class="darkbutton display-block" (click)="deleteCapture(capture)">{{ "Delete" | translate }}</button>
+            </ion-card>
             <ion-card class="text-align-center margin-top-10 overflow-scroll no-scrollbar width-100 margin-left-0 display-inline-block secondary border-radius-20px">
               <ion-input type="text white" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
 

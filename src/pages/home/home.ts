@@ -136,8 +136,8 @@ export class HomePage {
 	    }
   	}
 
-  	removeCapture(capture: Capture) {
-  		this.db.deleteCapture(capture, this.auth.userid)
+  	deleteCapture(capture: Capture) {
+  		this.db.deleteCapture(capture, this.auth.userid).then( () => this.goToCapturePage())
   	}
 
   	goToCapturePage() {
