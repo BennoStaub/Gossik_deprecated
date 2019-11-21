@@ -6,4 +6,8 @@ page-define-reference-modal {
 	ion-content {
 		background-color: map-get($colors, secondary) !important;
 	}
+
+	.text-align-center {
+		text-align: center;
+	}
 }

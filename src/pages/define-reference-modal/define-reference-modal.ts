@@ -37,7 +37,7 @@ export class DefineReferenceModalPage {
   }
 
   cancel() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss('cancel');
   }
 
   addReference() {

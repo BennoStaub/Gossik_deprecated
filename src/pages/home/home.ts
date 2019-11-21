@@ -280,7 +280,7 @@ export class HomePage {
 		let modal = this.modalCtrl.create(DefineActionModalPage);
 		modal.present();
 		modal.onDidDismiss(data => {
-			if(data && data.content) {
+			if(data != 'cancel' && data.content) {
 				let action: Action = data;
 				action.userid = this.auth.userid;
 				action.taken = false;
@@ -306,12 +306,6 @@ export class HomePage {
 					}
 		            this.db.addCalendarEvent(eventData, this.auth.userid)
 		        }
-			} else {
-				let alert = this.alertCtrl.create({
-					title: 'No action defined!',
-					buttons: ['OK']
-				});
-				alert.present();
 			}
 		});
 	}
@@ -320,7 +314,7 @@ export class HomePage {
 		let modal = this.modalCtrl.create(DefineDelegationModalPage);
 		modal.present();
 		modal.onDidDismiss(data => {
-			if(data && data.content) {
+			if(data != 'cancel' && data.content) {
 				let delegation: Delegation = data;
 				delegation.userid = this.auth.userid;
 				delegation.goalid = goal.key;
@@ -338,12 +332,6 @@ export class HomePage {
 					}
 		            this.db.addCalendarEvent(eventData, this.auth.userid)
 		        }
-			} else {
-				let alert = this.alertCtrl.create({
-					title: 'No delegation defined!',
-					buttons: ['OK']
-				});
-				alert.present();
 			}
 		});
 	}
@@ -352,18 +340,12 @@ export class HomePage {
 	    let modal = this.modalCtrl.create(DefineReferenceModalPage);
 		modal.present();
 		modal.onDidDismiss(data => {
-			if(data && data.content) {
+			if(data != 'cancel' && data.content) {
 				let reference: Reference = data;
 				reference.userid = this.auth.userid;
 				reference.goalid = goal.key;
 				let capture : Capture = {key: '', userid: '', content: ''};
 				this.db.addReference(reference, capture, this.auth.userid);
-			} else {
-				let alert = this.alertCtrl.create({
-					title: 'No reference defined!',
-					buttons: ['OK']
-				});
-				alert.present();
 			}
 		});
 	}

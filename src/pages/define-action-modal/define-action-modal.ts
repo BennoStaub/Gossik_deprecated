@@ -41,7 +41,7 @@ export class DefineActionModalPage {
   }
 
   cancel() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss('cancel');
   }
 
   addAction() {

@@ -19,7 +19,7 @@
 
 
 <ion-content padding>
-        <ion-list inset>
+        <ion-list inset class="text-align-center">
           <ion-item no-lines>
             <ion-label>{{"Deadline required?" | translate }}</ion-label>
             <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>
@@ -33,7 +33,7 @@
                 <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" placeholder="{{'Choose deadline' | translate }}"></ion-datetime>
               </ion-item>
             </div>
-            <button class="darkbutton" ion-button full type="submit">{{"Define delegation" | translate }}</button>
+            <button class="darkbutton" ion-button round type="submit">{{"Define delegation" | translate }}</button>
           </form>
         </ion-list>
 </ion-content>

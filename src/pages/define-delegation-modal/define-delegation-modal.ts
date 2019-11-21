@@ -39,7 +39,7 @@ export class DefineDelegationModalPage {
   }
 
   cancel() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss('cancel');
   }
 
   addDelegation() {

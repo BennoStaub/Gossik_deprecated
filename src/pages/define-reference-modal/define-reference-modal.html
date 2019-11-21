@@ -19,12 +19,12 @@
 
 
 <ion-content padding>
-	<ion-list inset>
+	<ion-list inset class="text-align-center">
 		<form (ngSubmit)="addReference()" [formGroup]="defineReferenceForm">
 			<ion-item no-lines>
-				<ion-input type="text" formControlName="content"></ion-input>
+				<ion-input type="text" placeholder="{{'Reference' | translate }}" formControlName="content"></ion-input>
 			</ion-item>
-			<button class="darkbutton" ion-button full type="submit">{{"Define reference" | translate }}</button>
+			<button class="darkbutton" ion-button round type="submit">{{"Define reference" | translate }}</button>
 		</form>
 	</ion-list>
 </ion-content>
