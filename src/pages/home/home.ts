@@ -261,7 +261,12 @@ export class HomePage {
 	        if(goalname !== '' && goalname !== null && goalname !== undefined) {
 				this.newGoal.userid = this.auth.userid;
 				this.newGoal.name = goalname;
-				this.newGoal.color = this.projectColors[goalArray.length]
+				let numberGoals = goalArray.length;
+				if(numberGoals < 8) {
+					this.newGoal.color = this.projectColors[numberGoals];
+				} else {
+					this.newGoal.color = '#FFFFFF'
+				}
 				goalname = '';
 				this.db.addGoal(this.newGoal, this.auth.userid);
 				this.errorMsg = "";
