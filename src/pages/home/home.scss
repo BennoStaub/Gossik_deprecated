@@ -252,6 +252,10 @@ page-home {
 		margin-top: 0px;
 	}
 
+	.margin-top-10 {
+		margin-top: 10px !important;
+	}
+
 	.margin-auto {
 		margin: auto;
 	}
@@ -352,5 +356,25 @@ page-home {
 
 	.text-align-right-important {
 		text-align: right !important;
+	}
+
+	.text-align-left {
+		text-align: left !important;
+	}
+
+	.table-bordered {
+    	border: 1px solid #000000;
+	}
+
+	.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    	border: 1px solid #000000;
+	}
+
+	.weekview-allday-content-table td {
+    	border: 1px solid #000000;
+	}
+
+	.height-90 {
+		height: 90%;
 	}
 }

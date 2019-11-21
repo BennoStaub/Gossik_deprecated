@@ -54,7 +54,7 @@
             <ion-card class="text-align-center margin-top-10 overflow-scroll no-scrollbar width-100 margin-left-0 display-inline-block secondary border-radius-20px">
               <ion-input type="text white" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
 
-              <button ion-button round class="darkbutton margin-auto" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
+              <button ion-button round class="darkbutton margin-auto margin-bottom-10 margin-top-10" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
             </ion-card>
           </ion-col>
           <ion-col>
@@ -289,18 +289,20 @@
     </div>
 
     <!-- CalendarPage -->
-    <div class="height-100" *ngIf="viewpoint == 'CalendarPage'">
+    <div class="height-100 secondary border-radius-20px" *ngIf="viewpoint == 'CalendarPage'">
       <ion-row>
-        <ion-buttons end>
-          <button class="darkbutton" ion-button icon-only (click)="addEvent()">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-buttons>
+        <ion-col col-3>
+          <ion-buttons start>
+            <button class="darkbutton" ion-button icon-only (click)="addEvent()">
+              <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-col>
         <ion-col style="text-align: center">
-          <h2 class="white">{{ viewTitle }}</h2>
+          <h2>{{ viewTitle }}</h2>
         </ion-col>
       </ion-row>
-      <div class="padding-bottom-50 height-100">
+      <div class="padding-bottom-50 height-90">
         <calendar [eventSource]="eventSource"
                   [calendarMode]="calendar.mode"
                   [currentDate]="calendar.currentDate"
