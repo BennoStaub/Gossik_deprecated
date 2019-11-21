@@ -154,7 +154,7 @@
                       </ion-row>
                     </ion-grid>
                   </ion-card>
-                  <ion-item class="height-50 secondary border-radius-20px">{{"Team" | translate }}</ion-item>
+                  <ion-item class="height-50 secondary border-radius-20px"><h1>{{"Team" | translate }}</h1></ion-item>
                 </ion-col>
                 <ion-col col-8>
                   <calendar [eventSource]="eventSource"
@@ -173,17 +173,17 @@
                 <ion-item class="height-100 secondary border-radius-20px">
                   <ion-grid class="height-100">
                     <ion-row class="height-100">
-                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar">{{"Actions" | translate }}
+                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar"><h1>{{"Actions" | translate }}</h1>
                         <button class="block width-100 no-padding" *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
                           <p class="border-top">{{nextAction.content}}</p>
                         </button>
                       </ion-col>
-                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar">{{"Delegations" | translate }}
+                      <ion-col class="border-right height-100 overflow-scroll no-scrollbar"><h1>{{"Delegations" | translate }}</h1>
                         <button class="block width-100 no-padding" *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
                           <p class="border-top">{{delegation.content}}</p>
                         </button>
                       </ion-col>
-                      <ion-col class="height-100 overflow-scroll no-scrollbar">{{"References" | translate }}
+                      <ion-col class="height-100 overflow-scroll no-scrollbar"><h1>{{"References" | translate }}</h1>
                         <button class="block width-100 no-padding" *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
                           <p class="border-top">{{reference.content}}</p>
                         </button>
@@ -195,7 +195,7 @@
             </ion-grid>
           </ion-col>
           <ion-col col-3>
-            <ion-item class="height-100 secondary border-radius-20px">{{"Chat" | translate }}</ion-item>
+            <ion-item class="height-100 secondary border-radius-20px"><h1>{{"Chat" | translate }}</h1></ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>
