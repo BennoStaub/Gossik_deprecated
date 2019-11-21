@@ -643,7 +643,7 @@ export class HomePage {
 			}
 			let alert = this.alertCtrl.create({
 					title: '' + event.title,
-					subTitle: goal + time,
+					message: goal + time,
 					buttons: ['OK']
 			});
 			alert.present();
