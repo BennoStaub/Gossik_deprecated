@@ -308,12 +308,32 @@ page-home {
 		overflow-x: hidden;
 	}
 
+	.overflow-y-hidden {
+		overflow-y: hidden;
+	}
+
 	.max-width-400px {
 		max-width: 400px;
 	}
 
+	.width-300px {
+		width: 300px;
+	}
+
+	.height-150px {
+		height: 150px;
+	}
+
+	.text-overflow {
+		text-overflow: hidden;
+	}
+
 	.item-inner {
 		border-bottom-color: transparent;
+	}
+
+	.one-line {
+		white-space: nowrap;
 	}
 
 	.project-color {

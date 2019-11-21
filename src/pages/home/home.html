@@ -115,7 +115,7 @@
   <div class="height-100" *ngIf="viewpoint == 'ProjectsPage'">
     <div *ngIf="pageCtrl == ''">
       
-        <ion-card class="width-18 height-20 overflow-x-hidden text-align-center margin-10 display-inline-block secondary border-radius-20px min-height-150px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
+        <ion-card class="width-18 height-150px overflow-y-hidden overflow-x-hidden text-align-center margin-10 display-inline-block secondary border-radius-20px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
           <ion-grid>
                 <ion-row>
                   <ion-col col-9>
@@ -127,7 +127,7 @@
                 </ion-row>
                 <ion-row>
               
-              <p class="border-top width-100" *ngFor="let action of actions[goal.key]">{{action.content}}</p>
+              <p class="one-line border-top width-100 overflow-x-hidden" *ngFor="let action of actions[goal.key]">{{action.content}}</p>
                 </ion-row>
               </ion-grid>
       </ion-card>
