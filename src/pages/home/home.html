@@ -255,9 +255,9 @@
     </div>
 
     <!-- ToDoPage -->
-    <div *ngIf="viewpoint == 'ToDoPage'">
-      <div *ngIf="pageCtrl == ''">
-        <ion-grid>
+    <div class="height-100" *ngIf="viewpoint == 'ToDoPage'">
+      <div class="height-100" *ngIf="pageCtrl == ''">
+        <ion-grid class="height-100">
           <ion-row>
             <ion-col size="1" class="primary">
               <form class="flex" (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
@@ -277,7 +277,7 @@
           <ion-row class="height-100">
             <ion-col>
             <p class="primary">{{errorMsg}}</p>
-            <div class="content-container">
+            <div class="content-container height-100">
               <ion-item no-lines *ngFor="let action of doableActionArray" (click)="takeThisAction(action)">
                 <div [innerHtml]="action.content"></div>
               </ion-item>
