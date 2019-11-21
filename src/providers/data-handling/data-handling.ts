@@ -42,7 +42,16 @@ export class DataHandlingProvider {
     }
     
     deleteAction(action: Action, userid) {
-        return this.db.list('/users/' + userid + '/nextActions').remove(action.key);
+        return this.db.list('/users/' + userid + '/nextActions').remove(action.key).then( () =>
+            {
+                if(action.deadline) {
+                    //this.deleteCalendarEvent(action.deadlineid);
+                }
+            });
+    }
+
+    deleteCalendarEvent(event: CalendarEvent, userid) {
+        return this.db.list('/users/' + userid + '/calendarEvents').remove(event.key);
     }
 
     deleteDelegation(delegation: Delegation, userid) {

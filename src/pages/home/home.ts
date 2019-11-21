@@ -634,7 +634,17 @@ export class HomePage {
 			let alert = this.alertCtrl.create({
 					title: '' + event.title,
 					message: goal + time,
-					buttons: ['OK']
+					buttons: [
+						    	{
+							        text: 'OK'
+						      	},
+						      	{
+							        text: 'Delete',
+							        handler: () => {
+							          this.db.deleteCalendarEvent(event, this.auth.userid).then( () => this.goToCalendarPage());
+							        }
+						      	}
+						    ]
 			});
 			alert.present();
 		});
