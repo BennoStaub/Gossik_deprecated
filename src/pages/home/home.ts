@@ -276,7 +276,7 @@ export class HomePage {
 	    });
 	}
 
-	addAction(goal) {
+	addAction(goal, capture) {
 		let modal = this.modalCtrl.create(DefineActionModalPage);
 		modal.present();
 		modal.onDidDismiss(data => {
@@ -292,7 +292,6 @@ export class HomePage {
 				if(!action.time) {
 					action.time = 0
 				}
-				let capture : Capture = {key: '', userid: '', content: ''};
 				if(action.deadline) {
 					let deadlineTime = new Date (action.deadline).setHours(2);
 					let eventData: CalendarEvent = {
@@ -314,7 +313,7 @@ export class HomePage {
 		});
 	}
 
-	addDelegation(goal) {
+	addDelegation(goal, capture) {
 		let modal = this.modalCtrl.create(DefineDelegationModalPage);
 		modal.present();
 		modal.onDidDismiss(data => {
@@ -322,7 +321,6 @@ export class HomePage {
 				let delegation: Delegation = data;
 				delegation.userid = this.auth.userid;
 				delegation.goalid = goal.key;
-				let capture : Capture = {key: '', userid: '', content: ''};
 				if(delegation.deadline) {
 					let deadlineTime = new Date (delegation.deadline).setHours(2);
 					let eventData: CalendarEvent = {
@@ -344,7 +342,7 @@ export class HomePage {
 		});
 	}
 
-	addReference(goal) {
+	addReference(goal, capture) {
 	    let modal = this.modalCtrl.create(DefineReferenceModalPage);
 		modal.present();
 		modal.onDidDismiss(data => {
@@ -352,7 +350,6 @@ export class HomePage {
 				let reference: Reference = data;
 				reference.userid = this.auth.userid;
 				reference.goalid = goal.key;
-				let capture : Capture = {key: '', userid: '', content: ''};
 				this.db.addReference(reference, capture, this.auth.userid);
 			}
 		});
