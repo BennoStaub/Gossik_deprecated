@@ -16,6 +16,7 @@ import { CalendarEventModalPage } from '../calendar-event-modal/calendar-event-m
 import { ActionDetailsModalPage } from '../action-details-modal/action-details-modal';
 import { DelegationDetailsModalPage } from '../delegation-details-modal/delegation-details-modal';
 import { MaterialDetailsModalPage } from '../material-details-modal/material-details-modal';
+import { DefineActionModalPage } from '../define-action-modal/define-action-modal';
 
 import 'rxjs/add/operator/take';
 import * as moment from 'moment';
@@ -279,6 +280,32 @@ export class HomePage {
 	    });
 	}
 
+	adddAction(goal) {
+		let modal = this.modalCtrl.create(DefineActionModalPage);
+		modal.present();
+		modal.onDidDismiss(data => {
+			if(data) {
+				let action: Action = data;
+				action.userid = this.auth.userid;
+				action.taken = false;
+				action.goalid = goal.key;
+				this.db.addAction(action, this.capture, this.auth.userid);
+				if(action.deadline) {
+					let deadlineTime = new Date (action.deadline).setHours(2);
+					let eventData: CalendarEvent = {
+						userid: this.auth.userid,
+						goalid: goal.key,
+						startTime: new Date(action.deadline).toISOString(),
+						endTime: new Date (deadlineTime).toISOString(),
+						title: 'Deadline: ' + action.content,
+						allDay: true
+					}
+		            this.db.addCalendarEvent(eventData, this.auth.userid)
+		        }
+			}
+		});
+	}
+
 	addAction() {
 	    this.errorMsg = "";
 	    this.newAction.content = this.defineActionForm.value.content;
@@ -304,7 +331,7 @@ export class HomePage {
 	                allDay: true
 	              }
 	              this.db.addCalendarEvent(eventData, this.auth.userid)
-	              this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+	              this.db.addAction(this.newAction, this.capture, this.auth.userid).then( () => {
 	              this.navCtrl.setRoot(HomePage);
 	              });
 	            } else {
@@ -312,7 +339,7 @@ export class HomePage {
 	            }
 	          } else {
 	            this.errorMsg = "";
-	            this.db.addNextActionToGoal(this.newAction, this.assignedGoal, this.capture, this.auth.userid).then( () => {
+	            this.db.addAction(this.newAction, this.capture, this.auth.userid).then( () => {
 	            this.navCtrl.setRoot(HomePage);
 	            });
 	          }

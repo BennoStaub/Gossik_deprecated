@@ -1,0 +1,9 @@
+page-define-action-modal {
+	.scroll-content {
+		scrollbar-width: none;
+	}
+
+	ion-content {
+		background-color: map-get($colors, secondary) !important;
+	}
+}

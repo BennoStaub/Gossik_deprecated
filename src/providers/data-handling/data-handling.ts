@@ -85,7 +85,7 @@ export class DataHandlingProvider {
         return this.db.object<Goal>('/users/' + userid + '/goals/' + goalid);
     }
 
-    addNextActionToGoal(action: Action, goal: Goal, capture: Capture, userid) {
+    addAction(action: Action, capture: Capture, userid) {
         return this.db.list('users/' + userid + '/nextActions').push(action).then( () => this.deleteCapture(capture, userid));
     }
 
