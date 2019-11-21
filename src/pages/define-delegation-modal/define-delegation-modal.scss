@@ -1,3 +1,9 @@
 page-define-delegation-modal {
+	.scroll-content {
+		scrollbar-width: none;
+	}
 
+	ion-content {
+		background-color: map-get($colors, secondary) !important;
+	}
 }
