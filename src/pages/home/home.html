@@ -259,9 +259,9 @@
       <div class="height-100" *ngIf="pageCtrl == ''">
         <ion-grid class="height-100">
           <ion-row>
-            <ion-col size="1" class="primary">
+            <ion-col size="1" class="primary flex">
               <form class="flex" (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
-                  <ion-label class="primary display-inline-block">{{"Time available in minutes" | translate }}:</ion-label>
+                  <ion-label class="min-width-175px primary display-inline-block">{{"Time available in minutes" | translate }}:</ion-label>
                   <ion-input type="number" min="0" formControlName="timeEstimate"></ion-input>
               </form>
             </ion-col>
