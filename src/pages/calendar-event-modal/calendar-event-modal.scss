@@ -1,6 +1,14 @@
 page-calendar-event-modal {
 
-	ion-content {
+	.scroll-content {
 		scrollbar-width: none;
+	}
+
+	ion-content {
+		background-color: map-get($colors, secondary) !important;
+	}
+
+	.text-align-center {
+		text-align: center;
 	}
 }

@@ -5,12 +5,12 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>{{"Event Details" | translate }}</ion-title>
+    <ion-title>{{"Create Event" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
  
 <ion-content>
-  <ion-list>
+  <ion-list class="text-align-center">
     <ion-item>
       <ion-input type="text" placeholder="{{'Title' | translate }}" [(ngModel)]="event.title"></ion-input>
     </ion-item>
@@ -31,9 +31,9 @@
       <ion-label>{{"End" | translate }}</ion-label>
       <ion-datetime displayFormat="DD.MMM YYYY - HH:mm" pickerFormat="DD MMM YYYY - HH:mm" max="2100" [(ngModel)]="eventEndTimeISOString"></ion-datetime>
     </ion-item>
-  </ion-list>
- 
-  <button class="darkbutton" ion-button full icon-left (click)="save()">
+    <button class="darkbutton margin-auto" ion-button round icon-left (click)="save()">
     {{"Add Event" | translate }}
   </button>
+  </ion-list>
+ 
 </ion-content>
