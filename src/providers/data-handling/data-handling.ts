@@ -93,7 +93,7 @@ export class DataHandlingProvider {
         return this.db.list('users/' + userid + '/delegations').push(delegation).then( () => this.deleteCapture(capture, userid));
     }
 
-    addReferenceToGoal(reference: Reference, goal: Goal, capture: Capture, userid){
+    addReference(reference: Reference, capture: Capture, userid){
         return this.db.list('/users/' + userid + '/references').push(reference).then( () => this.deleteCapture(capture, userid));
     }
 

@@ -18,6 +18,7 @@ import { DelegationDetailsModalPage } from '../delegation-details-modal/delegati
 import { MaterialDetailsModalPage } from '../material-details-modal/material-details-modal';
 import { DefineActionModalPage } from '../define-action-modal/define-action-modal';
 import { DefineDelegationModalPage } from '../define-delegation-modal/define-delegation-modal';
+import { DefineReferenceModalPage } from '../define-reference-modal/define-reference-modal';
 
 import 'rxjs/add/operator/take';
 import * as moment from 'moment';
@@ -340,26 +341,23 @@ export class HomePage {
 		});
 	}
 
-	goToDefineMaterial(goal) {
-		this.assignedGoal = goal
-	    this.pageCtrl = 'defineReference';
-	    this.defineReferenceForm = this.fb.group({
-				content: ['', Validators.required]
-	    });
-	}
-
-	addReference() {
-	    this.newReference.content = this.defineReferenceForm.value.content;
-	    this.newReference.goalid = this.assignedGoal.key;
-	    this.newReference.userid = this.auth.userid;
-	    if(this.newReference.content !== '' && this.newReference.content !== null && this.newReference.content !== undefined) {
-	      this.errorMsg = "";
-	      this.db.addReferenceToGoal(this.newReference, this.assignedGoal, this.capture, this.auth.userid).then( () => {
-	      this.navCtrl.setRoot(HomePage);
-	      });
-	    } else {
-	      this.errorMsg = "Please define what you want to save as reference.";
-	    }
+	addReference(goal) {
+	    let modal = this.modalCtrl.create(DefineReferenceModalPage);
+		modal.present();
+		modal.onDidDismiss(data => {
+			if(data && data.content) {
+				let reference: Reference = data;
+				reference.userid = this.auth.userid;
+				reference.goalid = goal.key;
+				this.db.addReference(reference, this.capture, this.auth.userid);
+			} else {
+				let alert = this.alertCtrl.create({
+					title: 'No reference defined!',
+					buttons: ['OK']
+				});
+				alert.present();
+			}
+		});
 	}
 
 	// ProcessTakenActionPage function

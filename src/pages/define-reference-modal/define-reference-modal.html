@@ -1,0 +1,30 @@
+<!--
+  Generated template for the DefineReferenceModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+  	<ion-buttons start>
+      <button ion-button icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{"Defining new reference:" | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list inset>
+		<form (ngSubmit)="addReference()" [formGroup]="defineReferenceForm">
+			<ion-item no-lines>
+				<ion-input type="text" formControlName="content"></ion-input>
+			</ion-item>
+			<button class="darkbutton" ion-button full type="submit">{{"Define reference" | translate }}</button>
+		</form>
+	</ion-list>
+</ion-content>

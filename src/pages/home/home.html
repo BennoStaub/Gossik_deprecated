@@ -74,25 +74,13 @@
               
               <button class="darkbutton button-left" ion-button round (click)="addAction(goal)">{{"Action" | translate }}</button>
               <button class="darkbutton button-left" ion-button round (click)="addDelegation(goal)">{{"Delegation" | translate }}</button>
-              <button class="darkbutton button-left" ion-button round (click)="goToDefineMaterial(goal)">{{"Reference" | translate }}</button>
+              <button class="darkbutton button-left" ion-button round (click)="addReference(goal)">{{"Reference" | translate }}</button>
                 </ion-row>
               </ion-grid>
             </ion-card>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </div>
-
-    <div *ngIf="pageCtrl == 'defineReference'">
-      {{"Defining new reference:" | translate }}
-      <ion-list inset>
-        <form (ngSubmit)="addReference()" [formGroup]="defineReferenceForm">
-          <ion-item no-lines>
-            <ion-input type="text" value="{{capture.content}}" formControlName="content"></ion-input>
-          </ion-item>
-          <button class="darkbutton" ion-button full type="submit">{{"Define reference" | translate }}</button>
-        </form>
-      </ion-list>
     </div>
   </div>
 
