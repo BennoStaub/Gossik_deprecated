@@ -55,7 +55,12 @@ export class DataHandlingProvider {
     }
 
     deleteDelegation(delegation: Delegation, userid) {
-        return this.db.list('/users/' + userid + '/delegations').remove(delegation.key);
+        return this.db.list('/users/' + userid + '/delegations').remove(delegation.key).then( () =>
+            {
+                if(delegation.deadline) {
+                    this.deleteCalendarEvent(delegation.deadlineid, userid);
+                }
+            });
     }
     
     deleteReference(reference: Reference, userid) {

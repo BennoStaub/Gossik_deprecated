@@ -306,7 +306,7 @@ export class HomePage {
 		            this.db.addCalendarEvent(eventData, this.auth.userid).then( event => {
 		            	action.deadlineid = event.key;
 		            	this.db.addAction(action, capture, this.auth.userid);
-		            })
+		            });
 		        } else {
 					this.db.addAction(action, capture, this.auth.userid);
 				}
@@ -323,7 +323,6 @@ export class HomePage {
 				delegation.userid = this.auth.userid;
 				delegation.goalid = goal.key;
 				let capture : Capture = {key: '', userid: '', content: ''};
-				this.db.addDelegation(delegation, capture, this.auth.userid);
 				if(delegation.deadline) {
 					let deadlineTime = new Date (delegation.deadline).setHours(2);
 					let eventData: CalendarEvent = {
@@ -334,8 +333,13 @@ export class HomePage {
 						title: 'Deadline Delegation: ' + delegation.content,
 						allDay: true
 					}
-		            this.db.addCalendarEvent(eventData, this.auth.userid)
-		        }
+					this.db.addCalendarEvent(eventData, this.auth.userid).then( event => {
+		            	delegation.deadlineid = event.key;
+		            	this.db.addDelegation(delegation, capture, this.auth.userid);
+		            });
+				} else {
+					this.db.addDelegation(delegation, capture, this.auth.userid);
+				}
 			}
 		});
 	}
