@@ -11,10 +11,22 @@
 
 
 <ion-content padding>
-	<ion-item>
-		<p>{{this.delegation.content}}</p>
-		<br>
-		<p *ngIf="deadline">{{"Deadline" | translate }}: {{this.delegation.deadline}}</p>
-	</ion-item>
-	<button class="button-left darkbutton" ion-button round (click)="deleteDelegation(delegation)">{{"Delete" | translate }}</button>
+        <ion-list inset class="text-align-center">
+          <ion-item no-lines>
+            <ion-label>{{"Deadline required?" | translate }}</ion-label>
+            <ion-checkbox [(ngModel)]="deadline"></ion-checkbox>
+          </ion-item>
+          <form (ngSubmit)="saveDelegation()" [formGroup]="defineDelegationForm">
+            <ion-item no-lines>
+              <ion-input type="text" [(ngModel)]="delegation.content" formControlName="content"></ion-input>
+            </ion-item>
+            <div *ngIf="deadline">
+              <ion-item no-lines>
+                <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" [(ngModel)]="delegation.deadline" [doneText]="translate.instant('Done')" [cancelText]="translate.instant('Cancel')"></ion-datetime>
+              </ion-item>
+            </div>
+            <button class="darkbutton" ion-button round type="submit">{{"Edit" | translate }}</button>
+          </form>
+          <button class="button-left darkbutton" ion-button round (click)="deleteDelegation(delegation)">{{"Delete" | translate }}</button>
+        </ion-list>
 </ion-content>

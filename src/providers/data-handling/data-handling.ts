@@ -45,6 +45,7 @@ export class DataHandlingProvider {
         return this.db.list('/users/' + userid + '/nextActions').remove(action.key).then( () =>
             {
                 if(action.deadline) {
+                    console.log('event found');
                     this.deleteCalendarEvent(action.deadlineid, userid);
                 }
             });

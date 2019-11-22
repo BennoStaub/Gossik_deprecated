@@ -56,8 +56,8 @@ export class ActionDetailsModalPage {
   }
 
   deleteAction(action: Action) {
-    	this.db.deleteAction(action, this.auth.userid);
-    	this.viewCtrl.dismiss();
+    this.db.deleteAction(action, this.auth.userid);
+    this.viewCtrl.dismiss();
   }
 
   saveAction() {

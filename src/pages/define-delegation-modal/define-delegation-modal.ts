@@ -36,8 +36,8 @@ export class DefineDelegationModalPage {
       this.capture = {} as Capture;
     }
     this.defineDelegationForm = this.fb.group({
-		content: ['', Validators.required],
-		deadline: ['', Validators.required]
+		  content: ['', Validators.required],
+		  deadline: ['', Validators.required]
     });
   }
 
