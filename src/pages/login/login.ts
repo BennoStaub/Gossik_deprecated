@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IonicPage, NavController } from 'ionic-angular';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,7 +28,8 @@ export class LoginPage {
 		private auth: AuthentificationProvider,
 		private db: DataHandlingProvider,
     	fb: FormBuilder,
-    	public translate: TranslateService
+    	public translate: TranslateService,
+		private afDatabase: AngularFireDatabase
 	) {
 		this.pageCtrl = '';
 		this.loginForm = fb.group({
@@ -56,7 +58,10 @@ export class LoginPage {
 		};
 		this.auth.signInWithEmail(credentials)
 			.then(
-				() => this.navCtrl.setRoot(HomePage),
+				() => {
+					this.afDatabase.database.goOnline();
+					this.navCtrl.setRoot(HomePage);
+				},
 				error => this.loginError = error.message
 			);
   	} 
