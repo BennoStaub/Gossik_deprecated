@@ -473,9 +473,23 @@ export class HomePage {
   	}
 
   	deleteGoal(goal: Goal) {
-	    this.db.deleteGoal(goal.key, this.auth.userid).then( () => {
-	      this.pageCtrl = '';
-	    });
+  		this.translate.get(["Are you sure you want to delete this goal?", "No", "Delete"]).subscribe( alertMessage => {
+  		let alert = this.alertCtrl.create({
+			message: alertMessage["Are you sure you want to delete this goal?"],
+			buttons: [
+				    	{
+					        text: alertMessage["No"]
+				      	},
+				      	{
+					        text: alertMessage["Delete"],
+					        handler: () => {
+					          	this.db.deleteGoal(goal.key, this.auth.userid).then( () => this.goToProjectsPage());
+					        }
+				      	}
+				    ]
+		});
+		alert.present();
+  		});
   	}
 
   	// ToDoPage functions
