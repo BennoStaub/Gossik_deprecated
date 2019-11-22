@@ -176,7 +176,8 @@
                     (onTimeSelected)="onTimeSelected($event)"
                     step="5"
                     class="calendar"
-                    autoSelect="false">
+                    autoSelect="false"
+                    scrollToHour="8">
                   </calendar>
                 </ion-col>
               </ion-row>
@@ -345,7 +346,8 @@
                   step="5"
                   class="calendar"
                   autoSelect="false"
-                  [weekviewNormalEventTemplate]="template">
+                  [weekviewNormalEventTemplate]="template"
+                  scrollToHour="8">
         </calendar>
       </div>
 
