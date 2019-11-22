@@ -14,6 +14,9 @@
       <button class="header-icon" (click)="goToCapturePage()">
         <img src="../../assets/icon/icon_captures.png" height="20"> {{"Captures" | translate }}
       </button>
+      <button class="header-icon" (click)="goToSettingsPage()">
+        <!--<img src="../../assets/icon/icon_captures.png" height="20">--> {{"Settings" | translate }}
+      </button>
     </div>
   </div>
 </ion-header>
@@ -21,6 +24,12 @@
   <ion-content padding>
 
   <span class="font-white">{{errorMsg | translate}}</span>
+
+  <!-- SettingsPage -->
+  <div class="secondary border-radius-20px height-100" *ngIf="viewpoint == 'SettingsPage'">
+    <button class="darkbutton width-auto" round ion-button (click)="logout()">{{"Logout" | translate}}</button>
+  </div>
+
 
   <!-- CapturePage -->
   <div class="primary" *ngIf="viewpoint == 'CapturePage'">

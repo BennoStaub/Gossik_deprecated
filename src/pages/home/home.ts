@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController, Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 import { Capture } from '../../model/capture/capture.model';
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
@@ -102,7 +103,8 @@ export class HomePage {
 		public navParams: NavParams,
 		private modalCtrl: ModalController,
 		private alertCtrl: AlertController,
-		public translate: TranslateService
+		public translate: TranslateService,
+		private afDatabase: AngularFireDatabase
 	) {
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
@@ -350,6 +352,17 @@ export class HomePage {
 		this.viewpoint = 'CalendarPage';
 		this.errorMsg = '';
   	}
+
+  	goToSettingsPage() {
+  		this.errorMsg = '';
+  		this.viewpoint = 'SettingsPage';
+  	}
+
+  	// SettingsPage functions
+  	logout() {
+  		this.afDatabase.database.goOffline();
+    	this.auth.signOut().then( () => this.navCtrl.setRoot(LoginPage));
+    }
 
   	// ProcessCapturePage functions
   	addGoal(goalname) {
