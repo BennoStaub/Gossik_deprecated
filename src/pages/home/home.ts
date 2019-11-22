@@ -579,7 +579,7 @@ export class HomePage {
 	}
 
   	reviewReference(reference: Reference) {
-		let modal = this.modalCtrl.create(MaterialDetailsModalPage, {material: reference});
+		let modal = this.modalCtrl.create(MaterialDetailsModalPage, {reference: reference});
 		modal.present();
   	}
 

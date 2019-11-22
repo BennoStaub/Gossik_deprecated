@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { DataHandlingProvider } from '../../providers/data-handling/data-handling';
 import { AuthentificationProvider } from '../../providers/authentification/authentification';
 
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Reference } from '../../model/reference/reference.model';
@@ -15,7 +16,8 @@ import { Reference } from '../../model/reference/reference.model';
 })
 export class MaterialDetailsModalPage {
 
-	material = {} as Reference;
+	reference = {} as Reference;
+  defineReferenceForm: FormGroup
 
   constructor(
 	  	public navCtrl: NavController,
@@ -23,18 +25,28 @@ export class MaterialDetailsModalPage {
 	  	private navParams: NavParams,
 	  	private db: DataHandlingProvider,
 	  	public viewCtrl: ViewController,
-	  	public translate: TranslateService
+	  	public translate: TranslateService,
+      public fb: FormBuilder
   	) {
-    this.material = this.navParams.get('material');
+    this.reference = this.navParams.get('reference');
+    this.defineReferenceForm = this.fb.group({
+      content: ['', Validators.required]
+      });
   }
  
   cancel() {
     this.viewCtrl.dismiss();
   }
 
-  deleteMaterial(material: Reference) {
-    	this.db.deleteReference(material, this.auth.userid);
+  deleteReference(reference: Reference) {
+    	this.db.deleteReference(reference, this.auth.userid);
     	this.viewCtrl.dismiss();
+  }
+
+  saveReference() {
+    this.reference.content = this.defineReferenceForm.value.content;
+    this.db.editReference(this.reference, this.auth.userid);
+    this.viewCtrl.dismiss();
   }
 
 }

@@ -64,7 +64,7 @@ export class ActionDetailsModalPage {
     this.action.content = this.defineActionForm.value.content;
     this.action.priority = this.defineActionForm.value.priority;
     this.action.deadline = this.defineActionForm.value.deadline;
-    this.action.time = this.defineActionForm.value.time
+    this.action.time = this.defineActionForm.value.time;
     this.db.editAction(this.action, this.auth.userid);
     this.viewCtrl.dismiss();
   }

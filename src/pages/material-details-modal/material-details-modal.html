@@ -11,8 +11,13 @@
 
 
 <ion-content padding>
-	<ion-item>
-		<p>{{this.material.content}}</p>
-	</ion-item>
-	<button class="button-left darkbutton" ion-button round (click)="deleteMaterial(material)">{{"Delete" | translate }}</button>
+  <ion-list inset class="text-align-center">
+    <form (ngSubmit)="saveReference()" [formGroup]="defineReferenceForm">
+      <ion-item no-lines>
+        <ion-input type="text" [(ngModel)]="reference.content" formControlName="content"></ion-input>
+      </ion-item>
+      <button class="darkbutton" ion-button round type="submit">{{"Edit" | translate }}</button>
+    </form>
+    <button class="button-left darkbutton" ion-button round (click)="deleteReference(reference)">{{"Delete" | translate }}</button>
+  </ion-list>
 </ion-content>
