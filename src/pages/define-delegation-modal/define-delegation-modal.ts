@@ -30,8 +30,12 @@ export class DefineDelegationModalPage {
   	public translate: TranslateService,
   	public fb: FormBuilder
   	) {
-    this.capture = this.navParams.get('capture');
-  	this.defineDelegationForm = this.fb.group({
+    if(this.navParams.get('capture')) {
+      this.capture = this.navParams.get('capture');
+    } else {
+      this.capture = {} as Capture;
+    }
+    this.defineDelegationForm = this.fb.group({
 		content: ['', Validators.required],
 		deadline: ['', Validators.required]
     });

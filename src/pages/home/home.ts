@@ -402,6 +402,9 @@ export class HomePage {
 				if(!action.time) {
 					action.time = 0
 				}
+				if(!capture) {
+					capture = {} as Capture;
+				}
 				if(action.deadline) {
 					let deadlineTime = new Date (action.deadline).setHours(2);
 					let eventData: CalendarEvent = {
@@ -431,6 +434,9 @@ export class HomePage {
 				let delegation: Delegation = data;
 				delegation.userid = this.auth.userid;
 				delegation.goalid = goal.key;
+				if(!capture) {
+					capture = {} as Capture;
+				}
 				if(delegation.deadline) {
 					let deadlineTime = new Date (delegation.deadline).setHours(2);
 					let eventData: CalendarEvent = {
@@ -460,6 +466,9 @@ export class HomePage {
 				let reference: Reference = data;
 				reference.userid = this.auth.userid;
 				reference.goalid = goal.key;
+				if(!capture) {
+					capture = {} as Capture;
+				}
 				this.db.addReference(reference, capture, this.auth.userid);
 			}
 		});

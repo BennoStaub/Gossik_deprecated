@@ -20,7 +20,7 @@
 
 <ion-content padding>
         <ion-list inset class="text-align-center">
-        	<ion-item no-lines class="text-align-center">
+        	<ion-item no-lines class="text-align-center" *ngIf="capture.content">
 		      "{{capture.content}}"
 		    </ion-item>
           <ion-item no-lines>

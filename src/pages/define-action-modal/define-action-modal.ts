@@ -33,7 +33,7 @@ export class DefineActionModalPage {
     if(this.navParams.get('capture')) {
       this.capture = this.navParams.get('capture');
     } else {
-      this.capture = {content: ''};
+      this.capture = {} as Capture;
     }
   	this.defineActionForm = this.fb.group({
 		content: ['', Validators.required],

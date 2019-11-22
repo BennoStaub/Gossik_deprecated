@@ -30,7 +30,11 @@ export class DefineReferenceModalPage {
   	public translate: TranslateService,
   	public fb: FormBuilder
   	) {
-      this.capture = this.navParams.get('capture');
+      if(this.navParams.get('capture')) {
+        this.capture = this.navParams.get('capture');
+      } else {
+        this.capture = {} as Capture;
+      }
   		this.defineReferenceForm = this.fb.group({
 			content: ['', Validators.required]
 	    });
