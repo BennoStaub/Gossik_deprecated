@@ -92,6 +92,7 @@ export class HomePage {
 	goals: number;
 	takenActionListNotEmpty: boolean;
 	captureListNotEmpty: boolean;
+	language: string;
 	projectColors: string[] = ['#F38787', '#F0D385', '#C784E4', '#B7ED7B', '#8793E8', '#87E8E5', '#B9BB86', '#EAA170']
  
   constructor(
@@ -303,6 +304,7 @@ export class HomePage {
   	}
 
   	goToCalendarPage() {
+  		//this.language = this.translate.getBrowserLang();
   		this.goalArray = [];
   		this.goalList = this.db.getGoalList(this.auth.userid)
 		  .snapshotChanges()
