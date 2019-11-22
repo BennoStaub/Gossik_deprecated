@@ -41,8 +41,6 @@ export class MyApp {
       this.menu = menu;
       let language = this.translate.getBrowserLang();
       translate.setDefaultLang(language);
-      console.log('language');
-      console.log(language);
       statusBar.styleDefault();
       splashScreen.hide();
       this.auth.afAuth.authState

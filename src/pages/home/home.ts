@@ -142,6 +142,7 @@ export class HomePage {
 
   	goToCapturePage() {
   		this.viewpoint = 'CapturePage';
+  		this.errorMsg = '';
   	}
 
   	goToProcessCapturePage(capture: Capture) {
@@ -159,12 +160,14 @@ export class HomePage {
     	});
   		this.viewpoint = 'ProcessCapturePage';
   		this.pageCtrl = '';
+  		this.errorMsg = '';
   	}
 
   	goToProcessTakenActionPage(takenAction: Action) {
   		this.viewpoint = 'ProcessTakenActionPage';
   		this.pageCtrl = '';
   		this.takenAction = takenAction;
+  		this.errorMsg = '';
   	}
 
   	goToProjectsPage() {
@@ -199,6 +202,7 @@ export class HomePage {
 	    });
   		this.viewpoint = 'ProjectsPage';
   		this.pageCtrl = '';
+  		this.errorMsg = '';
   	}
 
   	goToToDoPage() {
@@ -225,6 +229,7 @@ export class HomePage {
     	this.viewpoint = 'ToDoPage';
     	this.pageCtrl = '';
     	this.errorMsg = '';
+    	this.doableActionArray = [];
   	}
 
   	goToCalendarPage() {
@@ -252,6 +257,7 @@ export class HomePage {
 				});
 			});
 		this.viewpoint = 'CalendarPage';
+		this.errorMsg = '';
   	}
 
   	// ProcessCapturePage functions
@@ -466,83 +472,6 @@ export class HomePage {
     	this.db.deleteReference(reference, this.auth.userid);
   	}
 
-  	goToEditAction(action: Action) {
-	    this.action = action;
-	    this.pageCtrl = 'editAction';
-	    this.editActionForm = this.fb.group({
-				content: ['', Validators.required],
-	      priority: ['', Validators.required],
-	      deadline: [this.action.deadline, Validators.required],
-	      time: ['', Validators.required]
-	    });
-  	}
-
-  	goToEditDelegation(delegation: Delegation) {
-	    this.delegation = delegation;
-	    this.pageCtrl = 'editDelegation';
-	    this.editDelegationForm = this.fb.group({
-				content: ['', Validators.required],
-	      deadline: [this.delegation.deadline, Validators.required]
-	    });
-	}
-
-  	goToEditReference(reference: Reference) {
-	    this.reference = reference;
-	    this.pageCtrl = 'editReference';
-	    this.editReferenceForm = this.fb.group({
-				content: ['', Validators.required]
-	    });
-  	}
-
-
-  	editAction() {
-	    if(this.editActionForm.value.content !== '' && this.editActionForm.value.content !== null && this.editActionForm.value.content !== undefined) {
-	      if(this.editActionForm.value.priority != 0 && this.editActionForm.value.priority !== null && this.editActionForm.value.priority !== undefined) {
-	        if(this.editActionForm.value.time != 0 && this.editActionForm.value.time !== null && this.editActionForm.value.time !== undefined) {
-	          this.errorMsg = "";
-	          this.action.content = this.editActionForm.value.content;
-	          this.action.deadline = this.editActionForm.value.deadline;
-	          this.action.priority = this.editActionForm.value.priority;
-	          this.action.time = this.editActionForm.value.time;
-	          this.db.editAction(this.action, this.auth.userid).then( () => {
-	          this.pageCtrl = 'reviewGoal';
-	          });
-	        } else {
-	          this.errorMsg = "Please define a valid time estimate for this action";
-	        }
-	      } else {
-	        this.errorMsg = "Please define a priority.";
-	      }
-	    } else {
-	      this.errorMsg = "Please define an action.";
-	    }
-  	}
-
-  	editDelegation() {
-	    if(this.editDelegationForm.value.content !== '' && this.editDelegationForm.value.content !== null && this.editDelegationForm.value.content !== undefined) {
-	      this.errorMsg = "";
-	      this.delegation.content = this.editDelegationForm.value.content;
-	      this.delegation.deadline = this.editDelegationForm.value.deadline;
-	      this.db.editDelegation(this.delegation, this.auth.userid).then( () => {
-	      this.pageCtrl = 'reviewGoal';
-	      });
-	    } else {
-	      this.errorMsg = "Please define what you are waiting for.";
-	    }
-  	}
-
-  	editReference() {
-	    if(this.editReferenceForm.value.content !== '' && this.editReferenceForm.value.content !== null && this.editReferenceForm.value.content !== undefined) {
-	      this.errorMsg = "";
-	      this.reference.content = this.editReferenceForm.value.content;
-	      this.db.editReference(this.reference, this.auth.userid).then( () => {
-	      this.pageCtrl = 'reviewGoal';
-	      });
-	    } else {
-	      this.errorMsg = "Please define a valid reference.";
-	    }
-  	}
-
   	deleteGoal(goal: Goal) {
 	    this.db.deleteGoal(goal.key, this.auth.userid).then( () => {
 	      this.pageCtrl = '';
@@ -568,7 +497,7 @@ export class HomePage {
   		}
   		this.doableActionArray = [];
   		this.doableHighPriorityActions = [];
-	    this.doableActionList = this.db.getNextActionListFromUser(this.auth.userid)
+	    this.actionList = this.db.getNextActionListFromUser(this.auth.userid)
 		  .snapshotChanges()
 		  .map(
 		  changes => {
@@ -576,25 +505,29 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
-	    this.doableActionList.take(1).subscribe(
-	      doableActionArray => {
-	        for(let doableAction of doableActionArray) {
-	        	console.log('goal');
-	        	console.log(this.goal);
-	          if(Number(doableAction.time) <= Number(this.giveTimeForm.value.timeEstimate) && !doableAction.taken && ((doableAction.goalid == this.goal.key) || this.goal.key == 'None')) {
-	            this.doableActionArray.push(doableAction);
+	    this.actionList.take(1).subscribe(
+	      actionArray => {
+	        for(let action of actionArray) {
+	          if(Number(action.time) <= Number(this.giveTimeForm.value.timeEstimate) && !action.taken && ((action.goalid == this.goal.key) || this.goal.key == 'None')) {
+	            this.doableActionArray.push(action);
 	          }
-	        };
+	        }
+	        if(this.doableActionArray.length == 0) {
+	        	this.errorMsg = "There is no doable action for that time.";
+	        } else {
+	        	this.errorMsg = '';
+	        }
 	      }
 	    );
   	}
 
   	takeThisAction(action: Action) {
 	    action.taken = true;
-	    this.db.editAction(action, this.auth.userid).then( () => {
-	      this.errorMsg = 'Great, have fun while taking Action! Visit the Captures to process this action when you finished it.';
-	    });
-	    this.showDoableActions();
+	    this.db.editAction(action, this.auth.userid);
+	    console.log(this.doableActionArray.indexOf(action));
+	    this.doableActionArray.splice(this.doableActionArray.indexOf(action), 1);
+	    console.log(this.doableActionArray);
+	    this.errorMsg = "Great, have fun while taking Action! Visit the Captures to process this action when you finished it.";
   	}
 
   	// CalendarPage functions

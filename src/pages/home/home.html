@@ -20,10 +20,11 @@
  
   <ion-content padding>
 
+  <span class="font-white">{{errorMsg | translate}}</span>
+
   <!-- CapturePage -->
   <div class="primary" *ngIf="viewpoint == 'CapturePage'">
     <ion-row class="width-40 margin-auto height-20">
-      <p>{{errorMsg | translate}}</p>
       <ion-card class="text-align-center height-40 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
         <ion-input class="height-50" type="text" [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-input>
         <button class="darkbutton width-auto" round ion-button (click)="addCapture(newCapture)">{{"Add" | translate}}</button>
@@ -41,7 +42,6 @@
 
   <!-- ProcessCapturePage -->
   <div *ngIf="viewpoint=='ProcessCapturePage'">
-    <p>{{errorMsg}}</p>
     <div *ngIf="pageCtrl == ''">
       <ion-grid>
         <ion-row class="width-100">
@@ -138,7 +138,6 @@
       </ion-card>
     </div>
 
-    <p>{{errorMsg}}</p>
 
     <div class="height-100" *ngIf="pageCtrl == 'ProjectOverview'">
       <ion-grid class="height-100">
@@ -300,7 +299,6 @@
           </ion-row>
           <ion-row class="height-100">
             <ion-col>
-            <p class="primary">{{errorMsg}}</p>
             <div class="content-container height-100">
               <ion-item no-lines *ngFor="let action of doableActionArray" (click)="takeThisAction(action)">
                 <div [innerHtml]="action.content"></div>
