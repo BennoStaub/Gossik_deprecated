@@ -100,7 +100,7 @@
   </div>
 
   <!-- ProcessTakenActionPage -->
-  <div *ngIf="viewpoint=='ProcessTakenActionPage'">
+  <div *ngIf="viewpoint=='ProcessTakenActionPage'" class="primary">
     <div *ngIf="pageCtrl == ''">
       {{"Please indicate whether you finished the action or want to abort it." | translate }}<br>
       <div class="buttons-flex-container">
@@ -114,7 +114,7 @@
     </div>
 
     <div *ngIf="pageCtrl == 'actionFinished'">
-      {{"Congrats! Is your project now accomplished or does it need more action?" | translate }}
+      {{"Congrats! Is your project now accomplished and can be deleted?" | translate }}
       <div class="buttons-flex-container">
         <button class="darkbutton button-left" ion-button round (click)="goalFinished()">{{"Accomplished" | translate }}</button>
         <button class="darkbutton button-right" ion-button round (click)="goalNotFinished()">{{"Not yet" | translate }}</button>

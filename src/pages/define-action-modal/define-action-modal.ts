@@ -30,7 +30,11 @@ export class DefineActionModalPage {
   	public translate: TranslateService,
   	public fb: FormBuilder
   	) {
-    this.capture = this.navParams.get('capture');
+    if(this.navParams.get('capture')) {
+      this.capture = this.navParams.get('capture');
+    } else {
+      this.capture = {content: ''};
+    }
   	this.defineActionForm = this.fb.group({
 		content: ['', Validators.required],
 		priority: ['', Validators.required],

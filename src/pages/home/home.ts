@@ -477,9 +477,23 @@ export class HomePage {
 	}
 
 	goalFinished() {
-		this.db.deleteGoal(this.takenAction.goalid, this.auth.userid).then( () => {
-			this.pageCtrl = 'goalFinished';
-		});
+		this.nextActionList = this.db.getNextActionListFromGoal(this.takenAction.goalid, this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+		this.nextActionList.take(1).subscribe( nextActionArray => {
+			if(nextActionArray.length == 1) {
+				this.db.deleteGoal(this.takenAction.goalid, this.auth.userid).then( () => {
+					this.pageCtrl = 'goalFinished';
+				});
+			} else {
+				this.db.deleteAction(this.takenAction, this.auth.userid).then(() => this.goToCapturePage());
+			}
+		})
 	}
 
 	goalNotFinished() {
