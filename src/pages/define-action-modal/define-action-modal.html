@@ -20,6 +20,9 @@
 
 <ion-content padding>
   <ion-list inset class="text-align-center">
+    <ion-item no-lines class="text-align-center">
+      "{{capture.content}}"
+    </ion-item>
     <ion-item no-lines>
       <ion-label>{{"Deadline required?" | translate }}</ion-label>
       <ion-checkbox [(ngModel)]="checkDeadline"></ion-checkbox>

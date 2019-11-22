@@ -20,6 +20,9 @@
 
 <ion-content padding>
 	<ion-list inset class="text-align-center">
+		<ion-item no-lines class="text-align-center">
+	      "{{capture.content}}"
+	    </ion-item>
 		<form (ngSubmit)="addReference()" [formGroup]="defineReferenceForm">
 			<ion-item no-lines>
 				<ion-input type="text" placeholder="{{'Reference' | translate }}" formControlName="content"></ion-input>

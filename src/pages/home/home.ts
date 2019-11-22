@@ -387,7 +387,7 @@ export class HomePage {
 	}
 
 	addAction(goal, capture) {
-		let modal = this.modalCtrl.create(DefineActionModalPage);
+		let modal = this.modalCtrl.create(DefineActionModalPage, {capture: capture});
 		modal.present();
 		modal.onDidDismiss(data => {
 			if(data != 'cancel' && data.content) {
@@ -424,7 +424,7 @@ export class HomePage {
 	}
 
 	addDelegation(goal, capture) {
-		let modal = this.modalCtrl.create(DefineDelegationModalPage);
+		let modal = this.modalCtrl.create(DefineDelegationModalPage, {capture: capture});
 		modal.present();
 		modal.onDidDismiss(data => {
 			if(data != 'cancel' && data.content) {
@@ -453,7 +453,7 @@ export class HomePage {
 	}
 
 	addReference(goal, capture) {
-	    let modal = this.modalCtrl.create(DefineReferenceModalPage);
+	    let modal = this.modalCtrl.create(DefineReferenceModalPage, {capture: capture});
 		modal.present();
 		modal.onDidDismiss(data => {
 			if(data != 'cancel' && data.content) {

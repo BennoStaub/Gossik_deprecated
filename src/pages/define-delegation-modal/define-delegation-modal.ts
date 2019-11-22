@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { TranslateService } from '@ngx-translate/core';
+import { Capture } from '../../model/capture/capture.model';
 
 /**
  * Generated class for the DefineDelegationModalPage page.
@@ -20,6 +21,7 @@ export class DefineDelegationModalPage {
 
 	deadline: boolean;
 	defineDelegationForm: FormGroup;
+  capture = {} as Capture;
 
   constructor(
   	public navCtrl: NavController,
@@ -28,6 +30,7 @@ export class DefineDelegationModalPage {
   	public translate: TranslateService,
   	public fb: FormBuilder
   	) {
+    this.capture = this.navParams.get('capture');
   	this.defineDelegationForm = this.fb.group({
 		content: ['', Validators.required],
 		deadline: ['', Validators.required]
