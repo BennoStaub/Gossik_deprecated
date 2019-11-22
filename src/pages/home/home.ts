@@ -301,6 +301,21 @@ export class HomePage {
   	}
 
   	goToCalendarPage() {
+  		this.goalArray = [];
+  		this.goalList = this.db.getGoalList(this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+	    this.goalList.take(1).subscribe(
+	      goalArray => {
+	        for(let goal of goalArray) {
+	        	this.goalArray.push(goal);
+	        }
+	    });
   		this.eventSource = [];
   		this.calendarEventList = this.db.getCalendarEventListFromUser(this.auth.userid)
 			.snapshotChanges()
@@ -314,7 +329,15 @@ export class HomePage {
 		      	calendarEventArray => {
 		      	this.eventSource = [];
 		        for(let calendarEvent of calendarEventArray) {
-		        	calendarEvent.startTime = new Date(calendarEvent.startTime);
+				    console.log(typeof this.goalArray)
+		        	console.log(calendarEvent.goalid);
+		        	let goal = this.goalArray.find(goal => goal.key == calendarEvent.goalid);
+		        	if(goal) {
+				    	calendarEvent.color = goal.color;
+					} else {
+						calendarEvent.color = "#C0C0C0";
+					}
+					calendarEvent.startTime = new Date(calendarEvent.startTime);
 		        	calendarEvent.endTime = new Date(calendarEvent.endTime);
 		        	this.eventSource.push(calendarEvent);
 		        };
@@ -614,17 +637,40 @@ export class HomePage {
 
   	// CalendarPage functions
   	addEvent(){
+  		this.goalArray = [];
+  		this.goalList = this.db.getGoalList(this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+	    this.goalList.take(1).subscribe(
+	      goalArray => {
+	        for(let goal of goalArray) {
+	        	this.goalArray.push(goal);
+	        }
+	    });
   		this.selectedDay = new Date();
 		let modal = this.modalCtrl.create(CalendarEventModalPage, {selectedDay: this.selectedDay});
 		modal.present();
 		modal.onDidDismiss(data => {
 			if(data) {
-				if(!data.goalid) {
-					data.goalid = '';
-				}
 				let eventData: CalendarEvent = data;
 				eventData.userid = this.auth.userid;
 				eventData.allDay = false;
+				if(!data.goalid) {
+					eventData.color = "#C0C0C0";
+					eventData.goalid = '';
+				} else {
+				    let goal = this.goalArray.find(goal => goal.key == data.goalid);
+				    if(goal) {
+				    	eventData.color = goal.color;
+					} else {
+						eventData.color = "#C0C0C0";
+					}
+				}
 				this.db.addCalendarEvent(eventData, this.auth.userid)
 				eventData.startTime = new Date(eventData.startTime);
 		        eventData.endTime = new Date(eventData.endTime);
@@ -634,7 +680,6 @@ export class HomePage {
 				setTimeout(() => {
 					this.eventSource = events;
 				});
-				
 			}
 		});
 	}
@@ -676,30 +721,52 @@ export class HomePage {
 	}
 
 	onTimeSelected(event) {
-			if(event.events == undefined || event.events.length == 0) {
-			this.selectedDay = new Date(event.selectedTime);
-			let modal = this.modalCtrl.create(CalendarEventModalPage, {selectedDay: this.selectedDay});
-			modal.present();
-			modal.onDidDismiss(data => {
-				if(data) {
-					if(!data.goalid) {
-						data.goalid = '';
+		this.goalArray = [];
+  		this.goalList = this.db.getGoalList(this.auth.userid)
+		  .snapshotChanges()
+		  .map(
+		  changes => {
+			return changes.map(c => ({
+			  key: c.payload.key, ...c.payload.val()
+			}))
+	    });
+	    this.goalList.take(1).subscribe(
+	      goalArray => {
+	        for(let goal of goalArray) {
+	        	this.goalArray.push(goal);
+	        }
+	    });
+		if(event.events == undefined || event.events.length == 0) {
+		this.selectedDay = new Date(event.selectedTime);
+		let modal = this.modalCtrl.create(CalendarEventModalPage, {selectedDay: this.selectedDay});
+		modal.present();
+		modal.onDidDismiss(data => {
+			if(data){
+				let eventData: CalendarEvent = data;
+				eventData.userid = this.auth.userid;
+				eventData.allDay = false;
+				if(!data.goalid) {
+					eventData.color = "#C0C0C0";
+					eventData.goalid = '';
+				} else {
+				    let goal = this.goalArray.find(goal => goal.key == data.goalid);
+				    if(goal) {
+				    	eventData.color = goal.color;
+					} else {
+						eventData.color = "#C0C0C0";
 					}
-					let eventData: CalendarEvent = data;
-					eventData.userid = this.auth.userid;
-					eventData.allDay = false;
-					this.db.addCalendarEvent(eventData, this.auth.userid)
-					eventData.startTime = new Date(eventData.startTime);
-			        eventData.endTime = new Date(eventData.endTime);
-					let events = this.eventSource;
-					events.push(eventData);
-					this.eventSource = [];
-					setTimeout(() => {
-						this.eventSource = events;
-					});
-					
 				}
-			});
+				this.db.addCalendarEvent(eventData, this.auth.userid)
+				eventData.startTime = new Date(eventData.startTime);
+		        eventData.endTime = new Date(eventData.endTime);
+				let events = this.eventSource;
+				events.push(eventData);
+				this.eventSource = [];
+				setTimeout(() => {
+					this.eventSource = events;
+				});
+			}
+		});
 		}
 	}
  

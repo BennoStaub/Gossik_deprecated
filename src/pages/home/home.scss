@@ -85,6 +85,10 @@ page-home {
     	color: map-get($colors, white) !important;
     }
 
+    .calendar-event-inner {
+    	height: 100%;
+    }
+
     .secondary {
     	background-color: map-get($colors, secondary);
     	color: #000000 !important;

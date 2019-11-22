@@ -332,6 +332,10 @@
         </ion-col>
       </ion-row>
       <div class="padding-bottom-50 height-90">
+
+        <ng-template #template let-displayEvent="displayEvent">
+          <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+        </ng-template>
         <calendar [eventSource]="eventSource"
                   [calendarMode]="calendar.mode"
                   [currentDate]="calendar.currentDate"
@@ -340,7 +344,8 @@
                   (onTimeSelected)="onTimeSelected($event)"
                   step="5"
                   class="calendar"
-                  autoSelect="false">
+                  autoSelect="false"
+                  [weekviewNormalEventTemplate]="template">
         </calendar>
       </div>
 
