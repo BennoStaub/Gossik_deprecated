@@ -357,7 +357,9 @@
                   class="calendar"
                   autoSelect="false"
                   [weekviewNormalEventTemplate]="template"
-                  scrollToHour="8">
+                  scrollToHour="8"
+                  [locale]="translate.currentLang"
+                  formatHourColumn="{{'ha' | translate }}">
         </calendar>
       </div>
 

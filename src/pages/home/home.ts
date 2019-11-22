@@ -107,6 +107,7 @@ export class HomePage {
 		public translate: TranslateService,
 		private afDatabase: AngularFireDatabase
 	) {
+  		console.log(this.translate.currentLang);
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
 		}
@@ -145,11 +146,9 @@ export class HomePage {
 		}))
 		});
 		this.takenActionListCheckEmpty.subscribe(data => {
-  			console.log(data);
   			this.takenActionListNotEmpty = (data.length > 0);
   		});
   		this.captureListCheckEmpty.subscribe(data => {
-  			console.log(data);
   			this.captureListNotEmpty = (data.length > 0);
   		});
   	}
@@ -207,11 +206,9 @@ export class HomePage {
 		}))
 		});
 		this.takenActionListCheckEmpty.subscribe(data => {
-  			console.log(data);
   			this.takenActionListNotEmpty = (data.length > 0);
   		});
   		this.captureListCheckEmpty.subscribe(data => {
-  			console.log(data);
   			this.captureListNotEmpty = (data.length > 0);
   		});
   	}
@@ -333,8 +330,6 @@ export class HomePage {
 		      	calendarEventArray => {
 		      	this.eventSource = [];
 		        for(let calendarEvent of calendarEventArray) {
-				    console.log(typeof this.goalArray)
-		        	console.log(calendarEvent.goalid);
 		        	let goal = this.goalArray.find(goal => goal.key == calendarEvent.goalid);
 		        	if(goal) {
 				    	calendarEvent.color = goal.color;
@@ -397,7 +392,6 @@ export class HomePage {
 				action.userid = this.auth.userid;
 				action.taken = false;
 				action.goalid = goal.key;
-				console.log(action);
 				if(!action.priority) {
 					action.priority = 0
 				}
@@ -667,9 +661,7 @@ export class HomePage {
   	takeThisAction(action: Action) {
 	    action.taken = true;
 	    this.db.editAction(action, this.auth.userid);
-	    console.log(this.doableActionArray.indexOf(action));
 	    this.doableActionArray.splice(this.doableActionArray.indexOf(action), 1);
-	    console.log(this.doableActionArray);
 	    this.errorMsg = "Great, have fun while taking Action! Visit the Captures to process this action when you finished it.";
   	}
 
@@ -744,7 +736,6 @@ export class HomePage {
 						      	{
 							        text: 'Delete',
 							        handler: () => {
-							        	console.log(event);
 							          	this.db.deleteCalendarEvent(event.key, this.auth.userid).then( () => this.goToCalendarPage());
 							        }
 						      	}

@@ -40,7 +40,11 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.menu = menu;
       let language = this.translate.getBrowserLang();
-      translate.setDefaultLang(language);
+      console.log('languages');
+      console.log(this.translate.getLangs());
+      this.translate.setDefaultLang(language);
+      this.translate.use(language);
+      console.log(this.translate.currentLang);
       statusBar.styleDefault();
       splashScreen.hide();
       this.auth.afAuth.authState

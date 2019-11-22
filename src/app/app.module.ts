@@ -41,6 +41,12 @@ export function setTranslateLoader(http: HttpClient) {
  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeDe, 'de');
+
 
 @NgModule({
   declarations: [
