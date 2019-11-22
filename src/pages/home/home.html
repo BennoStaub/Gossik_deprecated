@@ -30,13 +30,17 @@
         <button class="darkbutton width-auto" round ion-button (click)="addCapture(newCapture)">{{"Add" | translate}}</button>
       </ion-card>
     </ion-row>
-    <div class="secondary border-radius-20px padding-bottom-10">
+    <div *ngIf="takenActionListNotEmpty || captureListNotEmpty" class="secondary border-radius-20px padding-bottom-10">
+      <div *ngIf="takenActionListNotEmpty">
       <h3 class="padding-left-20">{{"Taken actions ready for processing" | translate}}:</h3>
       <p class="border-bottom-1 padding-left-20 padding-top-10" *ngFor="let takenAction of takenActionList | async" (click)="goToProcessTakenActionPage(takenAction)">{{"You started with action" |translate}} "{{takenAction.content}}" {{", click here to process" | translate }}
       </p>
+    </div>
+    <div *ngIf="captureListNotEmpty">
     <h3 class="padding-left-20">{{"Thoughts captured and ready for processing" | translate}}:</h3>
       <p class="border-bottom-1 padding-left-20" *ngFor="let capture of captureList | async" (click)="goToProcessCapturePage(capture)">{{capture.content}}
       </p>
+    </div>
     </div>
   </div>
 

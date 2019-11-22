@@ -34,6 +34,8 @@ export class HomePage {
   	viewpoint: string;
 	captureList: Observable<Capture[]>;
 	takenActionList: Observable<Action[]>;
+	captureListCheckEmpty: Observable<Capture[]>;
+	takenActionListCheckEmpty: Observable<Action[]>;
 	newCapture = {} as Capture;
 	errorMsg: string;
 	isApp: boolean;
@@ -87,6 +89,8 @@ export class HomePage {
 	};
 	actions = {};
 	goals: number;
+	takenActionListNotEmpty: boolean;
+	captureListNotEmpty: boolean;
 	projectColors: string[] = ['#F38787', '#F0D385', '#C784E4', '#B7ED7B', '#8793E8', '#87E8E5', '#B9BB86', '#EAA170']
  
   constructor(
@@ -121,6 +125,30 @@ export class HomePage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
 		});
+		this.captureListCheckEmpty = this.db.getCaptureListFromUser(this.auth.userid)
+		.snapshotChanges()
+		.map(
+		changes => {
+		return changes.map(c => ({
+		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
+		}))
+		});
+		this.takenActionListCheckEmpty = this.db.getTakenActionListFromUser(this.auth.userid)
+		.snapshotChanges()
+		.map(
+		changes => {
+		return changes.map(c => ({
+		  key: c.payload.key, ...c.payload.val()
+		}))
+		});
+		this.takenActionListCheckEmpty.subscribe(data => {
+  			console.log(data);
+  			this.takenActionListNotEmpty = (data.length > 0);
+  		});
+  		this.captureListCheckEmpty.subscribe(data => {
+  			console.log(data);
+  			this.captureListNotEmpty = (data.length > 0);
+  		});
   	}
 
   	//HomePage functions
@@ -141,8 +169,48 @@ export class HomePage {
   	}
 
   	goToCapturePage() {
+  		this.captureList = this.db.getCaptureListFromUser(this.auth.userid)
+		.snapshotChanges()
+		.map(
+		changes => {
+		return changes.map(c => ({
+		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
+		}))
+		});
+		this.takenActionList = this.db.getTakenActionListFromUser(this.auth.userid)
+		.snapshotChanges()
+		.map(
+		changes => {
+		return changes.map(c => ({
+		  key: c.payload.key, ...c.payload.val()
+		}))
+		});
   		this.viewpoint = 'CapturePage';
   		this.errorMsg = '';
+  		this.captureListCheckEmpty = this.db.getCaptureListFromUser(this.auth.userid)
+		.snapshotChanges()
+		.map(
+		changes => {
+		return changes.map(c => ({
+		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
+		}))
+		});
+		this.takenActionListCheckEmpty = this.db.getTakenActionListFromUser(this.auth.userid)
+		.snapshotChanges()
+		.map(
+		changes => {
+		return changes.map(c => ({
+		  key: c.payload.key, ...c.payload.val()
+		}))
+		});
+		this.takenActionListCheckEmpty.subscribe(data => {
+  			console.log(data);
+  			this.takenActionListNotEmpty = (data.length > 0);
+  		});
+  		this.captureListCheckEmpty.subscribe(data => {
+  			console.log(data);
+  			this.captureListNotEmpty = (data.length > 0);
+  		});
   	}
 
   	goToProcessCapturePage(capture: Capture) {
