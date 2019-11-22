@@ -24,12 +24,12 @@
  
     <ion-item>
       <ion-label>{{"Start" | translate }}</ion-label>
-      <ion-datetime displayFormat="DD.MMM YYYY - HH:mm" pickerFormat="DD MMM YYYY - HH:mm" max="2100" [(ngModel)]="eventStartTimeISOString"></ion-datetime>
+      <ion-datetime displayFormat="DD.MMM YYYY - HH:mm" pickerFormat="DD MMM YYYY - HH:mm" max="2100" [(ngModel)]="eventStartTimeISOString" [doneText]="translate.instant('Done')" [cancelText]="translate.instant('Cancel')"></ion-datetime>
     </ion-item>
  
     <ion-item>
       <ion-label>{{"End" | translate }}</ion-label>
-      <ion-datetime displayFormat="DD.MMM YYYY - HH:mm" pickerFormat="DD MMM YYYY - HH:mm" max="2100" [(ngModel)]="eventEndTimeISOString"></ion-datetime>
+      <ion-datetime displayFormat="DD.MMM YYYY - HH:mm" pickerFormat="DD MMM YYYY - HH:mm" max="2100" [(ngModel)]="eventEndTimeISOString" [doneText]="translate.instant('Done')" [cancelText]="translate.instant('Cancel')"></ion-datetime>
     </ion-item>
     <button class="darkbutton margin-auto" ion-button round icon-left (click)="save()">
     {{"Add Event" | translate }}
