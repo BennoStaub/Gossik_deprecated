@@ -21,6 +21,10 @@ page-home {
     	margin-top: 50px;
     }
 
+    .font-size-1rem {
+    	font-size: 1rem !important;
+    }
+
     .header-icons-div {
     	height: 22px;
     	background-color: map-get($colors, primary);
