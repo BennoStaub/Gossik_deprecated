@@ -9,11 +9,12 @@
         </ion-header>
         <ion-content>
           <ion-list>
-            <button ion-item (click)="goToHomePage()">Homepage</button>
-            <button ion-item (click)="goToReviewGoalPage()">Review goals</button>
-            <button ion-item (click)="goToTakeActionPage()">Take action</button>
+            <ion-nav [root]="HomePage" [rootParams]="calendar"><button ion-item>Calendar</button></ion-nav>
+            <button ion-item (click)="goToCapturePage()">Captures</button>
             <button ion-item (click)="goToCalendarPage()">Calendar</button>
-            <button ion-item (click)="logout()">Logout</button>
+            <button ion-item (click)="goToToDoPage()">ToDo</button>
+            <button ion-item (click)="goToProjectsPage()">Projects</button>
+            <button ion-item (click)="goToSettingsPage()">Settings</button>
           </ion-list>
         </ion-content>
 </ion-menu>

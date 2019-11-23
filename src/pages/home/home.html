@@ -1,7 +1,14 @@
 <ion-header>
-  <div class="header-container">
-    <img class="header-logo" src="../../assets/imgs/logo_schriftzug_weiss.png" height="60">
-    <div class="header-icons-div" *ngIf="!isApp">
+    <div *ngIf="isApp">
+      <ion-buttons start>
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+    </div>
+    <div class="header-container" *ngIf="!isApp">
+      <img class="header-logo" src="../../assets/imgs/logo_schriftzug_weiss.png" height="60">
+    <div class="header-icons-div">
       <button class="header-icon" (click)="goToCalendarPage()">
         <img src="../../assets/icon/icon_calendar.png" height="20"> {{"Calendar" | translate }}
       </button>
@@ -33,7 +40,13 @@
 
   <!-- CapturePage -->
   <div class="primary" *ngIf="viewpoint == 'CapturePage'">
-    <ion-row class="width-40 margin-auto height-20">
+    <ion-row class="margin-auto height-20" *ngIf="isApp">
+      <ion-card class="text-align-center height-40 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
+        <ion-input class="height-50" type="text" [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-input>
+        <button class="darkbutton width-auto" round ion-button (click)="addCapture(newCapture)">{{"Add" | translate}}</button>
+      </ion-card>
+    </ion-row>
+    <ion-row class="width-40 margin-auto height-20" *ngIf="!isApp">
       <ion-card class="text-align-center height-40 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
         <ion-input class="height-50" type="text" [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-input>
         <button class="darkbutton width-auto" round ion-button (click)="addCapture(newCapture)">{{"Add" | translate}}</button>

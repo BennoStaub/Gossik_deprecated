@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController} from 'ionic-angular';
+import { Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -34,7 +34,8 @@ export class MyApp {
               splashScreen: SplashScreen,
               private auth: AuthentificationProvider,
               menu: MenuController,
-              public translate: TranslateService) {
+              public translate: TranslateService
+              ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -64,27 +65,29 @@ export class MyApp {
   }
 
 
-  logout() {
-    this.menu.close();
-    this.auth.signOut();
-    this.nav.setRoot(LoginPage);
-    }
-
-  goToReviewGoalPage() {
-    this.menu.close();
-  }
-
-  goToTakeActionPage() {
+  goToCapturePage() {
+    this.nav.setRoot(HomePage, {page: 'capture'});
     this.menu.close();
   }
 
   goToCalendarPage() {
+    this.nav.setRoot(HomePage, {page: 'calendar'});
     this.menu.close();
   }
 
-  goToHomePage() {
+  goToToDoPage() {
+    this.nav.setRoot(HomePage, {page: 'todo'});
     this.menu.close();
-    this.nav.setRoot(HomePage);
+  }
+
+  goToProjectsPage() {
+    this.nav.setRoot(HomePage, {page: 'projects'});
+    this.menu.close();
+  }
+
+  goToSettingsPage() {
+    this.nav.setRoot(HomePage, {page: 'settings'});
+    this.menu.close();
   }
   
 }

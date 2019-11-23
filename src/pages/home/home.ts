@@ -112,45 +112,20 @@ export class HomePage {
 			this.navCtrl.setRoot(LoginPage);
 		}
 		this.isApp = !this.platform.is('core');
-		this.viewpoint = 'CapturePage';
-		this.captureList = this.db.getCaptureListFromUser(this.auth.userid)
-		.snapshotChanges()
-		.map(
-		changes => {
-		return changes.map(c => ({
-		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
-		}))
-		});
-		this.takenActionList = this.db.getTakenActionListFromUser(this.auth.userid)
-		.snapshotChanges()
-		.map(
-		changes => {
-		return changes.map(c => ({
-		  key: c.payload.key, ...c.payload.val()
-		}))
-		});
-		this.captureListCheckEmpty = this.db.getCaptureListFromUser(this.auth.userid)
-		.snapshotChanges()
-		.map(
-		changes => {
-		return changes.map(c => ({
-		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
-		}))
-		});
-		this.takenActionListCheckEmpty = this.db.getTakenActionListFromUser(this.auth.userid)
-		.snapshotChanges()
-		.map(
-		changes => {
-		return changes.map(c => ({
-		  key: c.payload.key, ...c.payload.val()
-		}))
-		});
-		this.takenActionListCheckEmpty.subscribe(data => {
-  			this.takenActionListNotEmpty = (data.length > 0);
-  		});
-  		this.captureListCheckEmpty.subscribe(data => {
-  			this.captureListNotEmpty = (data.length > 0);
-  		});
+		console.log(this.navParams.get('rootParams'));
+		if(this.navParams.get('page') == 'capture') {
+			this.goToCapturePage();
+		} else if(this.navParams.get('page') == 'calendar') {
+			this.goToCalendarPage();
+		} else if(this.navParams.get('page') == 'todo') {
+			this.goToToDoPage();
+		} else if(this.navParams.get('page') == 'projects') {
+			this.goToProjectsPage();
+		} else if(this.navParams.get('page') == 'settings') {
+			this.goToSettingsPage();
+		} else {
+			this.goToCapturePage();
+		}
   	}
 
   	//HomePage functions
