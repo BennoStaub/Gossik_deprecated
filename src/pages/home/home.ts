@@ -665,8 +665,6 @@ export class HomePage {
   		if(!this.giveTimeForm.value.timeEstimate) {
   			this.giveTimeForm.value.timeEstimate = 10000000;
   		}
-  		this.doableActionArray = [];
-  		this.doableHighPriorityActions = [];
 	    this.actionList = this.db.getNextActionListFromUser(this.auth.userid)
 		  .snapshotChanges()
 		  .map(
@@ -677,6 +675,7 @@ export class HomePage {
 	    });
 	    this.actionList.subscribe(
 	      actionArray => {
+	      	this.doableActionArray = [];
 	        for(let action of actionArray) {
 	        	if(action.active != false) {
 					if(Number(action.time) <= Number(this.giveTimeForm.value.timeEstimate) && !action.taken && ((action.goalid == this.goal.key) || this.goal.key == 'None')) {
