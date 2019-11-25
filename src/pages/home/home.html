@@ -227,16 +227,22 @@
                     <ion-item class="height-50 secondary border-radius-20px"><h1>{{"Team" | translate }}</h1></ion-item>
                   </ion-col>
                   <ion-col col-8>
+                    <ng-template #template let-displayEvent="displayEvent">
+                      <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+                    </ng-template>
                     <calendar [eventSource]="eventSource"
-                      [calendarMode]="calendar.mode"
-                      [currentDate]="calendar.currentDate"
-                      (onEventSelected)="onEventSelected($event)"
-                      (onTitleChanged)="onViewTitleChanged($event)"
-                      (onTimeSelected)="onTimeSelected($event)"
-                      step="5"
-                      class="calendar"
-                      autoSelect="false"
-                      scrollToHour="8">
+                              [calendarMode]="calendar.mode"
+                              [currentDate]="calendar.currentDate"
+                              (onEventSelected)="onEventSelected($event)"
+                              (onTitleChanged)="onViewTitleChanged($event)"
+                              (onTimeSelected)="onTimeSelected($event)"
+                              step="5"
+                              class="calendar"
+                              autoSelect="false"
+                              [weekviewNormalEventTemplate]="template"
+                              scrollToHour="8"
+                              [locale]="translate.currentLang"
+                              formatHourColumn="{{'ha' | translate }}">
                     </calendar>
                   </ion-col>
                 </ion-row>
