@@ -42,13 +42,17 @@
   <div class="primary" *ngIf="viewpoint == 'CapturePage'">
     <ion-row class="margin-auto height-20" *ngIf="isApp">
       <ion-card class="text-align-center height-40 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
-        <ion-input class="height-50" type="text" [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-input>
+        <ion-item class="height-50 border-radius-20px">
+          <ion-input type="text" [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-input>
+        </ion-item>
         <button class="darkbutton width-auto" round ion-button (click)="addCapture(newCapture)">{{"Add" | translate}}</button>
       </ion-card>
     </ion-row>
     <ion-row class="width-40 margin-auto height-20" *ngIf="!isApp">
       <ion-card class="text-align-center height-40 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-150px">
-        <ion-input class="height-50" type="text" [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-input>
+        <ion-item class="height-50 border-radius-20px">
+          <ion-input type="text" [(ngModel)]="newCapture.content" placeholder="{{'Input new capture'| translate}}"></ion-input>
+        </ion-item>
         <button class="darkbutton width-auto" round ion-button (click)="addCapture(newCapture)">{{"Add" | translate}}</button>
       </ion-card>
     </ion-row>
@@ -81,8 +85,9 @@
               <button ion-button round class="darkbutton display-block" (click)="deleteCapture(capture)">{{ "Delete" | translate }}</button>
               </ion-card>
               <ion-card class="text-align-center margin-top-10 overflow-scroll no-scrollbar width-100 margin-left-0 display-inline-block secondary border-radius-20px">
-                <ion-input type="text white" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
-
+                <ion-item class="border-radius-20px">
+                  <ion-input type="text" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+                </ion-item>
                 <button ion-button round class="darkbutton margin-auto margin-bottom-10 margin-top-10" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
               </ion-card>
             </ion-col>
@@ -123,7 +128,9 @@
           <button ion-button round class="darkbutton display-block" (click)="deleteCapture(capture)">{{ "Delete" | translate }}</button>
         </ion-card>
         <ion-card class="margin-0 padding-10 margin-bottom-10 width-100 secondary border-radius-20px">
-          <ion-input type="text white" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+          <ion-item class="border-radius-20px">
+            <ion-input type="text" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+          </ion-item>
           <button ion-button round class="darkbutton margin-auto margin-bottom-10 margin-top-10" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
         </ion-card>
         <ion-card class="margin-0 padding-10 margin-bottom-10 width-100 secondary border-radius-20px" no-lines *ngFor="let goal of goalArray">
@@ -180,7 +187,9 @@
     <div *ngIf="!isApp" class="height-100">
       <div *ngIf="pageCtrl == ''">
         <ion-card class="width-18 height-150px overflow-y-hidden overflow-x-hidden text-align-center margin-10 display-inline-block secondary border-radius-20px">
-          <ion-input type="text white" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+          <ion-item class="border-radius-20px">
+            <ion-input type="text" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+          </ion-item>
 
           <button ion-button round class="darkbutton margin-auto margin-bottom-10 margin-top-10" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
         </ion-card>
@@ -302,7 +311,9 @@
     <div *ngIf="isApp" class="height-100">
       <div *ngIf="pageCtrl == ''">
         <ion-card class="height-150px overflow-y-hidden overflow-x-hidden text-align-center margin-10 display-inline-block secondary border-radius-20px">
-          <ion-input type="text white" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+          <ion-item class="border-radius-20px">
+            <ion-input type="text" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
+          </ion-item>
 
           <button ion-button round class="darkbutton margin-auto margin-bottom-10 margin-top-10" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
         </ion-card>
@@ -404,8 +415,10 @@
           <ion-row>
             <ion-col size="1" class="primary flex">
               <form class="flex" (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
+                <ion-item class="primary">
                   <ion-label class="min-width-175px primary display-inline-block">{{"Time available in minutes" | translate }}:</ion-label>
                   <ion-input type="number" min="0" formControlName="timeEstimate"></ion-input>
+                </ion-item>
               </form>
             </ion-col>
             <ion-col col-8>
