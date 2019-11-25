@@ -89,7 +89,7 @@
             <ion-col>
               
               
-              <ion-card class="max-width-400px overflow-x-hidden text-align-center padding-10 width-auto margin-top-0 height-20 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-100px" no-lines *ngFor="let goal of goalList | async">
+              <ion-card class="max-width-400px overflow-x-hidden text-align-center padding-10 width-auto margin-top-0 height-20 overflow-scroll no-scrollbar margin-right-10 display-inline-block secondary border-radius-20px min-height-100px" no-lines *ngFor="let goal of goalArray">
                 <ion-grid>
                   <ion-row>
                     <ion-col col-10>
@@ -126,7 +126,7 @@
           <ion-input type="text white" [(ngModel)]="goalname" placeholder="{{'Project name' | translate}}"></ion-input>
           <button ion-button round class="darkbutton margin-auto margin-bottom-10 margin-top-10" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
         </ion-card>
-        <ion-card class="margin-0 padding-10 margin-bottom-10 width-100 secondary border-radius-20px" no-lines *ngFor="let goal of goalList | async">
+        <ion-card class="margin-0 padding-10 margin-bottom-10 width-100 secondary border-radius-20px" no-lines *ngFor="let goal of goalArray">
           <ion-grid>
             <ion-row>
               <ion-col col-10>
@@ -184,7 +184,7 @@
 
           <button ion-button round class="darkbutton margin-auto margin-bottom-10 margin-top-10" (click)="addGoal(goalname)">{{"Create" | translate }}</button>
         </ion-card>
-        <ion-card class="width-18 height-150px overflow-y-hidden overflow-x-hidden text-align-center margin-10 display-inline-block secondary border-radius-20px" no-lines *ngFor="let goal of goalList | async" (click)="reviewGoal(goal)">
+        <ion-card class="width-18 height-150px overflow-y-hidden overflow-x-hidden text-align-center margin-10 display-inline-block secondary border-radius-20px" no-lines *ngFor="let goal of goalArray" (click)="reviewGoal(goal)">
           <ion-grid>
             <ion-row>
               <ion-col col-9>
@@ -258,7 +258,7 @@
                               <ion-icon name="add"></ion-icon>
                             </button>
                           </ion-buttons>
-                          <button class="block width-100 no-padding" *ngFor="let nextAction of nextActionList | async" (click)="reviewAction(nextAction)">
+                          <button class="block width-100 no-padding" *ngFor="let nextAction of actionArray" (click)="reviewAction(nextAction)">
                             <p class="border-top">{{nextAction.content}}</p>
                           </button>
                         </ion-col>
@@ -269,7 +269,7 @@
                               <ion-icon name="add"></ion-icon>
                             </button>
                           </ion-buttons>
-                          <button class="block width-100 no-padding" *ngFor="let delegation of delegationList | async" (click)="reviewDelegation(delegation)">
+                          <button class="block width-100 no-padding" *ngFor="let delegation of delegationArray" (click)="reviewDelegation(delegation)">
                             <p class="border-top">{{delegation.content}}</p>
                           </button>
                         </ion-col>
@@ -280,7 +280,7 @@
                               <ion-icon name="add"></ion-icon>
                             </button>
                           </ion-buttons>
-                          <button class="block width-100 no-padding" *ngFor="let reference of referenceList | async" (click)="reviewReference(reference)">
+                          <button class="block width-100 no-padding" *ngFor="let reference of referenceArray" (click)="reviewReference(reference)">
                             <p class="border-top">{{reference.content}}</p>
                           </button>
                         </ion-col>

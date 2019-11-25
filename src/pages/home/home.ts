@@ -76,8 +76,8 @@ export class HomePage {
   	doableActionList: Observable<Action[]>;
 	doableAction = {} as Action;
 	giveTimeForm: FormGroup;
-	doableActionArray: Action[] = [];
-	doableHighPriorityActions: Action[] = [];
+	doableActionArray: Action[];
+	doableHighPriorityActions: Action[];
 	goalFromAction = {} as Goal;
 	eventSource = [];
 	calendarEventList: Observable<CalendarEvent[]>;
@@ -93,8 +93,11 @@ export class HomePage {
 	takenActionListNotEmpty: boolean;
 	captureListNotEmpty: boolean;
 	language: string;
-	captureArray: Capture[] = [];
-	takenActionArray: Action[] = [];
+	captureArray: Capture[];
+	actionArray: Action[];
+	delegationArray: Delegation[];
+	referenceArray: Reference[];
+	takenActionArray: Action[];
 	projectColors: string[] = ['#F38787', '#F0D385', '#C784E4', '#B7ED7B', '#8793E8', '#87E8E5', '#B9BB86', '#EAA170']
  
   constructor(
@@ -195,6 +198,14 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
+		this.goalList.subscribe( goalArray => {
+			this.goalArray = [];
+			for(let goal of goalArray) {
+				if(goal.active != false) {
+					this.goalArray.push(goal);
+				}
+			}
+		})
 	  	this.newGoalForm = this.fb.group({
   			newGoal: ['', Validators.required]
     	});
@@ -224,20 +235,25 @@ export class HomePage {
 	    this.goalList.take(1).subscribe(
 	      goalArray => {
 	        for(let goal of goalArray) {
-	        	this.goalArray.push(goal);
-	        }
-	        for(let goal of this.goalArray) {
-		    	this.actionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
-				  .snapshotChanges()
-				  .map(
-				  changes => {
-					return changes.map(c => ({
-					  key: c.payload.key, ...c.payload.val()
-					}))
-			    });
-			    this.actionList.subscribe( actionList => {
-			      	this.actions[goal.key] = actionList;
-			    });
+	        	if(goal.active != false) {
+		        	this.goalArray.push(goal);
+			    	this.actionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
+					  .snapshotChanges()
+					  .map(
+					  changes => {
+						return changes.map(c => ({
+						  key: c.payload.key, ...c.payload.val()
+						}))
+				    });
+				    this.actionList.subscribe( actionArray => {
+				    	this.actions[goal.key] = [];
+				    	for(let action of actionArray) {
+				    		if(action.active != false) {
+				      			this.actions[goal.key].push(action);
+				      		}
+				      	}
+				    });
+				}
 			};
 	    });
   		this.viewpoint = 'ProjectsPage';
@@ -255,10 +271,12 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
-		this.goalList.take(1).subscribe(
+		this.goalList.subscribe(
 	      goalArray => {
 	        for(let goal of goalArray) {
-	        	this.goalArray.push(goal);
+	        	if(goal.active != false) {
+	        		this.goalArray.push(goal);
+	        	}
 	        }
 	    })
   		this.giveTimeForm = this.fb.group({
@@ -273,7 +291,6 @@ export class HomePage {
   	}
 
   	goToCalendarPage() {
-  		//this.language = this.translate.getBrowserLang();
   		this.goalArray = [];
   		this.goalList = this.db.getGoalList(this.auth.userid)
 		  .snapshotChanges()
@@ -283,10 +300,12 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
-	    this.goalList.take(1).subscribe(
+	    this.goalList.subscribe(
 	      goalArray => {
 	        for(let goal of goalArray) {
-	        	this.goalArray.push(goal);
+	        	if(goal.active != false) {
+	        		this.goalArray.push(goal);
+	        	}
 	        }
 	    });
   		this.eventSource = [];
@@ -295,13 +314,14 @@ export class HomePage {
 			.map(
 			changes => {
 			return changes.map(c => ({
-			  key: c.payload.key, userid: c.payload.val().userid, goalid: c.payload.val().goalid, startTime: c.payload.val().startTime, endTime: c.payload.val().endTime, title: c.payload.val().title, allDay: c.payload.val().allDay
+			  key: c.payload.key, ...c.payload.val()
 			}))
 			});
-			this.calendarEventList.take(1).subscribe(
-		      	calendarEventArray => {
-		      	this.eventSource = [];
-		        for(let calendarEvent of calendarEventArray) {
+		this.calendarEventList.subscribe(
+	      	calendarEventArray => {
+	      	this.eventSource = [];
+	        for(let calendarEvent of calendarEventArray) {
+	        	if(calendarEvent.active != false) {
 		        	let goal = this.goalArray.find(goal => goal.key == calendarEvent.goalid);
 		        	if(goal) {
 				    	calendarEvent.color = goal.color;
@@ -311,13 +331,14 @@ export class HomePage {
 					calendarEvent.startTime = new Date(calendarEvent.startTime);
 		        	calendarEvent.endTime = new Date(calendarEvent.endTime);
 		        	this.eventSource.push(calendarEvent);
-		        };
-		        let events = this.eventSource;
-				this.eventSource = [];
-				setTimeout(() => {
-					this.eventSource = events;
-				});
+		        }
+	        };
+	        let events = this.eventSource;
+			this.eventSource = [];
+			setTimeout(() => {
+				this.eventSource = events;
 			});
+		});
 		this.viewpoint = 'CalendarPage';
 		this.errorMsg = '';
   	}
@@ -340,6 +361,7 @@ export class HomePage {
 	        if(goalname !== '' && goalname !== null && goalname !== undefined) {
 				this.newGoal.userid = this.auth.userid;
 				this.newGoal.name = goalname;
+				this.newGoal.active = true;
 				let numberGoals = goalArray.length;
 				if(numberGoals < 8) {
 					this.newGoal.color = this.projectColors[numberGoals];
@@ -364,6 +386,7 @@ export class HomePage {
 				action.userid = this.auth.userid;
 				action.taken = false;
 				action.goalid = goal.key;
+				action.active = true;
 				if(!action.priority) {
 					action.priority = 0
 				}
@@ -381,7 +404,8 @@ export class HomePage {
 						startTime: new Date(action.deadline).toISOString(),
 						endTime: new Date (deadlineTime).toISOString(),
 						title: 'Deadline: ' + action.content,
-						allDay: true
+						allDay: true,
+						active: true
 					}
 		            this.db.addCalendarEvent(eventData, this.auth.userid).then( event => {
 		            	action.deadlineid = event.key;
@@ -402,6 +426,7 @@ export class HomePage {
 				let delegation: Delegation = data;
 				delegation.userid = this.auth.userid;
 				delegation.goalid = goal.key;
+				delegation.active = true;
 				if(!capture) {
 					capture = {} as Capture;
 				}
@@ -413,7 +438,8 @@ export class HomePage {
 						startTime: new Date(delegation.deadline).toISOString(),
 						endTime: new Date (deadlineTime).toISOString(),
 						title: 'Deadline Delegation: ' + delegation.content,
-						allDay: true
+						allDay: true,
+						active: true
 					}
 					this.db.addCalendarEvent(eventData, this.auth.userid).then( event => {
 		            	delegation.deadlineid = event.key;
@@ -434,6 +460,7 @@ export class HomePage {
 				let reference: Reference = data;
 				reference.userid = this.auth.userid;
 				reference.goalid = goal.key;
+				reference.active = true;
 				if(!capture) {
 					capture = {} as Capture;
 				}
@@ -478,6 +505,7 @@ export class HomePage {
 		let capture = {} as Capture;
 		capture.content = 'Action finished: ' + this.takenAction.content + '\n from goal: ' + data.name;
 		capture.userid = this.auth.userid;
+		capture.active = true
 		this.db.deleteAction(this.takenAction, this.auth.userid).then( () => {
 			this.db.addCapture(capture, this.auth.userid);
 			this.navCtrl.setRoot(HomePage);
@@ -493,25 +521,27 @@ export class HomePage {
 			.map(
 			changes => {
 			return changes.map(c => ({
-			  key: c.payload.key, userid: c.payload.val().userid, goalid: c.payload.val().goalid, startTime: c.payload.val().startTime, endTime: c.payload.val().endTime, title: c.payload.val().title, allDay: c.payload.val().allDay
+			  key: c.payload.key, ...c.payload.val()
 			}))
 			});
-			this.calendarEventList.take(1).subscribe(
-		      	calendarEventArray => {
-		      	this.eventSource = [];
-		        for(let calendarEvent of calendarEventArray) {
+		this.calendarEventList.subscribe(
+	      	calendarEventArray => {
+	      	this.eventSource = [];
+	        for(let calendarEvent of calendarEventArray) {
+	        	if(calendarEvent.active != false) {
 		        	if(calendarEvent.goalid == goal.key) {
 			        	calendarEvent.startTime = new Date(calendarEvent.startTime);
 			        	calendarEvent.endTime = new Date(calendarEvent.endTime);
 			        	this.eventSource.push(calendarEvent);
 			        }
-		        };
-		        let events = this.eventSource;
-				this.eventSource = [];
-				setTimeout(() => {
-					this.eventSource = events;
-				});
+			    }
+	        };
+	        let events = this.eventSource;
+			this.eventSource = [];
+			setTimeout(() => {
+				this.eventSource = events;
 			});
+		});
 	    this.pageCtrl = 'ProjectOverview';
 	    this.goal = goal;
 	    this.referenceList = this.db.getReferenceListFromGoal(goal.key, this.auth.userid)
@@ -522,6 +552,14 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
+		this.referenceList.subscribe( referenceArray => {
+			this.referenceArray = [];
+			for( let reference of referenceArray) {
+				if(reference.active != false) {
+					this.referenceArray.push(reference);
+				}
+			}
+		});
 	    this.nextActionList = this.db.getNextActionListFromGoal(goal.key, this.auth.userid)
 		  .snapshotChanges()
 		  .map(
@@ -530,6 +568,14 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
+		this.nextActionList.subscribe( actionArray => {
+			this.actionArray = [];
+			for( let action of actionArray) {
+				if(action.active != false) {
+					this.actionArray.push(action);
+				}
+			}
+		});
 	    this.delegationList = this.db.getDelegationListFromGoal(goal.key, this.auth.userid)
 		  .snapshotChanges()
 		  .map(
@@ -538,6 +584,14 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
+		this.delegationList.subscribe( delegationArray => {
+			this.delegationArray = [];
+			for( let delegation of delegationArray) {
+				if(delegation.active != false) {
+					this.delegationArray.push(delegation);
+				}
+			}
+		});
 	}
 
   	reviewAction(action: Action) {
@@ -614,12 +668,14 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
-	    this.actionList.take(1).subscribe(
+	    this.actionList.subscribe(
 	      actionArray => {
 	        for(let action of actionArray) {
-	          if(Number(action.time) <= Number(this.giveTimeForm.value.timeEstimate) && !action.taken && ((action.goalid == this.goal.key) || this.goal.key == 'None')) {
-	            this.doableActionArray.push(action);
-	          }
+	        	if(action.active != false) {
+					if(Number(action.time) <= Number(this.giveTimeForm.value.timeEstimate) && !action.taken && ((action.goalid == this.goal.key) || this.goal.key == 'None')) {
+					this.doableActionArray.push(action);
+					}
+				}
 	        }
 	        if(this.doableActionArray.length == 0) {
 	        	this.errorMsg = "There is no doable action for that time.";
@@ -651,7 +707,9 @@ export class HomePage {
 	    this.goalList.take(1).subscribe(
 	      goalArray => {
 	        for(let goal of goalArray) {
-	        	this.goalArray.push(goal);
+	        	if(goal.active != false) {
+	        		this.goalArray.push(goal);
+	        	}
 	        }
 	    });
   		this.selectedDay = new Date();
@@ -662,6 +720,7 @@ export class HomePage {
 				let eventData: CalendarEvent = data;
 				eventData.userid = this.auth.userid;
 				eventData.allDay = false;
+				eventData.active = true;
 				if(!data.goalid) {
 					eventData.color = "#C0C0C0";
 					eventData.goalid = '';
@@ -734,7 +793,9 @@ export class HomePage {
 	    this.goalList.take(1).subscribe(
 	      goalArray => {
 	        for(let goal of goalArray) {
-	        	this.goalArray.push(goal);
+	        	if(goal.active != false) {
+	        		this.goalArray.push(goal);
+	        	}
 	        }
 	    });
 		if(event.events == undefined || event.events.length == 0) {
@@ -746,6 +807,7 @@ export class HomePage {
 				let eventData: CalendarEvent = data;
 				eventData.userid = this.auth.userid;
 				eventData.allDay = false;
+				eventData.active = true;
 				if(!data.goalid) {
 					eventData.color = "#C0C0C0";
 					eventData.goalid = '';

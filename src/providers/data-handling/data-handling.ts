@@ -29,7 +29,8 @@ export class DataHandlingProvider {
     }
 	
 	deleteCapture(capture: Capture, userid) {
-        return this.db.list('/users/' + userid + '/captures').remove(capture.key);
+        capture.active = false;
+        return this.editCapture(capture, userid);
     }
 
     getCalendarEventListFromUser(userid) {
@@ -42,10 +43,10 @@ export class DataHandlingProvider {
     }
     
     deleteAction(action: Action, userid) {
-        return this.db.list('/users/' + userid + '/nextActions').remove(action.key).then( () =>
+        action.active = false;
+        return this.editAction(action, userid).then( () =>
             {
                 if(action.deadline) {
-                    console.log('event found');
                     this.deleteCalendarEvent(action.deadlineid, userid);
                 }
             });
@@ -56,7 +57,8 @@ export class DataHandlingProvider {
     }
 
     deleteDelegation(delegation: Delegation, userid) {
-        return this.db.list('/users/' + userid + '/delegations').remove(delegation.key).then( () =>
+        delegation.active = false;
+        return this.editDelegation(delegation, userid).then( () =>
             {
                 if(delegation.deadline) {
                     this.deleteCalendarEvent(delegation.deadlineid, userid);
@@ -65,7 +67,8 @@ export class DataHandlingProvider {
     }
     
     deleteReference(reference: Reference, userid) {
-        return this.db.list('/users/' + userid + '/references').remove(reference.key);
+        reference.active = false;
+        return this.editReference(reference, userid);
 	}
     
     getGoalList(userid) {
@@ -127,6 +130,12 @@ export class DataHandlingProvider {
         });
     }
 
+    editCapture(capture: Capture, userid) {
+        let capturekey = capture.key;
+        delete capture.key;
+        return this.db.database.ref('/users/' + userid + '/captures/' + capturekey).set(capture);
+    }
+
     editAction(action: Action, userid) {
         let actionkey = action.key;
         delete action.key;
@@ -143,6 +152,12 @@ export class DataHandlingProvider {
         let referencekey = reference.key;
         delete reference.key;
         return this.db.database.ref('/users/' + userid + '/references/' + referencekey).set(reference);
+    }
+
+    editCalendarEvent(calendarEvent: CalendarEvent, userid) {
+        let calendarEventkey = calendarEvent.key;
+        delete calendarEvent.key;
+        return this.db.database.ref('/users/' + userid + '/calendarEvents/' + calendarEventkey).set(calendarEvent);
     }
 
     deleteGoal(goalid, userid) {
