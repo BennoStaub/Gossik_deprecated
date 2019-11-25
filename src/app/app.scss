@@ -66,3 +66,13 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .alert-message {
     scrollbar-width: none !important;
   }
+
+.picker-md .picker-prefix, .picker-md .picker-suffix, .picker-md .picker-opt.picker-opt-selected {
+    font-weight: bold;
+    background-color: #DEDEDE;
+  }
+
+.picker-md .picker-wrapper, .picker-md .picker-toolbar {
+  background-color: #EBEBEE;
+}
+
