@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Push } from '@ionic-native/push';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -95,8 +94,7 @@ registerLocaleData(localeDe, 'de');
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AngularFireAuth,
     DataHandlingProvider,
-    AuthentificationProvider,
-    Push
+    AuthentificationProvider
   ]
 })
 export class AppModule {}
