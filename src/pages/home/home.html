@@ -386,6 +386,9 @@
           </button>
         </ion-card>
         <ion-card class="margin-0 height-100 padding-10 margin-bottom-10 width-100 secondary border-radius-20px">
+          <ng-template #template let-displayEvent="displayEvent">
+            <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+          </ng-template>
           <calendar [eventSource]="eventSource"
             [calendarMode]="calendar.mode"
             [currentDate]="calendar.currentDate"
@@ -395,6 +398,7 @@
             step="5"
             class="calendar"
             autoSelect="false"
+            [weekviewNormalEventTemplate]="template"
             scrollToHour="8"
             [locale]="translate.currentLang"
             formatHourColumn="{{'formatHourColumn' | translate }}"
@@ -462,11 +466,9 @@
         </ion-col>
       </ion-row>
       <div class="padding-bottom-50 height-90">
-
         <ng-template #template let-displayEvent="displayEvent">
           <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
         </ng-template>
-
         <calendar [eventSource]="eventSource"
                   [calendarMode]="calendar.mode"
                   [currentDate]="calendar.currentDate"
