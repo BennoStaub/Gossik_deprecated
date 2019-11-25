@@ -767,7 +767,8 @@ export class HomePage {
 						      	{
 							        text: 'Delete',
 							        handler: () => {
-							          	this.db.deleteCalendarEvent(event.key, this.auth.userid).then( () => this.goToCalendarPage());
+							          	this.db.deleteCalendarEvent(event.key, this.auth.userid)
+							          	this.goToCalendarPage();
 							        }
 						      	}
 						    ]

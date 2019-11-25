@@ -53,7 +53,11 @@ export class DataHandlingProvider {
     }
 
     deleteCalendarEvent(eventid, userid) {
-        return this.db.list('/users/' + userid + '/calendarEvents').remove(eventid);
+        return this.db.object<CalendarEvent>('/users/' + userid + '/calendarEvents/' + eventid).valueChanges().take(1).subscribe( event => {
+                event.key = eventid;
+                event.active = false;
+                this.editCalendarEvent(event, userid); 
+            });
     }
 
     deleteDelegation(delegation: Delegation, userid) {
