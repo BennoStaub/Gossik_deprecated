@@ -242,6 +242,12 @@
                     <ng-template #template let-displayEvent="displayEvent">
                       <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
                     </ng-template>
+                    <ng-template #template let-displayEvent="displayEvent" >
+                      <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+                    </ng-template>
+                    <ng-template #template let-displayEvent="displayEvent" >
+                      <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+                    </ng-template>
                     <calendar [eventSource]="eventSource"
                               [calendarMode]="calendar.mode"
                               [currentDate]="calendar.currentDate"
@@ -253,11 +259,15 @@
                               autoSelect="false"
                               [weekviewNormalEventTemplate]="template"
                               [weekviewAllDayEventTemplate]="template"
+                              [dayviewNormalEventTemplate]="template"
+                              [dayviewAllDayEventTemplate]="template"
                               scrollToHour="8"
                               [locale]="translate.currentLang"
                               formatHourColumn="{{'formatHourColumn' | translate }}"
                               formatWeekTitle="{{'formatWeekTitle' | translate }}"
-                              startingDayWeek="1">
+                              formatDayTitle="{{'formatDayTitle' | translate }}"
+                              startingDayWeek="1"
+                              allDayLabel="{{'Deadlines' | translate }}">
                     </calendar>
                   </ion-col>
                 </ion-row>
@@ -396,6 +406,12 @@
           <ng-template #template let-displayEvent="displayEvent">
             <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
           </ng-template>
+          <ng-template #template let-displayEvent="displayEvent">
+            <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+          </ng-template>
+          <ng-template #template let-displayEvent="displayEvent" >
+            <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+          </ng-template>
           <calendar [eventSource]="eventSource"
                     [calendarMode]="calendar.mode"
                     [currentDate]="calendar.currentDate"
@@ -407,11 +423,15 @@
                     autoSelect="false"
                     [weekviewNormalEventTemplate]="template"
                     [weekviewAllDayEventTemplate]="template"
+                    [dayviewNormalEventTemplate]="template"
+                    [dayviewAllDayEventTemplate]="template"
                     scrollToHour="8"
                     [locale]="translate.currentLang"
                     formatHourColumn="{{'formatHourColumn' | translate }}"
                     formatWeekTitle="{{'formatWeekTitle' | translate }}"
-                    startingDayWeek="1">
+                    formatDayTitle="{{'formatDayTitle' | translate }}"
+                    startingDayWeek="1"
+                    allDayLabel="{{'Deadlines' | translate }}">
           </calendar>
         </ion-card>
         <ion-card class="margin-0 padding-10 margin-bottom-10 width-100 secondary border-radius-20px">
@@ -480,6 +500,12 @@
         <ng-template #template let-displayEvent="displayEvent">
           <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
         </ng-template>
+        <ng-template #template let-displayEvent="displayEvent">
+          <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+        </ng-template>
+        <ng-template #template let-displayEvent="displayEvent">
+          <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+        </ng-template>
         <calendar [eventSource]="eventSource"
                   [calendarMode]="calendar.mode"
                   [currentDate]="calendar.currentDate"
@@ -491,11 +517,15 @@
                   autoSelect="false"
                   [weekviewNormalEventTemplate]="template"
                   [weekviewAllDayEventTemplate]="template"
+                  [dayviewNormalEventTemplate]="template"
+                  [dayviewAllDayEventTemplate]="template"
                   scrollToHour="8"
                   [locale]="translate.currentLang"
                   formatHourColumn="{{'formatHourColumn' | translate }}"
                   formatWeekTitle="{{'formatWeekTitle' | translate }}"
-                  startingDayWeek="1">
+                  formatDayTitle="{{'formatDayTitle' | translate }}"
+                  startingDayWeek="1"
+                  allDayLabel="{{'Deadlines' | translate }}">
         </calendar>
       </div>
 
@@ -503,7 +533,6 @@
 
 
     </div>
-
 
 
 

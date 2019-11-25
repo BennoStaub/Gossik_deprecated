@@ -116,6 +116,11 @@ export class HomePage {
 			this.navCtrl.setRoot(LoginPage);
 		}
 		this.isApp = !this.platform.is('core');
+		if(this.isApp) {
+			this.calendar.mode = 'day'
+		} else {
+			this.calendar.mode = 'week';
+		}
 		if(this.navParams.get('page') == 'capture') {
 			this.goToCapturePage();
 		} else if(this.navParams.get('page') == 'calendar') {
