@@ -164,9 +164,19 @@ export class DataHandlingProvider {
         return this.db.database.ref('/users/' + userid + '/calendarEvents/' + calendarEventkey).set(calendarEvent);
     }
 
-    deleteGoal(goalid, userid) {
-        return this.db.list('/users/' + userid + '/goals').remove(goalid).then( () => {
-            this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('goalid').equalTo(goalid))
+    editGoal(goal: Goal, userid) {
+        let goalkey = goal.key;
+        delete goal.key;
+        return this.db.database.ref('/users/' + userid + '/goals/' + goalkey).set(goal);
+    }
+
+
+
+    deleteGoal(goal, userid) {
+        let goalkey = goal.key;
+        goal.active = false;
+        return this.editGoal(goal, userid).then( () => {
+            this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('goalid').equalTo(goalkey))
             .snapshotChanges()
             .map(
             changes => {
@@ -175,10 +185,10 @@ export class DataHandlingProvider {
             }))
             }).take(1).subscribe(actions => {
                 for(let action of actions) {
-                    this.db.list('/users/' + userid + '/nextActions').remove(action.key);  
+                    this.deleteAction(action, userid);  
                 }
             });
-            this.db.list('/users/' + userid + '/delegations', ref => ref.orderByChild('goalid').equalTo(goalid))
+            this.db.list('/users/' + userid + '/delegations', ref => ref.orderByChild('goalid').equalTo(goalkey))
             .snapshotChanges()
             .map(
             changes => {
@@ -187,10 +197,10 @@ export class DataHandlingProvider {
             }))
             }).take(1).subscribe(delegations => {
                 for(let delegation of delegations) {
-                    this.db.list('/users/' + userid + '/delegations').remove(delegation.key);  
+                    this.deleteDelegation(delegation, userid);  
                 }
             });
-            this.db.list('/users/' + userid + '/references', ref => ref.orderByChild('goalid').equalTo(goalid))
+            this.db.list('/users/' + userid + '/references', ref => ref.orderByChild('goalid').equalTo(goalkey))
             .snapshotChanges()
             .map(
             changes => {
@@ -199,7 +209,7 @@ export class DataHandlingProvider {
             }))
             }).take(1).subscribe(references => {
                 for(let reference of references) {
-                    this.db.list('/users/' + userid + '/references').remove(reference.key);  
+                    this.deleteReference(reference, userid);  
                 }
             });
         });

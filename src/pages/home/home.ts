@@ -493,9 +493,12 @@ export class HomePage {
 	    });
 		this.nextActionList.take(1).subscribe( nextActionArray => {
 			if(nextActionArray.length == 1) {
-				this.db.deleteGoal(this.takenAction.goalid, this.auth.userid).then( () => {
-					this.pageCtrl = 'goalFinished';
-				});
+				this.db.getGoalFromGoalid(this.takenAction.goalid, this.auth.userid).valueChanges().take(1).subscribe( goal => {
+					goal.key = this.takenAction.goalid;
+					this.db.deleteGoal(goal, this.auth.userid).then( () => {
+						this.pageCtrl = 'goalFinished';
+					});
+				})
 			} else {
 				this.db.deleteAction(this.takenAction, this.auth.userid).then(() => this.goToCapturePage());
 			}
@@ -624,6 +627,8 @@ export class HomePage {
   	}
 
   	deleteGoal(goal: Goal) {
+  		console.log('goal.key');
+  		console.log(goal);
   		this.translate.get(["Are you sure you want to delete this goal?", "No", "Delete"]).subscribe( alertMessage => {
   		let alert = this.alertCtrl.create({
 			message: alertMessage["Are you sure you want to delete this goal?"],
@@ -634,7 +639,7 @@ export class HomePage {
 				      	{
 					        text: alertMessage["Delete"],
 					        handler: () => {
-					          	this.db.deleteGoal(goal.key, this.auth.userid).then( () => this.goToProjectsPage());
+					          	this.db.deleteGoal(goal, this.auth.userid).then( () => this.goToProjectsPage());
 					        }
 				      	}
 				    ]
