@@ -22,7 +22,7 @@
             </ion-item>
             <div *ngIf="deadline">
               <ion-item no-lines>
-                <ion-datetime displayFormat="DD.MMM YYYY" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" [(ngModel)]="delegation.deadline" [doneText]="translate.instant('Done')" [cancelText]="translate.instant('Cancel')"></ion-datetime>
+                <ion-datetime displayFormat="DDD DD.MMM YYYY - HH:mm" dayShortNames="[{{'Sun' | translate}}, {{'Mon' | translate}}, {{'Tue' | translate}}, {{'Wed' | translate}}, {{'Thu' | translate}}, {{'Fri' | translate}}, {{'Sat' | translate}}]" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" [(ngModel)]="delegation.deadline" [doneText]="translate.instant('Done')" [cancelText]="translate.instant('Cancel')"></ion-datetime>
               </ion-item>
             </div>
             <button class="darkbutton" ion-button round type="submit">{{"Edit" | translate }}</button>
