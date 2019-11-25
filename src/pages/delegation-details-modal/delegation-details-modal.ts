@@ -61,7 +61,9 @@ export class DelegationDetailsModalPage {
   saveDelegation() {
     this.delegation.content = this.defineDelegationForm.value.content;
     this.delegation.deadline = this.defineDelegationForm.value.deadline;
+    let delegationkey = this.delegation.key;
     this.db.editDelegation(this.delegation, this.auth.userid);
+    this.delegation.key = delegationkey;
     this.viewCtrl.dismiss();
   }
 

@@ -45,7 +45,9 @@ export class MaterialDetailsModalPage {
 
   saveReference() {
     this.reference.content = this.defineReferenceForm.value.content;
+    let referencekey = this.reference.key;
     this.db.editReference(this.reference, this.auth.userid);
+    this.reference.key = referencekey;
     this.viewCtrl.dismiss();
   }
 
