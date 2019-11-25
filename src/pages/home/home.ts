@@ -655,6 +655,7 @@ export class HomePage {
   	}
 
   	showDoableActions() {
+  		console.log('showing');
   		if(!this.giveTimeForm.value.timeEstimate) {
   			this.giveTimeForm.value.timeEstimate = 10000000;
   		}

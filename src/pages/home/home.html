@@ -416,7 +416,7 @@
             <ion-col size="1" class="primary flex">
               <form class="flex width-100" (ngSubmit)="showDoableActions()" [formGroup]="giveTimeForm">
                 <ion-label class="min-width-175px primary display-inline-block">{{"Time available in minutes" | translate }}:</ion-label>
-                <ion-input type="number" min="0" formControlName="timeEstimate"></ion-input>
+                <ion-input type="number" min="0" formControlName="timeEstimate" (ionChange)="showDoableActions()" autofocus="true"></ion-input>
               </form>
             </ion-col>
             <ion-col col-8>
