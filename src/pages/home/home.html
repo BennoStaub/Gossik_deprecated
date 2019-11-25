@@ -239,6 +239,9 @@
                     <ng-template #template let-displayEvent="displayEvent">
                       <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
                     </ng-template>
+                    <ng-template #template let-displayEvent="displayEvent">
+                      <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+                    </ng-template>
                     <calendar [eventSource]="eventSource"
                               [calendarMode]="calendar.mode"
                               [currentDate]="calendar.currentDate"
@@ -249,6 +252,7 @@
                               class="calendar"
                               autoSelect="false"
                               [weekviewNormalEventTemplate]="template"
+                              [weekviewAllDayEventTemplate]="template"
                               scrollToHour="8"
                               [locale]="translate.currentLang"
                               formatHourColumn="{{'formatHourColumn' | translate }}"
@@ -389,21 +393,25 @@
           <ng-template #template let-displayEvent="displayEvent">
             <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
           </ng-template>
+          <ng-template #template let-displayEvent="displayEvent">
+            <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+          </ng-template>
           <calendar [eventSource]="eventSource"
-            [calendarMode]="calendar.mode"
-            [currentDate]="calendar.currentDate"
-            (onEventSelected)="onEventSelected($event)"
-            (onTitleChanged)="onViewTitleChanged($event)"
-            (onTimeSelected)="onTimeSelected($event)"
-            step="5"
-            class="calendar"
-            autoSelect="false"
-            [weekviewNormalEventTemplate]="template"
-            scrollToHour="8"
-            [locale]="translate.currentLang"
-            formatHourColumn="{{'formatHourColumn' | translate }}"
-            formatWeekTitle="{{'formatWeekTitle' | translate }}"
-            startingDayWeek="1">
+                    [calendarMode]="calendar.mode"
+                    [currentDate]="calendar.currentDate"
+                    (onEventSelected)="onEventSelected($event)"
+                    (onTitleChanged)="onViewTitleChanged($event)"
+                    (onTimeSelected)="onTimeSelected($event)"
+                    step="5"
+                    class="calendar"
+                    autoSelect="false"
+                    [weekviewNormalEventTemplate]="template"
+                    [weekviewAllDayEventTemplate]="template"
+                    scrollToHour="8"
+                    [locale]="translate.currentLang"
+                    formatHourColumn="{{'formatHourColumn' | translate }}"
+                    formatWeekTitle="{{'formatWeekTitle' | translate }}"
+                    startingDayWeek="1">
           </calendar>
         </ion-card>
         <ion-card class="margin-0 padding-10 margin-bottom-10 width-100 secondary border-radius-20px">
@@ -469,6 +477,9 @@
         <ng-template #template let-displayEvent="displayEvent">
           <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
         </ng-template>
+        <ng-template #template let-displayEvent="displayEvent">
+          <div class="calendar-event-inner" [ngStyle]="{'background-color': displayEvent.event.color}">{{displayEvent.event.title}}</div>
+        </ng-template>
         <calendar [eventSource]="eventSource"
                   [calendarMode]="calendar.mode"
                   [currentDate]="calendar.currentDate"
@@ -479,6 +490,7 @@
                   class="calendar"
                   autoSelect="false"
                   [weekviewNormalEventTemplate]="template"
+                  [weekviewAllDayEventTemplate]="template"
                   scrollToHour="8"
                   [locale]="translate.currentLang"
                   formatHourColumn="{{'formatHourColumn' | translate }}"

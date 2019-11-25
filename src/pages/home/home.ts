@@ -405,7 +405,8 @@ export class HomePage {
 						endTime: new Date (deadlineTime).toISOString(),
 						title: 'Deadline: ' + action.content,
 						allDay: true,
-						active: true
+						active: true,
+						color: goal.color
 					}
 		            this.db.addCalendarEvent(eventData, this.auth.userid).then( event => {
 		            	action.deadlineid = event.key;
@@ -439,7 +440,8 @@ export class HomePage {
 						endTime: new Date (deadlineTime).toISOString(),
 						title: 'Deadline Delegation: ' + delegation.content,
 						allDay: true,
-						active: true
+						active: true,
+						color: goal.color
 					}
 					this.db.addCalendarEvent(eventData, this.auth.userid).then( event => {
 		            	delegation.deadlineid = event.key;
@@ -655,7 +657,6 @@ export class HomePage {
   	}
 
   	showDoableActions() {
-  		console.log('showing');
   		if(!this.giveTimeForm.value.timeEstimate) {
   			this.giveTimeForm.value.timeEstimate = 10000000;
   		}
