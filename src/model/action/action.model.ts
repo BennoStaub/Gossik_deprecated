@@ -10,4 +10,5 @@ export interface Action {
     deadlineid: string;
     time: number;
     taken: boolean;
+    active?: boolean;
 }

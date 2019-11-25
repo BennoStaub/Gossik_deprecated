@@ -3,4 +3,5 @@ export interface Reference {
     userid: string;
     goalid: string;
     content: string;
+    active?: boolean;
 }

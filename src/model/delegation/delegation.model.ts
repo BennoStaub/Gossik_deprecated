@@ -5,4 +5,5 @@ export interface Delegation {
     content: string;
     deadline: Date;
     deadlineid: string;
+    active?: boolean;
 }

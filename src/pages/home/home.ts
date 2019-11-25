@@ -93,6 +93,8 @@ export class HomePage {
 	takenActionListNotEmpty: boolean;
 	captureListNotEmpty: boolean;
 	language: string;
+	captureArray: Capture[] = [];
+	takenActionArray: Action[] = [];
 	projectColors: string[] = ['#F38787', '#F0D385', '#C784E4', '#B7ED7B', '#8793E8', '#87E8E5', '#B9BB86', '#EAA170']
  
   constructor(
@@ -107,12 +109,10 @@ export class HomePage {
 		public translate: TranslateService,
 		private afDatabase: AngularFireDatabase
 	) {
-  		console.log(this.translate.currentLang);
 		if(!this.auth.checkLoggedIn) {
 			this.navCtrl.setRoot(LoginPage);
 		}
 		this.isApp = !this.platform.is('core');
-		console.log(this.navParams.get('rootParams'));
 		if(this.navParams.get('page') == 'capture') {
 			this.goToCapturePage();
 		} else if(this.navParams.get('page') == 'calendar') {
@@ -133,6 +133,7 @@ export class HomePage {
 	    if(capture.content !== '' && capture.content !== null && capture.content !== undefined) {
 	      this.errorMsg = "";
 	      capture.userid = this.auth.userid;
+	      capture.active = true;
 	      this.db.addCapture(capture, this.auth.userid).then(ref => {
 	        this.navCtrl.setRoot(HomePage);
 	      })
@@ -151,8 +152,17 @@ export class HomePage {
 		.map(
 		changes => {
 		return changes.map(c => ({
-		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
+		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>'), active: c.payload.val().active
 		}))
+		});
+		this.captureList.subscribe( captureArray => {
+			this.captureArray = []
+			for(let capture of captureArray) {
+				if(capture.active != false){
+					this.captureArray.push(capture);
+				}
+			}
+			this.captureListNotEmpty = (this.captureArray.length > 0);
 		});
 		this.takenActionList = this.db.getTakenActionListFromUser(this.auth.userid)
 		.snapshotChanges()
@@ -162,30 +172,17 @@ export class HomePage {
 		  key: c.payload.key, ...c.payload.val()
 		}))
 		});
+		this.takenActionList.subscribe( takenActionArray => {
+			this.takenActionArray = [];
+			for(let action of takenActionArray) {
+				if(action.active != false){
+					this.takenActionArray.push(action);
+				}
+			}
+			this.takenActionListNotEmpty = (this.takenActionArray.length > 0);
+		});
   		this.viewpoint = 'CapturePage';
   		this.errorMsg = '';
-  		this.captureListCheckEmpty = this.db.getCaptureListFromUser(this.auth.userid)
-		.snapshotChanges()
-		.map(
-		changes => {
-		return changes.map(c => ({
-		  key: c.payload.key, userid: c.payload.val().userid, content: c.payload.val().content.replace(/\n/g, '<br>')
-		}))
-		});
-		this.takenActionListCheckEmpty = this.db.getTakenActionListFromUser(this.auth.userid)
-		.snapshotChanges()
-		.map(
-		changes => {
-		return changes.map(c => ({
-		  key: c.payload.key, ...c.payload.val()
-		}))
-		});
-		this.takenActionListCheckEmpty.subscribe(data => {
-  			this.takenActionListNotEmpty = (data.length > 0);
-  		});
-  		this.captureListCheckEmpty.subscribe(data => {
-  			this.captureListNotEmpty = (data.length > 0);
-  		});
   	}
 
   	goToProcessCapturePage(capture: Capture) {

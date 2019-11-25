@@ -16,9 +16,6 @@ export class AuthentificationProvider {
 		afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
-		if(this.platform.platforms().indexOf('core') != -1) {
-	  		this.desktop = true;
-	  	}
 	}
 
 	signInWithEmail(credentials) {

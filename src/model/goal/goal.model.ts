@@ -3,4 +3,5 @@ export interface Goal {
     userid: string;
     name: string;
     color: string;
+    active?: boolean;
 }
