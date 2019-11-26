@@ -690,6 +690,7 @@ export class HomePage {
 					}
 				}
 	        }
+	        this.doableActionArray = this.doableActionArray.reverse();
 	        if(this.doableActionArray.length == 0) {
 	        	this.errorMsg = "There is no doable action for that time.";
 	        } else {

@@ -96,7 +96,7 @@ export class DataHandlingProvider {
     }
 
     getNextActionListFromUser(userid) {
-        return this.db.list('/users/' + userid + '/nextActions');
+        return this.db.list('/users/' + userid + '/nextActions', ref => ref.orderByChild('priority'));
     }
 
     getTakenActionListFromUser(userid) {
