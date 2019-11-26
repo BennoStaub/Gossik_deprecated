@@ -469,7 +469,7 @@
           <ion-row class="height-100">
             <ion-col>
             <div class="content-container height-100">
-              <ion-grid>
+              <ion-grid *ngIf="!isApp">
                 <ion-row>
                   <ion-col col-8>{{"Action" | translate}}</ion-col>
                   <ion-col col-1 class="text-align-center">{{"Project" | translate}}</ion-col>
@@ -483,6 +483,16 @@
                   <ion-col col-1 class="text-align-center">{{action.priority}}</ion-col>
                   <ion-col col-1 class="text-align-center">{{action.time}}</ion-col>
                   <ion-col col-1 class="text-align-center">{{action.deadline}}</ion-col>
+                </ion-row>
+              </ion-grid>
+              <ion-grid *ngIf="isApp">
+                <ion-row>
+                  <ion-col col-8>{{"Action" | translate}}</ion-col>
+                  <ion-col col-4 class="text-align-center">{{"Time" | translate}}</ion-col>
+                </ion-row>
+                <ion-row class="background-white margin-bottom-1 border-radius-5px" *ngFor="let action of doableActionArray" (click)="takeThisAction(action)">
+                  <ion-col col-8>{{action.content}}</ion-col>
+                  <ion-col col-4 class="text-align-center">{{action.time}}</ion-col>
                 </ion-row>
               </ion-grid>
             </div>
