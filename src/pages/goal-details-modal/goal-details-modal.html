@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{"Goal Details" | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list inset class="text-align-center">
+    <form (ngSubmit)="saveGoal()" [formGroup]="editGoalForm">
+      <ion-item no-lines>
+        <ion-input type="text" [(ngModel)]="goal.name" formControlName="name"></ion-input>
+      </ion-item>
+      <button class="darkbutton" ion-button round type="submit">{{"Save" | translate }}</button>
+    </form>
+  </ion-list>
+</ion-content>

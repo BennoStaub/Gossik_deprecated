@@ -25,6 +25,8 @@ import { DelegationDetailsModalPage } from '../pages/delegation-details-modal/de
 import { DelegationDetailsModalPageModule } from '../pages/delegation-details-modal/delegation-details-modal.module';
 import { MaterialDetailsModalPage } from '../pages/material-details-modal/material-details-modal';
 import { MaterialDetailsModalPageModule } from '../pages/material-details-modal/material-details-modal.module';
+import { GoalDetailsModalPage } from '../pages/goal-details-modal/goal-details-modal';
+import { GoalDetailsModalPageModule } from '../pages/goal-details-modal/goal-details-modal.module';
 import { DefineActionModalPage } from '../pages/define-action-modal/define-action-modal';
 import { DefineActionModalPageModule } from '../pages/define-action-modal/define-action-modal.module';
 import { DefineDelegationModalPage } from '../pages/define-delegation-modal/define-delegation-modal';
@@ -73,7 +75,8 @@ registerLocaleData(localeDe, 'de');
     MaterialDetailsModalPageModule,
     DefineActionModalPageModule,
     DefineDelegationModalPageModule,
-    DefineReferenceModalPageModule
+    DefineReferenceModalPageModule,
+    GoalDetailsModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -86,7 +89,8 @@ registerLocaleData(localeDe, 'de');
     MaterialDetailsModalPage,
     DefineActionModalPage,
     DefineDelegationModalPage,
-    DefineReferenceModalPage
+    DefineReferenceModalPage,
+    GoalDetailsModalPage
   ],
   providers: [
     StatusBar,

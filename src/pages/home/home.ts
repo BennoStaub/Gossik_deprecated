@@ -17,6 +17,7 @@ import { CalendarEventModalPage } from '../calendar-event-modal/calendar-event-m
 import { ActionDetailsModalPage } from '../action-details-modal/action-details-modal';
 import { DelegationDetailsModalPage } from '../delegation-details-modal/delegation-details-modal';
 import { MaterialDetailsModalPage } from '../material-details-modal/material-details-modal';
+import { GoalDetailsModalPage } from '../goal-details-modal/goal-details-modal';
 import { DefineActionModalPage } from '../define-action-modal/define-action-modal';
 import { DefineDelegationModalPage } from '../define-delegation-modal/define-delegation-modal';
 import { DefineReferenceModalPage } from '../define-reference-modal/define-reference-modal';
@@ -622,6 +623,12 @@ export class HomePage {
 		let modal = this.modalCtrl.create(MaterialDetailsModalPage, {reference: reference});
 		modal.present();
 		this.reviewGoal(this.goal);
+  	}
+
+  	editGoal(goal: Goal) {
+  		let modal = this.modalCtrl.create(GoalDetailsModalPage, {goal: goal});
+  		modal.present();
+  		this.reviewGoal(this.goal);
   	}
 
   	deleteAction(action: Action, goal) {

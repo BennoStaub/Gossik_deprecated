@@ -17,7 +17,7 @@ import { Reference } from '../../model/reference/reference.model';
 export class MaterialDetailsModalPage {
 
 	reference = {} as Reference;
-  defineReferenceForm: FormGroup
+  defineReferenceForm: FormGroup;
 
   constructor(
 	  	public navCtrl: NavController,

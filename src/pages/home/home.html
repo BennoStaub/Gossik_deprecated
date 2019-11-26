@@ -226,6 +226,9 @@
                             <button class="darkbutton" ion-button round (click)="deleteGoal(goal)">
                               {{"Delete" | translate}}
                             </button>
+                            <button class="darkbutton" ion-button round (click)="editGoal(goal)">
+                              {{"Edit" | translate}}
+                            </button>
                           </ion-col>
                           <ion-col>
                             <ion-card class="margin-top-0 margin-right-0 project-color" [ngStyle]="{'background-color': goal.color}"></ion-card>
