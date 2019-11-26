@@ -286,7 +286,6 @@ export class HomePage {
 	        		this.goalArray.push(goal);
 	        	}
 	        }
-	        console.log(this.goalDict)
 	    })
   		this.giveTimeForm = this.fb.group({
       		timeEstimate: ['', Validators.required]
@@ -700,7 +699,9 @@ export class HomePage {
 					}
 				}
 	        }
-	        this.doableActionArray = this.doableActionArray.reverse();
+	        console.log(this.doableActionArray);
+	        this.doableActionArray.sort((a, b) => (a.priority/1 < b.priority/1) ? 1 : -1)
+	        console.log(this.doableActionArray);
 	        if(this.doableActionArray.length == 0) {
 	        	this.errorMsg = "There is no doable action for that time.";
 	        } else {
