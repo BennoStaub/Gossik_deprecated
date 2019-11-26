@@ -608,17 +608,20 @@ export class HomePage {
 
   	reviewAction(action: Action) {
 		let modal = this.modalCtrl.create(ActionDetailsModalPage, {action: action});
-		modal.present();
+		modal.present()
+		this.reviewGoal(this.goal);
   	}
 
 	reviewDelegation(delegation: Delegation) {
 		let modal = this.modalCtrl.create(DelegationDetailsModalPage, {delegation: delegation});
 		modal.present();
+		this.reviewGoal(this.goal);
 	}
 
   	reviewReference(reference: Reference) {
 		let modal = this.modalCtrl.create(MaterialDetailsModalPage, {reference: reference});
 		modal.present();
+		this.reviewGoal(this.goal);
   	}
 
   	deleteAction(action: Action, goal) {
