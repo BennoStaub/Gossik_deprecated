@@ -99,6 +99,10 @@ page-home {
     	color: #000000 !important;
     }
 
+    .background-white {
+    	background-color: map-get($colors, white);
+    }
+
     ion-input {
     	background-color: map-get($colors, white);
     	border-radius: 20px;
@@ -115,6 +119,10 @@ page-home {
 
 	.border-radius-20px {
 		border-radius: 20px;
+	}
+
+	.border-radius-5px {
+		border-radius: 5px;
 	}
 
 	.overflow-scroll {
@@ -135,6 +143,10 @@ page-home {
 
 	.margin-left-0 {
 		margin-left: 0px;
+	}
+
+	.margin-bottom-1 {
+		margin-bottom: 1px;
 	}
 
 	.display-inline-block {
@@ -165,6 +177,14 @@ page-home {
 
 	.width-40 {
 		width: 40%;
+	}
+
+	.width-100px {
+		width: 100px;
+	}
+
+	.text-align-right {
+		text-align: right;
 	}
 
 	.border-top {

@@ -469,9 +469,22 @@
           <ion-row class="height-100">
             <ion-col>
             <div class="content-container height-100">
-              <ion-item no-lines *ngFor="let action of doableActionArray" (click)="takeThisAction(action)">
-                <div [innerHtml]="action.content"></div>
-              </ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col col-8>{{"Action" | translate}}</ion-col>
+                  <ion-col col-1 class="text-align-center">{{"Project" | translate}}</ion-col>
+                  <ion-col col-1 class="text-align-center">{{"Priority" | translate}}</ion-col>
+                  <ion-col col-1 class="text-align-center">{{"Time" | translate}}</ion-col>
+                  <ion-col col-1 class="text-align-center">{{"Deadline" | translate}}</ion-col>
+                </ion-row>
+                <ion-row class="background-white margin-bottom-1 border-radius-5px" *ngFor="let action of doableActionArray" (click)="takeThisAction(action)">
+                  <ion-col col-8>{{action.content}}</ion-col>
+                  <ion-col col-1 class="text-align-center">{{goalDict[action.goalid].name}}</ion-col>
+                  <ion-col col-1 class="text-align-center">{{action.priority}}</ion-col>
+                  <ion-col col-1 class="text-align-center">{{action.time}}</ion-col>
+                  <ion-col col-1 class="text-align-center">{{action.deadline}}</ion-col>
+                </ion-row>
+              </ion-grid>
             </div>
           </ion-col>
           </ion-row>

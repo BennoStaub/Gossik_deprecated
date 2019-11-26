@@ -98,6 +98,7 @@ export class HomePage {
 	delegationArray: Delegation[];
 	referenceArray: Reference[];
 	takenActionArray: Action[];
+	goalDict = {};
 	projectColors: string[] = ['#F38787', '#F0D385', '#C784E4', '#B7ED7B', '#8793E8', '#87E8E5', '#B9BB86', '#EAA170']
  
   constructor(
@@ -267,7 +268,6 @@ export class HomePage {
   	}
 
   	goToToDoPage() {
-  		this.goalArray = [];
   		this.goalList = this.db.getGoalList(this.auth.userid)
 		  .snapshotChanges()
 		  .map(
@@ -278,16 +278,18 @@ export class HomePage {
 	    });
 		this.goalList.subscribe(
 	      goalArray => {
+  			this.goalArray = [];
 	        for(let goal of goalArray) {
 	        	if(goal.active != false) {
+	        		this.goalDict[goal.key] = goal;
 	        		this.goalArray.push(goal);
 	        	}
 	        }
+	        console.log(this.goalDict)
 	    })
   		this.giveTimeForm = this.fb.group({
       		timeEstimate: ['', Validators.required]
     	});
-    	this.doableHighPriorityActions = [];
     	this.goal =  <Goal>{key: 'None'};;
     	this.viewpoint = 'ToDoPage';
     	this.pageCtrl = '';
