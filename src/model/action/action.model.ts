@@ -6,7 +6,7 @@ export interface Action {
     nextAction: string;
     content: string;
     priority: number;
-    deadline: Date;
+    deadline: any;
     deadlineid: string;
     time: number;
     taken: boolean;

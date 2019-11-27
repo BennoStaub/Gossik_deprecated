@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { DefineActionModalPage } from './define-action-modal';
 
+import { DatePickerModule } from 'ionic-calendar-date-picker';
+
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -10,7 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   imports: [
     IonicPageModule.forChild(DefineActionModalPage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    DatePickerModule
   ],
 })
 export class DefineActionModalPageModule {}

@@ -3,7 +3,7 @@ export interface Delegation {
     userid: string;
     goalid: string;
     content: string;
-    deadline: Date;
+    deadline: any;
     deadlineid: string;
     active?: boolean;
 }

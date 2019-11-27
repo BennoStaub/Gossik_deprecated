@@ -18,10 +18,6 @@
 
 <ion-content padding>
   <ion-list inset class="text-align-center">
-    <ion-item no-lines>
-      <ion-label>{{"Deadline required?" | translate }}</ion-label>
-      <ion-checkbox [(ngModel)]="deadline"></ion-checkbox>
-    </ion-item>
     <form (ngSubmit)="saveAction()" [formGroup]="defineActionForm">
       <ion-item no-lines>
         <ion-input type="text" [(ngModel)]="action.content" formControlName="content"></ion-input>
@@ -34,11 +30,19 @@
           <ion-label block>{{"Estimated time in min" | translate }}:</ion-label>
           <ion-input type="number" min="0" max="1000" formControlName="time" [(ngModel)]="action.time"></ion-input>
       </ion-item>
-      <div *ngIf="deadline">
-        <ion-item no-lines>
-          <ion-datetime displayFormat="DDD DD.MMM YYYY - HH:mm" dayShortNames="[{{'Sun' | translate}}, {{'Mon' | translate}}, {{'Tue' | translate}}, {{'Wed' | translate}}, {{'Thu' | translate}}, {{'Fri' | translate}}, {{'Sat' | translate}}]" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" [(ngModel)]="action.deadline" [doneText]="translate.instant('Done')" [cancelText]="translate.instant('Cancel')"></ion-datetime>
-        </ion-item>
-      </div>
+      <div *ngIf="action.deadline">
+            <div *ngIf="!edit">
+              <ion-item no-lines>
+                {{"Deadline" | translate}}: {{deadlineString}}
+                <button (click)="editDeadline()">{{"Edit" | translate }}</button>
+              </ion-item>
+            </div>
+            <div *ngIf="edit">
+              <ion-item no-lines>
+                <ionic-calendar-date-picker [monthLabels]="monthLabels" [dayLabels]="dayLabels" (onSelect)="deadlineSelected($event)"></ionic-calendar-date-picker> 
+              </ion-item>
+            </div>
+          </div>
       <button class="darkbutton" ion-button round type="submit">{{"Save" | translate }}</button>
     </form>
     <button class="button-left darkbutton" ion-button round (click)="deleteAction(action)">{{"Delete" | translate }}</button>

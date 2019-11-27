@@ -404,12 +404,13 @@ export class HomePage {
 					capture = {} as Capture;
 				}
 				if(action.deadline) {
-					let deadlineTime = new Date (action.deadline).setHours(2);
+					let deadlineStartTime = new Date (action.deadline).setHours(2);
+					let deadlineEndTime = new Date (action.deadline).setHours(5);
 					let eventData: CalendarEvent = {
 						userid: this.auth.userid,
 						goalid: goal.key,
-						startTime: new Date(action.deadline).toISOString(),
-						endTime: new Date (deadlineTime).toISOString(),
+						startTime: new Date(deadlineStartTime).toISOString(),
+						endTime: new Date (deadlineEndTime).toISOString(),
 						title: 'Deadline: ' + action.content,
 						allDay: true,
 						active: true,
@@ -439,12 +440,13 @@ export class HomePage {
 					capture = {} as Capture;
 				}
 				if(delegation.deadline) {
-					let deadlineTime = new Date (delegation.deadline).setHours(2);
+					let deadlineStartTime = new Date (delegation.deadline).setHours(2);
+					let deadlineEndTime = new Date (delegation.deadline).setHours(5);
 					let eventData: CalendarEvent = {
 						userid: this.auth.userid,
 						goalid: goal.key,
-						startTime: new Date(delegation.deadline).toISOString(),
-						endTime: new Date (deadlineTime).toISOString(),
+						startTime: new Date(deadlineStartTime).toISOString(),
+						endTime: new Date (deadlineEndTime).toISOString(),
 						title: 'Deadline Delegation: ' + delegation.content,
 						allDay: true,
 						active: true,

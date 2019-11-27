@@ -42,6 +42,8 @@ export function setTranslateLoader(http: HttpClient) {
  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+import { DatePickerModule } from 'ionic-calendar-date-picker';
+
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 
@@ -76,7 +78,8 @@ registerLocaleData(localeDe, 'de');
     DefineActionModalPageModule,
     DefineDelegationModalPageModule,
     DefineReferenceModalPageModule,
-    GoalDetailsModalPageModule
+    GoalDetailsModalPageModule,
+    DatePickerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

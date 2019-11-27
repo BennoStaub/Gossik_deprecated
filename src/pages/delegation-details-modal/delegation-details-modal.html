@@ -12,20 +12,24 @@
 
 <ion-content padding>
         <ion-list inset class="text-align-center">
-          <ion-item no-lines>
-            <ion-label>{{"Deadline required?" | translate }}</ion-label>
-            <ion-checkbox [(ngModel)]="deadline"></ion-checkbox>
-          </ion-item>
           <form (ngSubmit)="saveDelegation()" [formGroup]="defineDelegationForm">
             <ion-item no-lines>
               <ion-input type="text" [(ngModel)]="delegation.content" formControlName="content"></ion-input>
             </ion-item>
-            <div *ngIf="deadline">
+          <div *ngIf="delegation.deadline">
+            <div *ngIf="!edit">
               <ion-item no-lines>
-                <ion-datetime displayFormat="DDD DD.MMM YYYY - HH:mm" dayShortNames="[{{'Sun' | translate}}, {{'Mon' | translate}}, {{'Tue' | translate}}, {{'Wed' | translate}}, {{'Thu' | translate}}, {{'Fri' | translate}}, {{'Sat' | translate}}]" pickerFormat="DD MMM YYYY" max="2100" formControlName="deadline" [(ngModel)]="delegation.deadline" [doneText]="translate.instant('Done')" [cancelText]="translate.instant('Cancel')"></ion-datetime>
+                {{"Deadline" | translate}}: {{deadlineString}}
+                <button (click)="editDeadline()">{{"Edit" | translate }}</button>
               </ion-item>
             </div>
-            <button class="darkbutton" ion-button round type="submit">{{"Save" | translate }}</button>
+            <div *ngIf="edit">
+              <ion-item no-lines>
+                <ionic-calendar-date-picker [monthLabels]="monthLabels" [dayLabels]="dayLabels" (onSelect)="deadlineSelected($event)"></ionic-calendar-date-picker> 
+              </ion-item>
+            </div>
+          </div>
+          <button class="darkbutton" ion-button round type="submit">{{"Save" | translate }}</button>
           </form>
           <button class="button-left darkbutton" ion-button round (click)="deleteDelegation(delegation)">{{"Delete" | translate }}</button>
         </ion-list>

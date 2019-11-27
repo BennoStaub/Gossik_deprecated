@@ -22,6 +22,8 @@ export class DefineDelegationModalPage {
 	deadline: boolean;
 	defineDelegationForm: FormGroup;
   capture = {} as Capture;
+  monthLabels = [];
+  dayLabels = [];
 
   constructor(
   	public navCtrl: NavController,
@@ -39,6 +41,33 @@ export class DefineDelegationModalPage {
 		  content: ['', Validators.required],
 		  deadline: ['', Validators.required]
     });
+    this.translate.get(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']).subscribe( monthLabels => {
+      this.monthLabels = [
+      monthLabels['Jan'],
+      monthLabels['Feb'],
+      monthLabels['Mar'],
+      monthLabels['Apr'],
+      monthLabels['May'],
+      monthLabels['Jun'],
+      monthLabels['Jul'],
+      monthLabels['Aug'],
+      monthLabels['Sep'],
+      monthLabels['Oct'],
+      monthLabels['Nov'],
+      monthLabels['Dec']
+      ];
+    });
+    this.translate.get(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']).subscribe( dayLabels => {
+      this.dayLabels = [
+      dayLabels['Sun'],
+      dayLabels['Mon'],
+      dayLabels['Tue'],
+      dayLabels['Wed'],
+      dayLabels['Thu'],
+      dayLabels['Fri'],
+      dayLabels['Sat']
+      ];
+    });
   }
 
   ionViewDidLoad() {
@@ -51,6 +80,11 @@ export class DefineDelegationModalPage {
 
   addDelegation() {
   	this.viewCtrl.dismiss(this.defineDelegationForm.value)
+  }
+
+  deadlineSelected(event) {
+    let deadlineFixed = new Date (event).setHours(2);
+    this.defineDelegationForm.value.deadline = new Date (deadlineFixed).toISOString();
   }
 
 }

@@ -93,5 +93,17 @@
   "You cannot save an empty capture.": "You cannot save an empty capture.",
   "You aborted this action, it has been put back into your actions list.": "You aborted this action, it has been put back into your actions list.",
   "You started with action": "You started with action",
-  ", click here to process.": ", click here to process."  
+  ", click here to process.": ", click here to process.",
+  "Jan": "Jan",
+  "Feb": "Feb",
+  "Mar": "Mar",
+  "Apr": "Apr",
+  "May": "May",
+  "Jun": "Jun",
+  "Jul": "Jul",
+  "Aug": "Aug",
+  "Sep": "Sep",
+  "Oct": "Oct",
+  "Nov": "Nov",
+  "Dec": "Dec" 
 }

@@ -38,7 +38,6 @@ export class DataHandlingProvider {
     }
 
     addCalendarEvent(calendarEvent: CalendarEvent, userid) {
-        console.log(calendarEvent);
         return this.db.list('/users/' + userid + '/calendarEvents').push(calendarEvent);
     }
     
@@ -61,6 +60,8 @@ export class DataHandlingProvider {
     }
 
     deleteDelegation(delegation: Delegation, userid) {
+        console.log('deleting delegation');
+        console.log(delegation);
         delegation.active = false;
         return this.editDelegation(delegation, userid).then( () =>
             {
@@ -147,6 +148,8 @@ export class DataHandlingProvider {
     }
 
     editDelegation(delegation: Delegation, userid) {
+        console.log('editing delegation');
+        console.log(delegation);
         let delegationkey = delegation.key;
         delete delegation.key;
         return this.db.database.ref('/users/' + userid + '/delegations/' + delegationkey).set(delegation);

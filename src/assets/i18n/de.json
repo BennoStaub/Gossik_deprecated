@@ -94,5 +94,17 @@
   "You cannot save an empty capture.": "Du kannst keinen leeren Post-It erstellen.",
   "You aborted this action, it has been put back into your actions list.": "Du hast die Aktion abgebrochen. Sie wurde zurück in deine ToDo-Liste platziert.",
   "You started with action": "Du hast mit der Aktion",
-  ", click here to process.": "begonnen, klicke hier um das zu verarbeiten."  
+  ", click here to process.": "begonnen, klicke hier um das zu verarbeiten.",
+  "Jan": "Jan",
+  "Feb": "Feb",
+  "Mar": "Mär",
+  "Apr": "Apr",
+  "May": "Mai",
+  "Jun": "Jun",
+  "Jul": "Jul",
+  "Aug": "Aug",
+  "Sep": "Sep",
+  "Oct": "Okt",
+  "Nov": "Nov",
+  "Dec": "Dez"
 }

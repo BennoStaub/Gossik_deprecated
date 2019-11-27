@@ -44,6 +44,7 @@
     "firebase": "^5.7.0",
     "intl": "^1.2.5",
     "ionic-angular": "3.9.2",
+    "ionic-calendar-date-picker": "^0.1.2",
     "ionic2-calendar": "^0.4.6",
     "ionicons": "3.0.0",
     "moment": "^2.22.2",

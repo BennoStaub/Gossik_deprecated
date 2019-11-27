@@ -26,7 +26,12 @@ export class DelegationDetailsModalPage {
 
 	delegation = {} as Delegation;
 	deadline: boolean;
-  defineDelegationForm: FormGroup
+  defineDelegationForm: FormGroup;
+  monthLabels = [];
+  dayLabels = [];
+  edit: boolean = false;
+  deadlineString: string;
+  formatOptions: any;
 
   constructor(
 	  	public navCtrl: NavController,
@@ -38,33 +43,74 @@ export class DelegationDetailsModalPage {
       public fb: FormBuilder
   	) {
     this.delegation = this.navParams.get('delegation');
-    if(!this.delegation.deadline) {
-    	this.deadline = false;
-    } else {
-    	this.deadline = true;
-    }
     this.defineDelegationForm = this.fb.group({
-      content: ['', Validators.required],
-      deadline: ['', Validators.required]
+      content: ['', Validators.required]
     });
+    if(!this.delegation.deadline) {
+      this.delegation.deadline = '';
+    }
+    this.translate.get(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']).subscribe( monthLabels => {
+      this.monthLabels = [
+      monthLabels['Jan'],
+      monthLabels['Feb'],
+      monthLabels['Mar'],
+      monthLabels['Apr'],
+      monthLabels['May'],
+      monthLabels['Jun'],
+      monthLabels['Jul'],
+      monthLabels['Aug'],
+      monthLabels['Sep'],
+      monthLabels['Oct'],
+      monthLabels['Nov'],
+      monthLabels['Dec']
+      ];
+    });
+    this.translate.get(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']).subscribe( dayLabels => {
+      this.dayLabels = [
+      dayLabels['Sun'],
+      dayLabels['Mon'],
+      dayLabels['Tue'],
+      dayLabels['Wed'],
+      dayLabels['Thu'],
+      dayLabels['Fri'],
+      dayLabels['Sat']
+      ];
+    });
+    this.formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    this.deadlineString = new Date (this.delegation.deadline).toLocaleDateString(this.translate.currentLang, this.formatOptions);
   }
  
   cancel() {
     this.viewCtrl.dismiss();
   }
 
-  deleteDelegation(delegation) {
-  	this.db.deleteDelegation(delegation, this.auth.userid);
+  deleteDelegation() {
+    console.log('delete');
+    console.log(this.delegation);
+  	this.db.deleteDelegation(this.delegation, this.auth.userid);
   	this.viewCtrl.dismiss();
   }
 
   saveDelegation() {
+    if(this.delegation.deadline) {
+      this.delegation.deadline = new Date (this.delegation.deadline).toISOString();
+    }
     this.delegation.content = this.defineDelegationForm.value.content;
-    this.delegation.deadline = this.defineDelegationForm.value.deadline;
     let delegationkey = this.delegation.key;
     this.db.editDelegation(this.delegation, this.auth.userid);
     this.delegation.key = delegationkey;
     this.viewCtrl.dismiss();
+  }
+
+  editDeadline() {
+    this.edit = true;
+  }
+
+  deadlineSelected(event) {
+    let deadlineFixed = new Date (event).setHours(2);
+    this.delegation.deadline = new Date (deadlineFixed);
+    this.deadlineString = new Date (this.delegation.deadline).toLocaleDateString(this.translate.currentLang, this.formatOptions);
+    this.edit = false;
   }
 
 }
