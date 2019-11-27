@@ -31,18 +31,28 @@
           <ion-input type="number" min="0" max="1000" formControlName="time" [(ngModel)]="action.time"></ion-input>
       </ion-item>
       <div *ngIf="action.deadline">
-            <div *ngIf="!edit">
-              <ion-item no-lines>
-                {{"Deadline" | translate}}: {{deadlineString}}
-                <button (click)="editDeadline()">{{"Edit" | translate }}</button>
-              </ion-item>
-            </div>
-            <div *ngIf="edit">
-              <ion-item no-lines>
-                <ionic-calendar-date-picker [monthLabels]="monthLabels" [dayLabels]="dayLabels" (onSelect)="deadlineSelected($event)"></ionic-calendar-date-picker> 
-              </ion-item>
-            </div>
-          </div>
+        <div *ngIf="!edit">
+          <ion-item no-lines>
+            {{"Deadline" | translate}}: {{deadlineString}}
+            <button (click)="editDeadline()">{{"Edit" | translate }}</button>
+          </ion-item>
+        </div>
+        <div *ngIf="edit">
+          <ion-item no-lines>
+            <ionic-calendar-date-picker [monthLabels]="monthLabels" [dayLabels]="dayLabels" (onSelect)="deadlineSelected($event)"></ionic-calendar-date-picker> 
+          </ion-item>
+        </div>
+      </div>
+      <div *ngIf="!action.deadline">
+        <ion-item no-lines>
+          <button type="button" (click)="editDeadline()">{{"Add deadline" | translate }}</button>
+        </ion-item>
+        <div *ngIf="edit">
+          <ion-item no-lines>
+            <ionic-calendar-date-picker [monthLabels]="monthLabels" [dayLabels]="dayLabels" (onSelect)="deadlineSelected($event)"></ionic-calendar-date-picker> 
+          </ion-item>
+        </div>
+      </div>
       <button class="darkbutton" ion-button round type="submit">{{"Save" | translate }}</button>
     </form>
     <button class="button-left darkbutton" ion-button round (click)="deleteAction(action)">{{"Delete" | translate }}</button>

@@ -16,20 +16,30 @@
             <ion-item no-lines>
               <ion-input type="text" [(ngModel)]="delegation.content" formControlName="content"></ion-input>
             </ion-item>
-          <div *ngIf="delegation.deadline">
-            <div *ngIf="!edit">
-              <ion-item no-lines>
-                {{"Deadline" | translate}}: {{deadlineString}}
-                <button (click)="editDeadline()">{{"Edit" | translate }}</button>
-              </ion-item>
+            <div *ngIf="delegation.deadline">
+              <div *ngIf="!edit">
+                <ion-item no-lines>
+                  {{"Deadline" | translate}}: {{deadlineString}}
+                  <button (click)="editDeadline()">{{"Edit" | translate }}</button>
+                </ion-item>
+              </div>
+              <div *ngIf="edit">
+                <ion-item no-lines>
+                  <ionic-calendar-date-picker [monthLabels]="monthLabels" [dayLabels]="dayLabels" (onSelect)="deadlineSelected($event)"></ionic-calendar-date-picker> 
+                </ion-item>
+              </div>
             </div>
-            <div *ngIf="edit">
+            <div *ngIf="!delegation.deadline">
               <ion-item no-lines>
-                <ionic-calendar-date-picker [monthLabels]="monthLabels" [dayLabels]="dayLabels" (onSelect)="deadlineSelected($event)"></ionic-calendar-date-picker> 
+                <button type="button" (click)="editDeadline()">{{"Add deadline" | translate }}</button>
               </ion-item>
+              <div *ngIf="edit">
+                <ion-item no-lines>
+                  <ionic-calendar-date-picker [monthLabels]="monthLabels" [dayLabels]="dayLabels" (onSelect)="deadlineSelected($event)"></ionic-calendar-date-picker> 
+                </ion-item>
+              </div>
             </div>
-          </div>
-          <button class="darkbutton" ion-button round type="submit">{{"Save" | translate }}</button>
+            <button class="darkbutton" ion-button round type="submit">{{"Save" | translate }}</button>
           </form>
           <button class="button-left darkbutton" ion-button round (click)="deleteDelegation(delegation)">{{"Delete" | translate }}</button>
         </ion-list>

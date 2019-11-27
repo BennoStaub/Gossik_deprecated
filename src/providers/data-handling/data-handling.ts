@@ -148,8 +148,6 @@ export class DataHandlingProvider {
     }
 
     editDelegation(delegation: Delegation, userid) {
-        console.log('editing delegation');
-        console.log(delegation);
         let delegationkey = delegation.key;
         delete delegation.key;
         return this.db.database.ref('/users/' + userid + '/delegations/' + delegationkey).set(delegation);

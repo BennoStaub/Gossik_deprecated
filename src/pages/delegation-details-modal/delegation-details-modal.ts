@@ -85,13 +85,12 @@ export class DelegationDetailsModalPage {
   }
 
   deleteDelegation() {
-    console.log('delete');
-    console.log(this.delegation);
   	this.db.deleteDelegation(this.delegation, this.auth.userid);
   	this.viewCtrl.dismiss();
   }
 
   saveDelegation() {
+    console.log('mhhh');
     if(this.delegation.deadline) {
       this.delegation.deadline = new Date (this.delegation.deadline).toISOString();
     }
