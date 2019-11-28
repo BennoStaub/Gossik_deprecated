@@ -7,7 +7,9 @@
       </ion-buttons>
     </div>
     <div class="header-container" *ngIf="!isApp">
+      <button class="header-icon" (click)="goToCapturePage()">
       <img class="header-logo" src="../../assets/imgs/logo_schriftzug_weiss.png" height="60">
+    </button>
     <div class="header-icons-div">
       <button class="header-icon" (click)="goToCalendarPage()">
         <img src="../../assets/icon/icon_calendar.png" height="20"> {{"Calendar" | translate }}
