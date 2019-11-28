@@ -167,7 +167,11 @@ export class HomePage {
   	}
 
   	deleteCapture(capture: Capture) {
-  		this.db.deleteCapture(capture, this.auth.userid).then( () => this.goToCapturePage())
+  		if(this.viewpoint == 'CapturePage') {
+  			this.db.deleteCapture(capture, this.auth.userid);
+  		} else {
+  			this.db.deleteCapture(capture, this.auth.userid).then( () => this.goToCapturePage())
+  		}
   	}
 
   	goToCapturePage() {
@@ -239,7 +243,6 @@ export class HomePage {
 
   	goToProjectsPage() {
   		this.goal.name = '';
-  		this.goalArray = [];
 	    this.goalList = this.db.getGoalList(this.auth.userid)
 		  .snapshotChanges()
 		  .map(
@@ -248,8 +251,9 @@ export class HomePage {
 			  key: c.payload.key, ...c.payload.val()
 			}))
 	    });
-	    this.goalList.take(1).subscribe(
+	    this.goalList.subscribe(
 	      goalArray => {
+  			this.goalArray = [];
 	        for(let goal of goalArray) {
 	        	if(goal.active != false) {
 		        	this.goalArray.push(goal);

@@ -66,8 +66,17 @@
     </div>
     <div *ngIf="captureListNotEmpty">
     <h3 class="padding-left-20">{{"Thoughts captured and ready for processing" | translate}}:</h3>
-      <p class="border-bottom-1 padding-left-20" *ngFor="let capture of captureArray" (click)="goToProcessCapturePage(capture)">{{capture.content}}
-      </p>
+    <ion-grid>
+      <ion-row class="border-bottom-1 padding-left-20 width-100 height-30px" *ngFor="let capture of captureArray">
+      <ion-col col-11 class="height-100">
+        <span (click)="goToProcessCapturePage(capture)">{{capture.content}}
+        </span>
+      </ion-col>
+      <ion-col col-1 class="height-100">
+        <button float-right (click)="deleteCapture(capture)">{{ "Delete" | translate }}</button>
+      </ion-col>
+    </ion-row>
+    </ion-grid>
     </div>
     </div>
   </div>
