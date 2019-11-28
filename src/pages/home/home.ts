@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { Content } from 'ionic-angular';
 import { NavController, NavParams, ModalController, AlertController, Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,6 +34,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HomePage {
 
+  	@ViewChild(Content) content: Content;
   	viewpoint: string;
 	captureList: Observable<Capture[]>;
 	takenActionList: Observable<Action[]>;
@@ -123,7 +125,10 @@ export class HomePage {
 		} else {
 			this.calendar.mode = 'week';
 		}
-		if(this.navParams.get('page') == 'capture') {
+  	}
+
+  	ionViewDidEnter() {
+  		if(this.navParams.get('page') == 'capture') {
 			this.goToCapturePage();
 		} else if(this.navParams.get('page') == 'calendar') {
 			this.goToCalendarPage();
@@ -136,6 +141,15 @@ export class HomePage {
 		} else {
 			this.goToCapturePage();
 		}
+  	}
+
+  	changePage(viewpoint: string) {
+  		console.log(this.content);
+  		this.content.scrollToTop();
+  		console.log(this.content);
+  		this.errorMsg = '';
+  		this.pageCtrl = '';
+  		this.viewpoint = viewpoint;
   	}
 
   	//HomePage functions
@@ -191,8 +205,7 @@ export class HomePage {
 			}
 			this.takenActionListNotEmpty = (this.takenActionArray.length > 0);
 		});
-  		this.viewpoint = 'CapturePage';
-  		this.errorMsg = '';
+		this.changePage('CapturePage');
   	}
 
   	goToProcessCapturePage(capture: Capture) {
@@ -216,16 +229,12 @@ export class HomePage {
 	  	this.newGoalForm = this.fb.group({
   			newGoal: ['', Validators.required]
     	});
-  		this.viewpoint = 'ProcessCapturePage';
-  		this.pageCtrl = '';
-  		this.errorMsg = '';
+    	this.changePage('ProcessCapturePage');
   	}
 
   	goToProcessTakenActionPage(takenAction: Action) {
-  		this.viewpoint = 'ProcessTakenActionPage';
-  		this.pageCtrl = '';
   		this.takenAction = takenAction;
-  		this.errorMsg = '';
+  		this.changePage('ProcessTakenActionPage');
   	}
 
   	goToProjectsPage() {
@@ -263,9 +272,7 @@ export class HomePage {
 				}
 			};
 	    });
-  		this.viewpoint = 'ProjectsPage';
-  		this.pageCtrl = '';
-  		this.errorMsg = '';
+	    this.changePage('ProjectsPage');
   	}
 
   	goToToDoPage() {
@@ -291,10 +298,7 @@ export class HomePage {
       		timeEstimate: ['', Validators.required]
     	});
     	this.goal =  <Goal>{key: 'None'};;
-    	this.viewpoint = 'ToDoPage';
-    	this.pageCtrl = '';
-    	this.errorMsg = '';
-    	this.doableActionArray = [];
+    	this.changePage('ToDoPage');
   	}
 
   	goToCalendarPage() {
@@ -346,13 +350,11 @@ export class HomePage {
 				this.eventSource = events;
 			});
 		});
-		this.viewpoint = 'CalendarPage';
-		this.errorMsg = '';
+		this.changePage('CalendarPage');
   	}
 
   	goToSettingsPage() {
-  		this.errorMsg = '';
-  		this.viewpoint = 'SettingsPage';
+  		this.changePage('SettingsPage');
   	}
 
   	// SettingsPage functions
@@ -529,6 +531,7 @@ export class HomePage {
 
 	// ProjectsPage functions
 	reviewGoal(goal: Goal) {
+		this.content.scrollToTop();
 		this.eventSource = [];
   		this.calendarEventList = this.db.getCalendarEventListFromUser(this.auth.userid)
 			.snapshotChanges()
