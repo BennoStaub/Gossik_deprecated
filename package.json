@@ -33,7 +33,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "@ultimate/ngxerrors": "^1.4.0",
     "angularfire2": "^5.0.0-rc.7",
-    "cordova-android": "8.1.0",
+    "cordova-android": "8.0.0",
     "cordova-plugin-advanced-http": "^2.2.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.2",
